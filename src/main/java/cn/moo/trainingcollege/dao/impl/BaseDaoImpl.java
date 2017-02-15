@@ -1,6 +1,6 @@
 package cn.moo.trainingcollege.dao.impl;
 
-import cn.moo.trainingcollege.dao.BaseDAO;
+import cn.moo.trainingcollege.dao.BaseDao;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -10,6 +10,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -17,13 +18,14 @@ import java.util.List;
 /**
  * Created by Moo on 2017/1/13.
  */
-public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
+@Repository
+public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     @Autowired
     protected SessionFactory sessionFactory;
 
     protected Class<T> entityClass;
 
-    public BaseDAOImpl() {
+    public BaseDaoImpl() {
         Type genType = getClass().getGenericSuperclass();
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         entityClass = (Class) params[0];

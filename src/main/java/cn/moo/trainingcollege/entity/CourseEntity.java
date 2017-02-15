@@ -9,12 +9,12 @@ import java.sql.Timestamp;
 @Entity(name = "course")
 public class CourseEntity {
     private int id;
-    private String studentId;
+    private String title;
     private String teacher;
     private Timestamp endTime;
     private Timestamp startTime;
     private int price;
-    private byte isActivated;
+    private int state;
 
     @Id
     @Column(name = "id")
@@ -27,13 +27,13 @@ public class CourseEntity {
     }
 
     @Basic
-    @Column(name = "student_id")
-    public String getStudentId() {
-        return studentId;
+    @Column(name = "title")
+    public String getTitle() {
+        return title;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Basic
@@ -76,16 +76,6 @@ public class CourseEntity {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "is_activated")
-    public byte getIsActivated() {
-        return isActivated;
-    }
-
-    public void setIsActivated(byte isActivated) {
-        this.isActivated = isActivated;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,8 +85,7 @@ public class CourseEntity {
 
         if (id != that.id) return false;
         if (price != that.price) return false;
-        if (isActivated != that.isActivated) return false;
-        if (studentId != null ? !studentId.equals(that.studentId) : that.studentId != null) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
         if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
         if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
@@ -107,12 +96,21 @@ public class CourseEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (studentId != null ? studentId.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + price;
-        result = 31 * result + (int) isActivated;
         return result;
+    }
+
+    @Basic
+    @Column(name = "state")
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

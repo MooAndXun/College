@@ -1,18 +1,19 @@
 package cn.moo.trainingcollege.service;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Created by chenmuen on 2017/2/11.
  */
+@Service
 public interface OrderService {
-    public boolean quitCourse(int orderId);
+    public void quitCourse(int orderId);
 
-    public boolean cancelCourse(int orderId);
+    public void cancelCourse(int orderId);
 
-    public boolean orderCourse(String studentId, int courseId);
+    public void orderCourse(String studentId, int courseId);
 
-    public boolean pay(int orderId);
+    public void pay(int orderId);
 
-    public boolean approveApplication(String orderId);
-
-    public boolean updateApplication(String orderId);
+    public void score(String studentId, int courseId, int score);
 }

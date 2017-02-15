@@ -1,12 +1,15 @@
 package cn.moo.trainingcollege.dao;
 
+import org.springframework.stereotype.Repository;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Moo on 2017/1/13.
  */
-public interface BaseDAO<T> {
+
+public interface BaseDao<T> {
 
     public List<?> doSqlQuery(String sql);
 
@@ -32,6 +35,8 @@ public interface BaseDAO<T> {
 
     @SuppressWarnings({"rawtypes" })
     public List<T> getListByColumn(String column, Object value, int page, int size, String ordercolumn, boolean asc);
+
+    public List<T> getListByLikeColumn(String column, Object value);
 
     @SuppressWarnings({"rawtypes" })
     public List<T> getListByLikeColumn(String column, Object value, int page, int size, String ordercolumn, boolean asc);

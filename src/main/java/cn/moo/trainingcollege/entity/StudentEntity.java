@@ -3,7 +3,7 @@ package cn.moo.trainingcollege.entity;
 import javax.persistence.*;
 
 /**
- * Created by chenmuen on 2017/1/25.
+ * Created by chenmuen on 2017/2/12.
  */
 @Entity(name = "student")
 public class StudentEntity {
@@ -13,7 +13,7 @@ public class StudentEntity {
     private int balance;
     private int level;
     private int point;
-    private byte isActivated;
+    private boolean isActivated;
 
     @Id
     @Column(name = "id")
@@ -77,12 +77,12 @@ public class StudentEntity {
 
     @Basic
     @Column(name = "is_activated")
-    public byte getIsActivated() {
+    public boolean isActivated() {
         return isActivated;
     }
 
-    public void setIsActivated(byte isActivated) {
-        this.isActivated = isActivated;
+    public void setActivated(boolean activated) {
+        isActivated = activated;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class StudentEntity {
         result = 31 * result + balance;
         result = 31 * result + level;
         result = 31 * result + point;
-        result = 31 * result + (int) isActivated;
+        result = 31 * result + (isActivated ? 1 : 0);
         return result;
     }
 }
