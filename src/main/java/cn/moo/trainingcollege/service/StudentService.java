@@ -16,4 +16,9 @@ public interface StudentService {
 
     public void updateStudent(StudentEntity student);
 
+    public void topUp(String studentId, int money);
+
+    public void levelUp(String studentId);
+
+    public void freeze(String studentId);
 }

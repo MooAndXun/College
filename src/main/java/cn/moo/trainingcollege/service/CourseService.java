@@ -8,11 +8,12 @@ import java.util.List;
 /**
  * Created by chenmuen on 2017/2/10.
  */
-@Service
 public interface CourseService {
     public CourseEntity getCourse(int courseId);
 
     public List<CourseEntity> getCourseList(String keyword);
+
+    public List<CourseEntity> getJoinedCourseList(String studentId);
 
     public void addCourse(CourseEntity course);
 
