@@ -3,20 +3,21 @@ package cn.moo.trainingcollege.entity;
 import javax.persistence.*;
 
 /**
- * Created by chenmuen on 2017/2/12.
+ * Created by 小春 on 2017/2/19.
  */
-@Entity(name = "student")
+@Entity
+@Table(name = "student", schema = "training", catalog = "")
 public class StudentEntity {
     private String id;
-    private String password;
     private String account;
     private int balance;
     private int level;
+    private String password;
     private int point;
-    private boolean isActivated;
+    private int state;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, length = 255)
     public String getId() {
         return id;
     }
@@ -26,17 +27,7 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "password")
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Basic
-    @Column(name = "account")
+    @Column(name = "account", nullable = false, length = 255)
     public String getAccount() {
         return account;
     }
@@ -46,7 +37,7 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "balance")
+    @Column(name = "balance", nullable = false)
     public int getBalance() {
         return balance;
     }
@@ -56,7 +47,7 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "level")
+    @Column(name = "level", nullable = false)
     public int getLevel() {
         return level;
     }
@@ -66,7 +57,17 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "point")
+    @Column(name = "password", nullable = false, length = 255)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Basic
+    @Column(name = "point", nullable = false)
     public int getPoint() {
         return point;
     }
@@ -76,13 +77,13 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "is_activated")
-    public boolean isActivated() {
-        return isActivated;
+    @Column(name = "state", nullable = false)
+    public int getState() {
+        return state;
     }
 
-    public void setActivated(boolean activated) {
-        isActivated = activated;
+    public void setState(int state) {
+        this.state = state;
     }
 
     @Override
@@ -95,10 +96,10 @@ public class StudentEntity {
         if (balance != that.balance) return false;
         if (level != that.level) return false;
         if (point != that.point) return false;
-        if (isActivated != that.isActivated) return false;
+        if (state != that.state) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (account != null ? !account.equals(that.account) : that.account != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
 
         return true;
     }
@@ -106,12 +107,12 @@ public class StudentEntity {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (account != null ? account.hashCode() : 0);
         result = 31 * result + balance;
         result = 31 * result + level;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + point;
-        result = 31 * result + (isActivated ? 1 : 0);
+        result = 31 * result + state;
         return result;
     }
 }
