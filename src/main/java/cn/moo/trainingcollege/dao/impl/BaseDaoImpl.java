@@ -140,6 +140,10 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return criteria.list();
     }
 
+    public List<T> getListByLikeColumn(String column, Object value){
+        return null;
+    }
+
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public List<Object> getPropertyList(String column, boolean asc) {
