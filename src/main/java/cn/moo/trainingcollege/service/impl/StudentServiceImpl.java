@@ -42,4 +42,19 @@ public class StudentServiceImpl implements StudentService {
     public void updateStudent(StudentEntity student) {
         studentDao.update(student);
     }
+
+    @Override
+    public void topUp(String studentId, int money) {
+
+    }
+
+    @Override
+    public void levelUp(String studentId) {
+
+    }
+
+    @Override
+    public void freeze(String studentId) {
+
+    }
 }

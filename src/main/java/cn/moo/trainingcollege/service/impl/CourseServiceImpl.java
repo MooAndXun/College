@@ -25,6 +25,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<CourseEntity> getJoinedCourseList(String studentId) {
+        return null;
+    }
+
+    @Override
     public void addCourse(CourseEntity course) {
         courseDao.add(course);
     }
