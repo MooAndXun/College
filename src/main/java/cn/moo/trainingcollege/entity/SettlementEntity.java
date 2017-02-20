@@ -6,16 +6,13 @@ import java.sql.Timestamp;
 /**
  * Created by 小春 on 2017/2/20.
  */
-@Entity(name = "topup")
-public class TopupEntity {
+@Entity(name = "settlement")
+public class SettlementEntity {
     private int id;
-    private String studentId;
+    private String organizationId;
+    private int courseId;
     private int money;
-    /**
-     * 1 充值
-     * -1 积分转换
-     */
-    private int type;
+    private int commission;
     private Timestamp createdAt;
 
     @Id
@@ -29,13 +26,23 @@ public class TopupEntity {
     }
 
     @Basic
-    @Column(name = "studentId", nullable = false, length = 255)
-    public String getStudentId() {
-        return studentId;
+    @Column(name = "organization_id", nullable = false, length = 255)
+    public String getOrganizationId() {
+        return organizationId;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    @Basic
+    @Column(name = "course_id", nullable = false)
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
     @Basic
@@ -49,13 +56,13 @@ public class TopupEntity {
     }
 
     @Basic
-    @Column(name = "type", nullable = false)
-    public int getType() {
-        return type;
+    @Column(name = "commission", nullable = false)
+    public int getCommission() {
+        return commission;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setCommission(int commission) {
+        this.commission = commission;
     }
 
     @Basic
@@ -73,12 +80,14 @@ public class TopupEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TopupEntity that = (TopupEntity) o;
+        SettlementEntity that = (SettlementEntity) o;
 
         if (id != that.id) return false;
+        if (courseId != that.courseId) return false;
         if (money != that.money) return false;
-        if (type != that.type) return false;
-        if (studentId != null ? !studentId.equals(that.studentId) : that.studentId != null) return false;
+        if (commission != that.commission) return false;
+        if (organizationId != null ? !organizationId.equals(that.organizationId) : that.organizationId != null)
+            return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
 
         return true;
@@ -87,9 +96,10 @@ public class TopupEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (studentId != null ? studentId.hashCode() : 0);
+        result = 31 * result + (organizationId != null ? organizationId.hashCode() : 0);
+        result = 31 * result + courseId;
         result = 31 * result + money;
-        result = 31 * result + type;
+        result = 31 * result + commission;
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
     }

@@ -15,6 +15,5 @@ public interface OrganService {
     public void updateOrgan(OrganizationEntity organization);
 
     public OrganizationEntity getOrgan(String organId);
-
-    public void pay(String studentId, int courseId);
+    
 }

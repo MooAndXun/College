@@ -3,10 +3,9 @@ package cn.moo.trainingcollege.entity;
 import javax.persistence.*;
 
 /**
- * Created by 小春 on 2017/2/19.
+ * Created by 小春 on 2017/2/20.
  */
-@Entity
-@Table(name = "student", schema = "training", catalog = "")
+@Entity(name = "student")
 public class StudentEntity {
     private String id;
     private String account;
@@ -14,7 +13,15 @@ public class StudentEntity {
     private int level;
     private String password;
     private int point;
+    /**
+     * 0 未激活
+     * 1 正常
+     * 2 暂停，余额少于50则暂停
+     * 3 停止
+     */
     private int state;
+    private String name;
+    private int exp;
 
     @Id
     @Column(name = "id", nullable = false, length = 255)
@@ -86,6 +93,26 @@ public class StudentEntity {
         this.state = state;
     }
 
+    @Basic
+    @Column(name = "name", nullable = false, length = 255)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "exp", nullable = false)
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,9 +124,11 @@ public class StudentEntity {
         if (level != that.level) return false;
         if (point != that.point) return false;
         if (state != that.state) return false;
+        if (exp != that.exp) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (account != null ? !account.equals(that.account) : that.account != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
@@ -113,6 +142,8 @@ public class StudentEntity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + point;
         result = 31 * result + state;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + exp;
         return result;
     }
 }

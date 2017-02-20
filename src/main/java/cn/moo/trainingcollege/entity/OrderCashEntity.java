@@ -6,15 +6,12 @@ import java.sql.Timestamp;
 /**
  * Created by 小春 on 2017/2/20.
  */
-@Entity(name = "order")
-public class OrderEntity {
+@Entity(name = "order_cash")
+public class OrderCashEntity {
     private int id;
-    private String studentId;
-    private String courseId;
+    private String studentName;
     private int price;
-    private boolean isDropped;//退课
-    private boolean isPaid;
-    private boolean isCancel;//取消
+    private boolean isDropped;
     private int score;
     private Timestamp createdAt;
 
@@ -29,23 +26,13 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "student_id", nullable = false, length = 255)
-    public String getStudentId() {
-        return studentId;
+    @Column(name = "student_name", nullable = false, length = 255)
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
-    @Basic
-    @Column(name = "course_id", nullable = false, length = 255)
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     @Basic
@@ -66,26 +53,6 @@ public class OrderEntity {
 
     public void setDropped(boolean dropped) {
         isDropped = dropped;
-    }
-
-    @Basic
-    @Column(name = "is_paid", nullable = false)
-    public boolean isPaid() {
-        return isPaid;
-    }
-
-    public void setPaid(boolean paid) {
-        isPaid = paid;
-    }
-
-    @Basic
-    @Column(name = "is_cancel", nullable = false)
-    public boolean isCancel() {
-        return isCancel;
-    }
-
-    public void setCancel(boolean cancel) {
-        isCancel = cancel;
     }
 
     @Basic
@@ -113,16 +80,13 @@ public class OrderEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderEntity that = (OrderEntity) o;
+        OrderCashEntity that = (OrderCashEntity) o;
 
         if (id != that.id) return false;
         if (price != that.price) return false;
         if (isDropped != that.isDropped) return false;
-        if (isPaid != that.isPaid) return false;
-        if (isCancel != that.isCancel) return false;
         if (score != that.score) return false;
-        if (studentId != null ? !studentId.equals(that.studentId) : that.studentId != null) return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
+        if (studentName != null ? !studentName.equals(that.studentName) : that.studentName != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
 
         return true;
@@ -131,12 +95,9 @@ public class OrderEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (studentId != null ? studentId.hashCode() : 0);
-        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
+        result = 31 * result + (studentName != null ? studentName.hashCode() : 0);
         result = 31 * result + price;
         result = 31 * result + (isDropped ? 1 : 0);
-        result = 31 * result + (isPaid ? 1 : 0);
-        result = 31 * result + (isCancel ? 1 : 0);
         result = 31 * result + score;
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
