@@ -3,12 +3,12 @@ package cn.moo.trainingcollege.entity;
 import javax.persistence.*;
 
 /**
- * Created by 小春 on 2017/2/20.
+ * Created by 小春 on 2017/2/21.
  */
 @Entity(name = "balance")
 public class BalanceEntity {
     private int id;
-    private int balance;
+    private double balance;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -21,12 +21,12 @@ public class BalanceEntity {
     }
 
     @Basic
-    @Column(name = "balance", nullable = false)
-    public int getBalance() {
+    @Column(name = "balance", nullable = false, precision = 0)
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
@@ -38,15 +38,18 @@ public class BalanceEntity {
         BalanceEntity that = (BalanceEntity) o;
 
         if (id != that.id) return false;
-        if (balance != that.balance) return false;
+        if (Double.compare(that.balance, balance) != 0) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + balance;
+        int result;
+        long temp;
+        result = id;
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 }

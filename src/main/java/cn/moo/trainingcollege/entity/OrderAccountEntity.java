@@ -4,17 +4,17 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by 小春 on 2017/2/20.
+ * Created by 小春 on 2017/2/21.
  */
-@Entity(name = "order")
-public class OrderEntity {
+@Entity(name = "order_account")
+public class OrderAccountEntity {
     private int id;
     private String studentId;
-    private String courseId;
-    private int price;
-    private boolean isDropped;//退课
+    private int courseId;
+    private double price;
+    private boolean isDropped;
     private boolean isPaid;
-    private boolean isCancel;//取消
+    private boolean isCancel;
     private int score;
     private Timestamp createdAt;
 
@@ -39,22 +39,22 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "course_id", nullable = false, length = 255)
-    public String getCourseId() {
+    @Column(name = "course_id", nullable = false)
+    public int getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
 
     @Basic
-    @Column(name = "price", nullable = false)
-    public int getPrice() {
+    @Column(name = "price", nullable = false, precision = 0)
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -113,16 +113,16 @@ public class OrderEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderEntity that = (OrderEntity) o;
+        OrderAccountEntity that = (OrderAccountEntity) o;
 
         if (id != that.id) return false;
-        if (price != that.price) return false;
+        if (courseId != that.courseId) return false;
+        if (Double.compare(that.price, price) != 0) return false;
         if (isDropped != that.isDropped) return false;
         if (isPaid != that.isPaid) return false;
         if (isCancel != that.isCancel) return false;
         if (score != that.score) return false;
         if (studentId != null ? !studentId.equals(that.studentId) : that.studentId != null) return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
 
         return true;
@@ -130,10 +130,13 @@ public class OrderEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result;
+        long temp;
+        result = id;
         result = 31 * result + (studentId != null ? studentId.hashCode() : 0);
-        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + price;
+        result = 31 * result + courseId;
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (isDropped ? 1 : 0);
         result = 31 * result + (isPaid ? 1 : 0);
         result = 31 * result + (isCancel ? 1 : 0);

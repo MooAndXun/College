@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by 小春 on 2017/2/20.
+ * Created by 小春 on 2017/2/21.
  */
 @Entity(name = "topup")
 public class TopupEntity {
     private int id;
     private String studentId;
-    private int money;
+    private double money;
     /**
      * 1 充值
      * -1 积分转换
@@ -39,12 +39,12 @@ public class TopupEntity {
     }
 
     @Basic
-    @Column(name = "money", nullable = false)
-    public int getMoney() {
+    @Column(name = "money", nullable = false, precision = 0)
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
@@ -76,7 +76,7 @@ public class TopupEntity {
         TopupEntity that = (TopupEntity) o;
 
         if (id != that.id) return false;
-        if (money != that.money) return false;
+        if (Double.compare(that.money, money) != 0) return false;
         if (type != that.type) return false;
         if (studentId != null ? !studentId.equals(that.studentId) : that.studentId != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
@@ -86,9 +86,12 @@ public class TopupEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result;
+        long temp;
+        result = id;
         result = 31 * result + (studentId != null ? studentId.hashCode() : 0);
-        result = 31 * result + money;
+        temp = Double.doubleToLongBits(money);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + type;
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;

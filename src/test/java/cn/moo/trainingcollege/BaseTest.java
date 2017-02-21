@@ -1,5 +1,7 @@
 package cn.moo.trainingcollege;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,6 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class BaseTest {
+    @Before
+    public void beforeTest(){
+        System.out.println("=======================");
+    }
+
     @Test
     public void baseTest() {}
+
+    @After
+    public void afterTest(){
+        System.out.println("=======================");
+    }
 }

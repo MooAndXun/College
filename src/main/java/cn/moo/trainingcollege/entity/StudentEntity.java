@@ -3,7 +3,7 @@ package cn.moo.trainingcollege.entity;
 import javax.persistence.*;
 
 /**
- * Created by 小春 on 2017/2/20.
+ * Created by 小春 on 2017/2/21.
  */
 @Entity(name = "student")
 public class StudentEntity {

@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by 小春 on 2017/2/20.
+ * Created by 小春 on 2017/2/21.
  */
 @Entity(name = "course")
 public class CourseEntity {
     private int id;
     private Timestamp endTime;
-    private int price;
+    private double price;
     private Timestamp startTime;
     /**
      * 0 未审批
@@ -20,6 +20,7 @@ public class CourseEntity {
     private int state;
     private String teacher;
     private String title;
+    private String organId;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -42,12 +43,12 @@ public class CourseEntity {
     }
 
     @Basic
-    @Column(name = "price", nullable = false)
-    public int getPrice() {
+    @Column(name = "price", nullable = false, precision = 0)
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -91,6 +92,16 @@ public class CourseEntity {
         this.title = title;
     }
 
+    @Basic
+    @Column(name = "organ_id", nullable = false, length = 255)
+    public String getOrganId() {
+        return organId;
+    }
+
+    public void setOrganId(String organId) {
+        this.organId = organId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,25 +110,30 @@ public class CourseEntity {
         CourseEntity that = (CourseEntity) o;
 
         if (id != that.id) return false;
-        if (price != that.price) return false;
+        if (Double.compare(that.price, price) != 0) return false;
         if (state != that.state) return false;
         if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
         if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
         if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (organId != null ? !organId.equals(that.organId) : that.organId != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result;
+        long temp;
+        result = id;
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + price;
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + state;
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (organId != null ? organId.hashCode() : 0);
         return result;
     }
 }

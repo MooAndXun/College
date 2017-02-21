@@ -30,7 +30,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getJoinedCourseList(String studentId) {
-        return null;
+        String sql = "SELECT * FROM `course` WHERE id IN (SELECT course_id FROM `order_account` WHERE student_id = '"+studentId+"')";
+        return (List<CourseEntity>) courseDao.doSqlQuery(sql);
+
     }
 
     @Override
