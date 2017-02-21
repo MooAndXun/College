@@ -4,12 +4,16 @@ import cn.moo.trainingcollege.dao.CourseDao;
 import cn.moo.trainingcollege.entity.CourseEntity;
 import cn.moo.trainingcollege.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * Created by chenmuen on 2017/2/12.
  */
+@Service
+@Transactional
 public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseDao courseDao;
