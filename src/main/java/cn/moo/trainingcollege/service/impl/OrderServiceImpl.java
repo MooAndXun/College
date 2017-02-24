@@ -94,15 +94,15 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void score(String studentId, int courseId, int score) {
-        OrderAccountEntity order = orderDao.getByStudentandCourse(studentId,courseId);
+    public void score(int orderId, int score) {
+        OrderAccountEntity order = orderDao.getByColumn("id",orderId);
         order.setScore(score);
         orderDao.update(order);
     }
 
     @Override
-    public void scoreCash(String studentName, int courseId, int score) {
-        OrderCashEntity order = orderCashDao.getByStudentAndCourse(studentName,courseId);
+    public void scoreCash(int orderId, int score) {
+        OrderCashEntity order = orderCashDao.getByColumn("id",orderId);
         order.setScore(score);
         orderCashDao.update(order);
     }

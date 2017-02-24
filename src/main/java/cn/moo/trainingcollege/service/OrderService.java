@@ -23,7 +23,7 @@ public interface OrderService {
 
     public void pay(int orderId);
 
-    public void score(String studentId, int courseId, int score);
+    public void score(int orderId, int score);
 
-    public void scoreCash(String studentName, int courseId, int score);
+    public void scoreCash(int orderId, int score);
 }
