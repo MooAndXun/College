@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by 小春 on 2017/2/21.
+ * Created by chenmuen on 2017/2/24.
  */
 @Entity(name = "order_account")
 public class OrderAccountEntity {
@@ -12,14 +12,14 @@ public class OrderAccountEntity {
     private String studentId;
     private int courseId;
     private double price;
-    private boolean isDropped;
+    private int quitState;
     private boolean isPaid;
     private boolean isCancel;
     private int score;
     private Timestamp createdAt;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -29,7 +29,7 @@ public class OrderAccountEntity {
     }
 
     @Basic
-    @Column(name = "student_id", nullable = false, length = 255)
+    @Column(name = "student_id")
     public String getStudentId() {
         return studentId;
     }
@@ -39,7 +39,7 @@ public class OrderAccountEntity {
     }
 
     @Basic
-    @Column(name = "course_id", nullable = false)
+    @Column(name = "course_id")
     public int getCourseId() {
         return courseId;
     }
@@ -49,7 +49,7 @@ public class OrderAccountEntity {
     }
 
     @Basic
-    @Column(name = "price", nullable = false, precision = 0)
+    @Column(name = "price")
     public double getPrice() {
         return price;
     }
@@ -59,17 +59,17 @@ public class OrderAccountEntity {
     }
 
     @Basic
-    @Column(name = "is_dropped", nullable = false)
-    public boolean isDropped() {
-        return isDropped;
+    @Column(name = "quit_state")
+    public int getQuitState() {
+        return quitState;
     }
 
-    public void setDropped(boolean dropped) {
-        isDropped = dropped;
+    public void setQuitState(int quitState) {
+        this.quitState = quitState;
     }
 
     @Basic
-    @Column(name = "is_paid", nullable = false)
+    @Column(name = "is_paid")
     public boolean isPaid() {
         return isPaid;
     }
@@ -79,7 +79,7 @@ public class OrderAccountEntity {
     }
 
     @Basic
-    @Column(name = "is_cancel", nullable = false)
+    @Column(name = "is_cancel")
     public boolean isCancel() {
         return isCancel;
     }
@@ -89,7 +89,7 @@ public class OrderAccountEntity {
     }
 
     @Basic
-    @Column(name = "score", nullable = false)
+    @Column(name = "score")
     public int getScore() {
         return score;
     }
@@ -99,7 +99,7 @@ public class OrderAccountEntity {
     }
 
     @Basic
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -118,7 +118,7 @@ public class OrderAccountEntity {
         if (id != that.id) return false;
         if (courseId != that.courseId) return false;
         if (Double.compare(that.price, price) != 0) return false;
-        if (isDropped != that.isDropped) return false;
+        if (quitState != that.quitState) return false;
         if (isPaid != that.isPaid) return false;
         if (isCancel != that.isCancel) return false;
         if (score != that.score) return false;
@@ -137,7 +137,7 @@ public class OrderAccountEntity {
         result = 31 * result + courseId;
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (isDropped ? 1 : 0);
+        result = 31 * result + quitState;
         result = 31 * result + (isPaid ? 1 : 0);
         result = 31 * result + (isCancel ? 1 : 0);
         result = 31 * result + score;
