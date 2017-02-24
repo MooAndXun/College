@@ -1,6 +1,10 @@
 package cn.moo.trainingcollege.service;
 
+import cn.moo.trainingcollege.entity.OrderAccountEntity;
+import org.hibernate.internal.CriteriaImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by chenmuen on 2017/2/11.
@@ -26,4 +30,6 @@ public interface OrderService {
     public void score(String studentId, int courseId, int score);
 
     public void scoreCash(String studentName, int courseId, int score);
+
+    public List<OrderAccountEntity> getStudentOrder(String studentId);
 }
