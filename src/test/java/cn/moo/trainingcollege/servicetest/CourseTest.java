@@ -20,4 +20,10 @@ public class CourseTest extends BaseTest {
         List<CourseEntity> list = courseService.getJoinedCourseList("S000002");
         System.out.println(list.size());
     }
+
+    @Test
+    public void getListTest(){
+        System.out.println(courseService.getJoinedStudent(1).size());
+        System.out.println(courseService.getOrganCourseList("O000001").size());
+    }
 }

@@ -1,6 +1,7 @@
 package cn.moo.trainingcollege.service.impl;
 
 import cn.moo.trainingcollege.dao.CourseDao;
+import cn.moo.trainingcollege.dao.StudentDao;
 import cn.moo.trainingcollege.entity.CourseEntity;
 import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.CourseService;
@@ -18,6 +19,8 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseDao courseDao;
+    @Autowired
+    StudentDao studentDao;
 
     @Override
     public CourseEntity getCourse(int courseId) {
@@ -48,13 +51,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getOrganCourseList(String organId) {
-        //TODO
-        return null;
+        String sql = "SELECT * FROM `course` WHERE organ_id = '"+organId+"'";
+        return (List<CourseEntity>) courseDao.doSqlQuery(sql);
     }
 
     @Override
     public List<StudentEntity> getJoinedStudent(int courseId) {
-        //TODO
-        return null;
+        String sql = "SELECT * FROM `student` WHERE id IN (SELECT student_id from order_account WHERE course_id = "+courseId+")";
+        return (List<StudentEntity>) studentDao.doSqlQuery(sql);
     }
 }
