@@ -4,20 +4,20 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by 小春 on 2017/2/21.
+ * Created by chenmuen on 2017/2/24.
  */
 @Entity(name = "order_cash")
 public class OrderCashEntity {
     private int id;
+    private int courseId;
     private String studentName;
     private double price;
-    private boolean isDropped;
+    private boolean quitState;
     private int score;
     private Timestamp createdAt;
-    private int courseId;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -27,7 +27,17 @@ public class OrderCashEntity {
     }
 
     @Basic
-    @Column(name = "student_name", nullable = false, length = 255)
+    @Column(name = "course_id")
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
+
+    @Basic
+    @Column(name = "student_name")
     public String getStudentName() {
         return studentName;
     }
@@ -37,7 +47,7 @@ public class OrderCashEntity {
     }
 
     @Basic
-    @Column(name = "price", nullable = false, precision = 0)
+    @Column(name = "price")
     public double getPrice() {
         return price;
     }
@@ -47,17 +57,17 @@ public class OrderCashEntity {
     }
 
     @Basic
-    @Column(name = "is_dropped", nullable = false)
-    public boolean isDropped() {
-        return isDropped;
+    @Column(name = "quit_state")
+    public boolean isQuitState() {
+        return quitState;
     }
 
-    public void setDropped(boolean dropped) {
-        isDropped = dropped;
+    public void setQuitState(boolean quitState) {
+        this.quitState = quitState;
     }
 
     @Basic
-    @Column(name = "score", nullable = false)
+    @Column(name = "score")
     public int getScore() {
         return score;
     }
@@ -67,23 +77,13 @@ public class OrderCashEntity {
     }
 
     @Basic
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     public Timestamp getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
-    }
-
-    @Basic
-    @Column(name = "course_id", nullable = false)
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
     }
 
     @Override
@@ -94,10 +94,10 @@ public class OrderCashEntity {
         OrderCashEntity that = (OrderCashEntity) o;
 
         if (id != that.id) return false;
-        if (Double.compare(that.price, price) != 0) return false;
-        if (isDropped != that.isDropped) return false;
-        if (score != that.score) return false;
         if (courseId != that.courseId) return false;
+        if (Double.compare(that.price, price) != 0) return false;
+        if (quitState != that.quitState) return false;
+        if (score != that.score) return false;
         if (studentName != null ? !studentName.equals(that.studentName) : that.studentName != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
 
@@ -109,13 +109,13 @@ public class OrderCashEntity {
         int result;
         long temp;
         result = id;
+        result = 31 * result + courseId;
         result = 31 * result + (studentName != null ? studentName.hashCode() : 0);
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (isDropped ? 1 : 0);
+        result = 31 * result + (quitState ? 1 : 0);
         result = 31 * result + score;
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        result = 31 * result + courseId;
         return result;
     }
 }
