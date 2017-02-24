@@ -26,4 +26,14 @@ public class OrderTest extends BaseTest {
     public void scoreTest(){
         orderService.score(2,100);
     }
+
+    @Test
+    public void quitTest(){
+        orderService.quitCourse(2);
+    }
+
+    @Test
+    public void getListTest(){
+        System.out.println(orderService.getStudentOrder("S000002").size());
+    }
 }

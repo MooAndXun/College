@@ -1,20 +1,33 @@
 package cn.moo.trainingcollege.service.impl;
 
+import cn.moo.trainingcollege.dao.BalanceDao;
 import cn.moo.trainingcollege.dao.CourseDao;
 import cn.moo.trainingcollege.dao.ManagerDao;
+import cn.moo.trainingcollege.dao.OrderDao;
+import cn.moo.trainingcollege.entity.BalanceEntity;
 import cn.moo.trainingcollege.entity.CourseEntity;
 import cn.moo.trainingcollege.entity.ManagerEntity;
+import cn.moo.trainingcollege.entity.OrderAccountEntity;
 import cn.moo.trainingcollege.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by 小春 on 2017/2/21.
  */
+
+@Service
+@Transactional
 public class ManagerServiceImpl implements ManagerService {
     @Autowired
     ManagerDao managerDao;
     @Autowired
     CourseDao courseDao;
+    @Autowired
+    OrderDao orderDao;
+    @Autowired
+    BalanceDao balanceDao;
 
     @Override
     public boolean checkLogin(String id,String password) {
@@ -44,9 +57,28 @@ public class ManagerServiceImpl implements ManagerService {
         courseDao.update(courseEntity);
     }
 
+    /**
+     * quitState:
+     * 0 默认
+     * -1 申请退课
+     * 1 批准退课
+     * 2 拒接退课
+     * @param orderId
+     * @param isApprove
+     */
     @Override
     public void approveQuit(int orderId, boolean isApprove) {
-        //TODO
+        OrderAccountEntity order = orderDao.getByColumn("id",orderId);
+        if(isApprove){
+            order.setQuitState(1);
+            double settlement = order.getPrice()*0.5;
+            BalanceEntity balanceEntity = balanceDao.getByColumn("id",1);
+            balanceEntity.setBalance(balanceEntity.getBalance() - settlement);
+            balanceDao.update(balanceEntity);
+        }else{
+            order.setQuitState(2);
+        }
+        orderDao.update(order);
     }
 
 }

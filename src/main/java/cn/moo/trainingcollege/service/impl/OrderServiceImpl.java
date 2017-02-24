@@ -34,19 +34,15 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void quitCourse(int orderId) {
         OrderAccountEntity order = orderDao.getByColumn("id",orderId);
-        double settlement = order.getPrice()*0.5;
-        order.setDropped(true);
-        BalanceEntity balanceEntity = balanceDao.getByColumn("id",1);
-        balanceEntity.setBalance(balanceEntity.getBalance() - settlement);
+        order.setQuitState(-1);
         orderDao.update(order);
-        balanceDao.update(balanceEntity);
 
     }
 
     @Override
     public void quitCourseCash(int orderId) {
         OrderCashEntity orderCashEntity = orderCashDao.getByColumn("id",orderId);
-        orderCashEntity.setDropped(true);
+        orderCashEntity.setQuitState(true);
         orderCashDao.update(orderCashEntity);
     }
 
@@ -111,8 +107,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<OrderAccountEntity> getStudentOrder(String studentId) {
-        //TODO
-        return null;
+        return (List<OrderAccountEntity>)orderDao.getListByColumn("studentId",studentId);
     }
 
     private double getPrice(int level, double price){

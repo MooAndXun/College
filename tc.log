@@ -8341,3 +8341,279 @@ org.springframework.transaction.UnexpectedRollbackException: Transaction rolled 
 [INFO][2017-02-21 20:50:18,463][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Committed transaction after test execution for test context [DefaultTestContext@4e7095ac testClass = OrderTest, testInstance = cn.moo.trainingcollege.servicetest.OrderTest@251ebf23, testMethod = scoreTest@OrderTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@29b732a2 testClass = OrderTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]
 [INFO][2017-02-21 20:50:18,467][org.springframework.context.support.GenericApplicationContext]Closing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Tue Feb 21 20:50:12 CST 2017]; root of context hierarchy
 [INFO][2017-02-21 20:50:18,480][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} closed
+[INFO][2017-02-24 19:47:29,676][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring.xml]
+[INFO][2017-02-24 19:47:30,488][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring-hibernate.xml]
+[INFO][2017-02-24 19:47:30,660][org.springframework.context.support.GenericApplicationContext]Refreshing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Fri Feb 24 19:47:30 CST 2017]; root of context hierarchy
+[INFO][2017-02-24 19:47:31,102][org.springframework.beans.factory.config.PropertyPlaceholderConfigurer]Loading properties file from class path resource [config.properties]
+[ERROR][2017-02-24 19:47:31,508][com.alibaba.druid.pool.DruidAbstractDataSource]maxIdle is deprecated
+[INFO][2017-02-24 19:47:31,674][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} inited
+[INFO][2017-02-24 19:47:31,905][org.hibernate.annotations.common.Version]HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+[INFO][2017-02-24 19:47:31,915][org.hibernate.Version]HHH000412: Hibernate Core {4.3.5.Final}
+[INFO][2017-02-24 19:47:31,918][org.hibernate.cfg.Environment]HHH000206: hibernate.properties not found
+[INFO][2017-02-24 19:47:31,921][org.hibernate.cfg.Environment]HHH000021: Bytecode provider name : javassist
+[INFO][2017-02-24 19:47:34,126][org.hibernate.dialect.Dialect]HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+[INFO][2017-02-24 19:47:34,431][org.hibernate.engine.transaction.internal.TransactionFactoryInitiator]HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO][2017-02-24 19:47:34,439][org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory]HHH000397: Using ASTQueryTranslatorFactory
+[INFO][2017-02-24 19:47:35,228][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000228: Running hbm2ddl schema update
+[INFO][2017-02-24 19:47:35,229][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000102: Fetching database metadata
+[INFO][2017-02-24 19:47:35,236][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000396: Updating schema
+[INFO][2017-02-24 19:47:39,345][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.balance
+[INFO][2017-02-24 19:47:39,345][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [balance, id]
+[INFO][2017-02-24 19:47:39,345][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:39,346][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:41,619][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.course
+[INFO][2017-02-24 19:47:41,619][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [start_time, teacher, price, end_time, id, state, title, organ_id]
+[INFO][2017-02-24 19:47:41,619][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:41,619][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:42,680][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.manager
+[INFO][2017-02-24 19:47:42,680][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, name, id]
+[INFO][2017-02-24 19:47:42,680][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:42,680][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:42,906][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.order_account
+[INFO][2017-02-24 19:47:42,907][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, score, price, quit_state, student_id, created_at, id, is_paid, is_cancel]
+[INFO][2017-02-24 19:47:42,907][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:42,907][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:45,834][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.order_cash
+[INFO][2017-02-24 19:47:45,834][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, student_name, score, price, quit_state, created_at, id]
+[INFO][2017-02-24 19:47:45,835][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:45,835][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:48,623][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.organization
+[INFO][2017-02-24 19:47:48,623][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, balance, name, id]
+[INFO][2017-02-24 19:47:48,624][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:48,624][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:49,085][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.settlement
+[INFO][2017-02-24 19:47:49,085][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, money, organization_id, created_at, commission, id]
+[INFO][2017-02-24 19:47:49,085][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:49,086][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:49,438][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.student
+[INFO][2017-02-24 19:47:49,438][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, balance, level, name, id, state, exp, account, point]
+[INFO][2017-02-24 19:47:49,439][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:49,439][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:49,671][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.topup
+[INFO][2017-02-24 19:47:49,672][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [studentid, money, created_at, id, type]
+[INFO][2017-02-24 19:47:49,672][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:47:49,672][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:47:49,674][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000232: Schema update complete
+[INFO][2017-02-24 19:47:49,856][org.springframework.orm.hibernate4.HibernateTransactionManager]Using DataSource [{
+	CreateTime:"2017-02-24 19:47:31",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:2,
+	ConnectCount:2,
+	Connections:[
+		{ID:1215029765, ConnectTime:"2017-02-24 19:47:34", UseCount:2, LastActiveTime:"2017-02-24 19:47:49"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO][2017-02-24 19:47:52,012][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Began transaction (1) for test context [DefaultTestContext@51671b08 testClass = OrderTest, testInstance = cn.moo.trainingcollege.servicetest.OrderTest@15051a0, testMethod = quitTest@OrderTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1162410a testClass = OrderTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.hibernate4.HibernateTransactionManager@b09fac1]; rollback [false]
+[INFO][2017-02-24 19:47:53,280][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Committed transaction after test execution for test context [DefaultTestContext@51671b08 testClass = OrderTest, testInstance = cn.moo.trainingcollege.servicetest.OrderTest@15051a0, testMethod = quitTest@OrderTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1162410a testClass = OrderTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]
+[INFO][2017-02-24 19:47:53,285][org.springframework.context.support.GenericApplicationContext]Closing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Fri Feb 24 19:47:30 CST 2017]; root of context hierarchy
+[INFO][2017-02-24 19:47:53,301][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} closed
+[INFO][2017-02-24 19:51:25,180][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring.xml]
+[INFO][2017-02-24 19:51:25,570][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring-hibernate.xml]
+[INFO][2017-02-24 19:51:25,758][org.springframework.context.support.GenericApplicationContext]Refreshing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Fri Feb 24 19:51:25 CST 2017]; root of context hierarchy
+[INFO][2017-02-24 19:51:26,341][org.springframework.beans.factory.config.PropertyPlaceholderConfigurer]Loading properties file from class path resource [config.properties]
+[ERROR][2017-02-24 19:51:26,808][com.alibaba.druid.pool.DruidAbstractDataSource]maxIdle is deprecated
+[INFO][2017-02-24 19:51:26,978][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} inited
+[INFO][2017-02-24 19:51:27,240][org.hibernate.annotations.common.Version]HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+[INFO][2017-02-24 19:51:27,262][org.hibernate.Version]HHH000412: Hibernate Core {4.3.5.Final}
+[INFO][2017-02-24 19:51:27,265][org.hibernate.cfg.Environment]HHH000206: hibernate.properties not found
+[INFO][2017-02-24 19:51:27,269][org.hibernate.cfg.Environment]HHH000021: Bytecode provider name : javassist
+[INFO][2017-02-24 19:51:28,103][org.hibernate.dialect.Dialect]HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+[INFO][2017-02-24 19:51:28,385][org.hibernate.engine.transaction.internal.TransactionFactoryInitiator]HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO][2017-02-24 19:51:28,391][org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory]HHH000397: Using ASTQueryTranslatorFactory
+[INFO][2017-02-24 19:51:28,980][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000228: Running hbm2ddl schema update
+[INFO][2017-02-24 19:51:28,981][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000102: Fetching database metadata
+[INFO][2017-02-24 19:51:28,985][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000396: Updating schema
+[INFO][2017-02-24 19:51:29,086][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.balance
+[INFO][2017-02-24 19:51:29,086][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [balance, id]
+[INFO][2017-02-24 19:51:29,086][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,087][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,159][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.course
+[INFO][2017-02-24 19:51:29,159][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [start_time, teacher, price, end_time, id, state, title, organ_id]
+[INFO][2017-02-24 19:51:29,159][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,160][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,229][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.manager
+[INFO][2017-02-24 19:51:29,230][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, name, id]
+[INFO][2017-02-24 19:51:29,230][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,230][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,304][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.order_account
+[INFO][2017-02-24 19:51:29,304][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, score, price, quit_state, student_id, created_at, id, is_paid, is_cancel]
+[INFO][2017-02-24 19:51:29,304][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,305][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,371][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.order_cash
+[INFO][2017-02-24 19:51:29,371][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, student_name, score, price, quit_state, created_at, id]
+[INFO][2017-02-24 19:51:29,371][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,371][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,460][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.organization
+[INFO][2017-02-24 19:51:29,465][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, balance, name, id]
+[INFO][2017-02-24 19:51:29,465][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,466][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,533][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.settlement
+[INFO][2017-02-24 19:51:29,534][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, money, organization_id, created_at, commission, id]
+[INFO][2017-02-24 19:51:29,534][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,534][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,601][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.student
+[INFO][2017-02-24 19:51:29,601][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, balance, level, name, id, state, exp, account, point]
+[INFO][2017-02-24 19:51:29,601][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,601][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,665][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.topup
+[INFO][2017-02-24 19:51:29,665][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [studentid, money, created_at, id, type]
+[INFO][2017-02-24 19:51:29,665][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 19:51:29,665][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 19:51:29,667][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000232: Schema update complete
+[INFO][2017-02-24 19:51:29,981][org.springframework.orm.hibernate4.HibernateTransactionManager]Using DataSource [{
+	CreateTime:"2017-02-24 19:51:26",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:2,
+	ConnectCount:2,
+	Connections:[
+		{ID:1215029765, ConnectTime:"2017-02-24 19:51:28", UseCount:2, LastActiveTime:"2017-02-24 19:51:29"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO][2017-02-24 19:51:30,254][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Began transaction (1) for test context [DefaultTestContext@51671b08 testClass = ManagerTest, testInstance = cn.moo.trainingcollege.servicetest.ManagerTest@15051a0, testMethod = quitTest@ManagerTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1162410a testClass = ManagerTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.hibernate4.HibernateTransactionManager@b09fac1]; rollback [false]
+[INFO][2017-02-24 19:51:30,650][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Committed transaction after test execution for test context [DefaultTestContext@51671b08 testClass = ManagerTest, testInstance = cn.moo.trainingcollege.servicetest.ManagerTest@15051a0, testMethod = quitTest@ManagerTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1162410a testClass = ManagerTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]
+[INFO][2017-02-24 19:51:30,653][org.springframework.context.support.GenericApplicationContext]Closing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Fri Feb 24 19:51:25 CST 2017]; root of context hierarchy
+[INFO][2017-02-24 19:51:30,666][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} closed
+[INFO][2017-02-24 20:08:51,040][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring.xml]
+[INFO][2017-02-24 20:08:51,468][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring-hibernate.xml]
+[INFO][2017-02-24 20:08:51,630][org.springframework.context.support.GenericApplicationContext]Refreshing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Fri Feb 24 20:08:51 CST 2017]; root of context hierarchy
+[INFO][2017-02-24 20:08:52,021][org.springframework.beans.factory.config.PropertyPlaceholderConfigurer]Loading properties file from class path resource [config.properties]
+[ERROR][2017-02-24 20:08:52,511][com.alibaba.druid.pool.DruidAbstractDataSource]maxIdle is deprecated
+[INFO][2017-02-24 20:08:52,715][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} inited
+[INFO][2017-02-24 20:08:53,011][org.hibernate.annotations.common.Version]HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+[INFO][2017-02-24 20:08:53,020][org.hibernate.Version]HHH000412: Hibernate Core {4.3.5.Final}
+[INFO][2017-02-24 20:08:53,024][org.hibernate.cfg.Environment]HHH000206: hibernate.properties not found
+[INFO][2017-02-24 20:08:53,027][org.hibernate.cfg.Environment]HHH000021: Bytecode provider name : javassist
+[INFO][2017-02-24 20:08:53,946][org.hibernate.dialect.Dialect]HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+[INFO][2017-02-24 20:08:54,202][org.hibernate.engine.transaction.internal.TransactionFactoryInitiator]HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO][2017-02-24 20:08:54,208][org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory]HHH000397: Using ASTQueryTranslatorFactory
+[INFO][2017-02-24 20:08:54,738][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000228: Running hbm2ddl schema update
+[INFO][2017-02-24 20:08:54,738][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000102: Fetching database metadata
+[INFO][2017-02-24 20:08:54,744][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000396: Updating schema
+[INFO][2017-02-24 20:08:54,848][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.balance
+[INFO][2017-02-24 20:08:54,848][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [balance, id]
+[INFO][2017-02-24 20:08:54,849][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:54,849][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:54,915][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.course
+[INFO][2017-02-24 20:08:54,915][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [start_time, teacher, price, end_time, id, state, title, organ_id]
+[INFO][2017-02-24 20:08:54,915][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:54,916][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:55,020][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.manager
+[INFO][2017-02-24 20:08:55,020][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, name, id]
+[INFO][2017-02-24 20:08:55,020][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:55,021][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:55,109][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.order_account
+[INFO][2017-02-24 20:08:55,109][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, score, price, quit_state, student_id, created_at, id, is_paid, is_cancel]
+[INFO][2017-02-24 20:08:55,109][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:55,109][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:55,242][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.order_cash
+[INFO][2017-02-24 20:08:55,242][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, student_name, score, price, quit_state, created_at, id]
+[INFO][2017-02-24 20:08:55,242][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:55,242][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:55,360][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.organization
+[INFO][2017-02-24 20:08:55,361][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, balance, name, id]
+[INFO][2017-02-24 20:08:55,361][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:55,361][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:55,435][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.settlement
+[INFO][2017-02-24 20:08:55,435][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, money, organization_id, created_at, commission, id]
+[INFO][2017-02-24 20:08:55,436][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:55,436][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:55,505][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.student
+[INFO][2017-02-24 20:08:55,505][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, balance, level, name, id, state, exp, account, point]
+[INFO][2017-02-24 20:08:55,505][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:55,505][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:55,572][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.topup
+[INFO][2017-02-24 20:08:55,572][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [studentid, money, created_at, id, type]
+[INFO][2017-02-24 20:08:55,572][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:08:55,573][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:08:55,574][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000232: Schema update complete
+[INFO][2017-02-24 20:08:55,772][org.springframework.orm.hibernate4.HibernateTransactionManager]Using DataSource [{
+	CreateTime:"2017-02-24 20:08:52",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:2,
+	ConnectCount:2,
+	Connections:[
+		{ID:1215029765, ConnectTime:"2017-02-24 20:08:53", UseCount:2, LastActiveTime:"2017-02-24 20:08:55"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO][2017-02-24 20:08:55,985][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Began transaction (1) for test context [DefaultTestContext@51671b08 testClass = OrderTest, testInstance = cn.moo.trainingcollege.servicetest.OrderTest@15051a0, testMethod = getListTest@OrderTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1162410a testClass = OrderTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.hibernate4.HibernateTransactionManager@b09fac1]; rollback [false]
+[INFO][2017-02-24 20:08:56,334][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Committed transaction after test execution for test context [DefaultTestContext@51671b08 testClass = OrderTest, testInstance = cn.moo.trainingcollege.servicetest.OrderTest@15051a0, testMethod = getListTest@OrderTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1162410a testClass = OrderTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]
+[INFO][2017-02-24 20:08:56,337][org.springframework.context.support.GenericApplicationContext]Closing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Fri Feb 24 20:08:51 CST 2017]; root of context hierarchy
+[INFO][2017-02-24 20:08:56,351][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} closed
+[INFO][2017-02-24 20:10:13,615][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring.xml]
+[INFO][2017-02-24 20:10:14,017][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring-hibernate.xml]
+[INFO][2017-02-24 20:10:14,187][org.springframework.context.support.GenericApplicationContext]Refreshing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Fri Feb 24 20:10:14 CST 2017]; root of context hierarchy
+[INFO][2017-02-24 20:10:14,642][org.springframework.beans.factory.config.PropertyPlaceholderConfigurer]Loading properties file from class path resource [config.properties]
+[ERROR][2017-02-24 20:10:15,037][com.alibaba.druid.pool.DruidAbstractDataSource]maxIdle is deprecated
+[INFO][2017-02-24 20:10:15,270][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} inited
+[INFO][2017-02-24 20:10:15,642][org.hibernate.annotations.common.Version]HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+[INFO][2017-02-24 20:10:15,654][org.hibernate.Version]HHH000412: Hibernate Core {4.3.5.Final}
+[INFO][2017-02-24 20:10:15,657][org.hibernate.cfg.Environment]HHH000206: hibernate.properties not found
+[INFO][2017-02-24 20:10:15,660][org.hibernate.cfg.Environment]HHH000021: Bytecode provider name : javassist
+[INFO][2017-02-24 20:10:16,449][org.hibernate.dialect.Dialect]HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+[INFO][2017-02-24 20:10:16,765][org.hibernate.engine.transaction.internal.TransactionFactoryInitiator]HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO][2017-02-24 20:10:16,770][org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory]HHH000397: Using ASTQueryTranslatorFactory
+[INFO][2017-02-24 20:10:17,262][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000228: Running hbm2ddl schema update
+[INFO][2017-02-24 20:10:17,262][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000102: Fetching database metadata
+[INFO][2017-02-24 20:10:17,269][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000396: Updating schema
+[INFO][2017-02-24 20:10:17,357][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.balance
+[INFO][2017-02-24 20:10:17,358][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [balance, id]
+[INFO][2017-02-24 20:10:17,358][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,358][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:17,441][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.course
+[INFO][2017-02-24 20:10:17,441][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [start_time, teacher, price, end_time, id, state, title, organ_id]
+[INFO][2017-02-24 20:10:17,441][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,441][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:17,517][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.manager
+[INFO][2017-02-24 20:10:17,518][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, name, id]
+[INFO][2017-02-24 20:10:17,518][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,518][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:17,598][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.order_account
+[INFO][2017-02-24 20:10:17,599][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, score, price, quit_state, student_id, created_at, id, is_paid, is_cancel]
+[INFO][2017-02-24 20:10:17,599][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,599][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:17,677][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.order_cash
+[INFO][2017-02-24 20:10:17,678][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, student_name, score, price, quit_state, created_at, id]
+[INFO][2017-02-24 20:10:17,678][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,678][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:17,765][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.organization
+[INFO][2017-02-24 20:10:17,765][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, balance, name, id]
+[INFO][2017-02-24 20:10:17,766][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,766][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:17,851][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.settlement
+[INFO][2017-02-24 20:10:17,852][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [course_id, money, organization_id, created_at, commission, id]
+[INFO][2017-02-24 20:10:17,852][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,852][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:17,923][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.student
+[INFO][2017-02-24 20:10:17,924][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [password, balance, level, name, id, state, exp, account, point]
+[INFO][2017-02-24 20:10:17,924][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,924][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:17,997][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000261: Table found: training.topup
+[INFO][2017-02-24 20:10:17,997][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000037: Columns: [studentid, money, created_at, id, type]
+[INFO][2017-02-24 20:10:17,997][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000108: Foreign keys: []
+[INFO][2017-02-24 20:10:17,998][org.hibernate.tool.hbm2ddl.TableMetadata]HHH000126: Indexes: [primary]
+[INFO][2017-02-24 20:10:18,000][org.hibernate.tool.hbm2ddl.SchemaUpdate]HHH000232: Schema update complete
+[INFO][2017-02-24 20:10:18,202][org.springframework.orm.hibernate4.HibernateTransactionManager]Using DataSource [{
+	CreateTime:"2017-02-24 20:10:14",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:2,
+	ConnectCount:2,
+	Connections:[
+		{ID:1215029765, ConnectTime:"2017-02-24 20:10:16", UseCount:2, LastActiveTime:"2017-02-24 20:10:18"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO][2017-02-24 20:10:18,420][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Began transaction (1) for test context [DefaultTestContext@51671b08 testClass = OrderTest, testInstance = cn.moo.trainingcollege.servicetest.OrderTest@15051a0, testMethod = getListTest@OrderTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1162410a testClass = OrderTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.hibernate4.HibernateTransactionManager@b09fac1]; rollback [false]
+[INFO][2017-02-24 20:10:18,709][org.springframework.test.context.transaction.TransactionalTestExecutionListener]Committed transaction after test execution for test context [DefaultTestContext@51671b08 testClass = OrderTest, testInstance = cn.moo.trainingcollege.servicetest.OrderTest@15051a0, testMethod = getListTest@OrderTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1162410a testClass = OrderTest, locations = '{classpath:spring.xml, classpath:spring-hibernate.xml}', classes = '{}', contextInitializerClasses = '[]', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]
+[INFO][2017-02-24 20:10:18,714][org.springframework.context.support.GenericApplicationContext]Closing org.springframework.context.support.GenericApplicationContext@7ac7a4e4: startup date [Fri Feb 24 20:10:14 CST 2017]; root of context hierarchy
+[INFO][2017-02-24 20:10:18,731][com.alibaba.druid.pool.DruidDataSource]{dataSource-1} closed
