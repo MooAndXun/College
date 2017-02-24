@@ -1,6 +1,8 @@
 package cn.moo.trainingcollege.service;
 
 import cn.moo.trainingcollege.entity.CourseEntity;
+import cn.moo.trainingcollege.entity.OrderAccountEntity;
+import cn.moo.trainingcollege.entity.StudentEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,5 +21,7 @@ public interface CourseService {
 
     public void updateCourse(CourseEntity course);
 
-    public void approveApplication(int courseId, boolean isApproved);
+    public List<CourseEntity> getOrganCourseList(String organId);
+
+    public List<StudentEntity> getJoinedStudent(int courseId);
 }

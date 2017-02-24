@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by 小春 on 2017/2/21.
  */
@@ -105,6 +107,12 @@ public class OrderServiceImpl implements OrderService{
         OrderCashEntity order = orderCashDao.getByColumn("id",orderId);
         order.setScore(score);
         orderCashDao.update(order);
+    }
+
+    @Override
+    public List<OrderAccountEntity> getStudentOrder(String studentId) {
+        //TODO
+        return null;
     }
 
     private double getPrice(int level, double price){

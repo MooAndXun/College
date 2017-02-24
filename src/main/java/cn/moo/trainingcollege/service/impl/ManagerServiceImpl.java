@@ -44,4 +44,9 @@ public class ManagerServiceImpl implements ManagerService {
         courseDao.update(courseEntity);
     }
 
+    @Override
+    public void approveQuit(int orderId, boolean isApprove) {
+        //TODO
+    }
+
 }

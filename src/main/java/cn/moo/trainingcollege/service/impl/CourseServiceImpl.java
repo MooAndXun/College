@@ -2,6 +2,7 @@ package cn.moo.trainingcollege.service.impl;
 
 import cn.moo.trainingcollege.dao.CourseDao;
 import cn.moo.trainingcollege.entity.CourseEntity;
+import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,8 +47,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void approveApplication(int courseId, boolean isApproved) {
-        CourseEntity course = courseDao.getByColumn("id", courseId);
-        course.setState(isApproved?1:-1);
+    public List<CourseEntity> getOrganCourseList(String organId) {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public List<StudentEntity> getJoinedStudent(int courseId) {
+        //TODO
+        return null;
     }
 }
