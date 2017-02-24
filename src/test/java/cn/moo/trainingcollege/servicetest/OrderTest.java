@@ -24,6 +24,6 @@ public class OrderTest extends BaseTest {
 
     @Test
     public void scoreTest(){
-        orderService.score("S000002",1,100);
+        orderService.score(2,100);
     }
 }
