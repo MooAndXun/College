@@ -12,6 +12,23 @@
     <context:component-scan base-package="cn.moo.trainingcollege.controller" />
     <!-- 开启mvc注解 -->
     <mvc:annotation-driven />
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--拦截以localhost:8080/student/开头的URL请求，包括localhost:8080/student/dashboard和localhost:8080/student/dashboard/detail类型-->
+            <mvc:mapping path="/student/**"/>
+            <!--&lt;!&ndash;排除在拦截名单外的URL请求&ndash;&gt;
+            &lt;!&ndash;首先是注册请求，这个在任何时候都不能拦截&ndash;&gt;
+            <mvc:exclude-mapping path="/student/register"/>
+            &lt;!&ndash;然后是登录请求&ndash;&gt;
+            <mvc:exclude-mapping path="/student/login"/>
+            &lt;!&ndash;下面的是一些资源文件，比如图片、CSS文件、JS文件等&ndash;&gt;
+            <mvc:exclude-mapping path="/student/common/**"/>
+            <mvc:exclude-mapping path="/student/css/**"/>
+            <mvc:exclude-mapping path="/student/js/**"/>-->
+            <!--当有URL被拦截后，调用下面这个拦截器StudentSessionInterceptor来处理，StudentSessionInterceptor决定了是放行还是拦截-->
+        <bean class="cn.moo.trainingcollege.interceptor.SessionInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
