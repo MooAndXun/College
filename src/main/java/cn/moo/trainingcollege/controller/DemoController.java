@@ -14,9 +14,10 @@ import java.util.List;
  */
 
 @Controller
+@RequestMapping("/demo")
 public class DemoController {
 
-    @RequestMapping("/demo")
+    @RequestMapping("/page")
     public String demo(){
         return "demo";
     }
