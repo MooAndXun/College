@@ -12,3 +12,9 @@ buildNumber.properties
 # idea
 .idea
 *.iml
+
+# project
+src/main/webapp/assets
+src/main/webapp/node_modules
+src/main/webapp/semantic
+src/main/webapp/semantic.json

@@ -12,6 +12,7 @@
     <context:component-scan base-package="cn.moo.trainingcollege.controller" />
     <!-- 开启mvc注解 -->
     <mvc:annotation-driven />
+
     <mvc:interceptors>
         <mvc:interceptor>
             <!--拦截以localhost:8080/student/开头的URL请求，包括localhost:8080/student/dashboard和localhost:8080/student/dashboard/detail类型-->
@@ -30,11 +31,33 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <bean id="viewResolver"
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/"/>
-        <property name="suffix" value=".jsp"/>
+    <mvc:resources mapping="/build/**" location="/build/" />
+
+
+
+    <!--<bean id="viewResolver"-->
+        <!--class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
+
+    <bean id="templateResolver"
+          class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <property name="prefix" value="/templates/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="LEGACYHTML5" />
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="cacheable" value="false" />
     </bean>
 
-    
+    <bean id="templateEngine"
+          class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
 </beans>
