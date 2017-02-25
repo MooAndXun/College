@@ -3,37 +3,18 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Component</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="../build/semantic/semantic.min.css">
-  <link rel="stylesheet" href="../build/css/style.css">
-</head>
+<head th:replace="fragment::head"></head>
 
 <body>
-  <header>
-    <nav>
-      <div class="wrapper">
-        <a class="nav-logo" href="#">TrainingCollege</a>
-        <div class="nav-item-group">
-          <a class="nav-item" href="#">课程</a>
-          <a class="nav-item" href="#">个人</a>
-          <a class="nav-item" href="#">机构</a>
-        </div>
-        <div class="nav-button-group">
-        </div>
-      </div>
-    </nav>
-    <div class="nav-title">Day Day up</div>
-  </header>
+  <header th:replace="fragment::header"></header>
   <div class="wrapper">
     <div class="container">
-      <div class="ui vertical menu nav-left">
-        <a class="active item">全部课程</a>
-        <a class="item">我的课程</a>
-        <a class="item">已完成课程</a>
+      <div class="nav-left">
+        <div class="ui vertical menu">
+          <a class="active item">全部课程</a>
+          <a class="item">我的课程</a>
+          <a class="item">已完成课程</a>
+        </div>
       </div>
       <div class="page-content">
         <div class="segment">
@@ -279,7 +260,7 @@
     </div>
   </div>
 
-  <footer></footer>
+  <footer th:replace="fragment::footer"></footer>
 
   <!-- Scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
