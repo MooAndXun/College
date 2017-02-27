@@ -34,7 +34,7 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "account", nullable = false, length = 255)
+    @Column(name = "account", length = 255)
     public String getAccount() {
         return account;
     }
