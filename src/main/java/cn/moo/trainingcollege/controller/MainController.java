@@ -1,105 +1,104 @@
 package cn.moo.trainingcollege.controller;
 
+import cn.moo.trainingcollege.entity.ManagerEntity;
+import cn.moo.trainingcollege.entity.OrganizationEntity;
+import cn.moo.trainingcollege.entity.StudentEntity;
+import cn.moo.trainingcollege.service.ManagerService;
+import cn.moo.trainingcollege.service.OrganService;
+import cn.moo.trainingcollege.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import javax.servlet.http.HttpSession;
 
 /**
- * Created by chenmuen on 2017/2/24.
+ * Created by chenmuen on 2017/2/27.
  */
 @Controller
-@RequestMapping("/page")
 public class MainController {
+    @Autowired
+    StudentService studentService;
 
-    @RequestMapping("/components")
-    public String components(Model model) {
-        return "components";
-    }
+    @Autowired
+    OrganService organService;
 
-    @RequestMapping("/login")
-    public String login(Model model) {
+    @Autowired
+    ManagerService managerService;
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
         return "login";
     }
 
-    @RequestMapping("/register")
-    public String register(Model model) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(@RequestParam String id, @RequestParam String password, HttpSession session) {
+        char type = id.charAt(0);
+
+        switch (type) {
+            case 'S':
+                if(studentService.checkLogin(id, password)) {
+                    session.setAttribute("user", id);
+                    session.setAttribute("userType", 0);
+                    return "redirect:/course/all";
+                }
+                break;
+            case 'O':
+                if(studentService.checkLogin(id, password)) {
+                    session.setAttribute("user", id);
+                    session.setAttribute("userType", 1);
+                    return "redirect:/course/manage";
+                }
+                break;
+            case 'M':
+                if(studentService.checkLogin(id, password)) {
+                    session.setAttribute("user", id);
+                    session.setAttribute("userType", 2);
+                    return "redirect:/course/approve";
+                }
+                break;
+        }
+
+        return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String registerPage() {
         return "register";
     }
 
-    @RequestMapping("/course/all")
-    public String courseList(Model model) {
-        List<Map> list = new ArrayList<>();
-        Map<String, String> course = new HashMap<>();
-        course.put("name", "演员的自我修养");
-        course.put("startTime", "2015-10-10");
-        course.put("endTime", "2015-10-10");
-        course.put("teacher", "尹天仇");
-        course.put("price", "360");
-        list.add(course);
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String register(@RequestParam String name,
+                           @RequestParam String password,
+                           @RequestParam int type,
+                           RedirectAttributes redirectAttributes) {
+        String id = null;
 
-        model.addAttribute("courseList", list);
-        return "course-all";
+        switch (type) {
+            case 0:
+                StudentEntity studentEntity = new StudentEntity();
+                studentEntity.setName(name);
+                studentEntity.setPassword(password);
+                studentService.addStudent(studentEntity);
+                break;
+            case 1:
+                OrganizationEntity organizationEntity = new OrganizationEntity();
+                organizationEntity.setName(name);
+                organizationEntity.setPassword(password);
+                organService.addOrgan(organizationEntity);
+                break;
+            case 2:
+                ManagerEntity managerEntity = new ManagerEntity();
+                managerEntity.setName(name);
+                managerEntity.setPassword(password);
+                managerService.addManager(managerEntity);
+                break;
+        }
+
+        return "redirect:/login";
     }
 
-    @RequestMapping("/course/detail")
-    public String courseDetail(Model model) {
-        Map<String, String> course = new HashMap<>();
-        course.put("id", "1");
-        course.put("name", "演员的自我修养");
-        course.put("startTime", "2015-10-10");
-        course.put("endTime", "2015-10-11");
-        course.put("teacher", "尹天仇");
-        course.put("price", "360");
-        course.put("description", "呵呵");
-
-        model.addAttribute("course", course);
-        return "course-detail";
-    }
-
-    @RequestMapping("/user/info")
-    public String userInfo(Model model) {
-        Map<String, Object> student = new HashMap<>();
-        student.put("id", "S0000001");
-        student.put("name", "史蒂夫·罗杰斯");
-        student.put("account", "A00000001");
-        student.put("level", "2");
-        student.put("point", "2000");
-
-        model.addAttribute("student", student);
-        return "user-info";
-    }
-
-    @RequestMapping("/course/manage/detail")
-    public String courseManageDetail(Model model) {
-        Map<String, String> course = new HashMap<>();
-        course.put("id", "1");
-        course.put("name", "演员的自我修养");
-        course.put("startTime", "2015-10-10");
-        course.put("endTime", "2015-10-11");
-        course.put("teacher", "尹天仇");
-        course.put("price", "360");
-        course.put("description", "呵呵");
-
-        List<Object> studentList = new ArrayList<>();
-        Map<String, Object> student = new HashMap<>();
-        student.put("id", "S0000001");
-        student.put("name", "史蒂夫·罗杰斯");
-        student.put("joinTime", "2015-10-10");
-        student.put("score", -1);
-
-        Map<String, Object> student2 = new HashMap<>();
-        student2.put("id", "S0000002");
-        student2.put("name", "托尼·斯塔克");
-        student2.put("joinTime", "2015-12-10");
-        student2.put("score", 90);
-
-        studentList.add(student);
-        studentList.add(student2);
-
-        model.addAttribute("studentList", studentList);
-        model.addAttribute("course", course);
-        return "course-manage-detail";
-    }
 }
