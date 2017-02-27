@@ -32,4 +32,8 @@ public interface OrderService {
     public void scoreCash(int orderId, int score);
 
     public List<OrderAccountEntity> getStudentOrder(String studentId);
+
+    public OrderAccountEntity getOrder(int orderId);
+
+    public OrderAccountEntity getOrder(String studentId, int courseId);
 }

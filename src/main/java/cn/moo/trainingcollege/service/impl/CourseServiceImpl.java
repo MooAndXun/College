@@ -29,7 +29,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getCourseList(String keyword) {
-        return courseDao.getListByLikeColumn("title", keyword);
+        if(keyword==null||keyword.equals("")) {
+            return courseDao.getAll();
+        } else {
+            return courseDao.getListByLikeColumn("title", keyword);
+        }
     }
 
     @Override
@@ -59,5 +63,12 @@ public class CourseServiceImpl implements CourseService {
     public List<StudentEntity> getJoinedStudent(int courseId) {
         String sql = "SELECT * FROM `student` WHERE id IN (SELECT student_id from order_account WHERE course_id = "+courseId+")";
         return (List<StudentEntity>) studentDao.doSqlQuery(sql);
+    }
+
+    @Override
+    public List<CourseEntity> getUnclosedCourseList(String keyword) {
+        //TODO
+
+        return getCourseList(keyword);
     }
 }

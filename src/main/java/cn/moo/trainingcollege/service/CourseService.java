@@ -24,4 +24,6 @@ public interface CourseService {
     public List<CourseEntity> getOrganCourseList(String organId);
 
     public List<StudentEntity> getJoinedStudent(int courseId);
+
+    public List<CourseEntity> getUnclosedCourseList(String keyword);
 }

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
  * Created by chenmuen on 2017/2/27.
  */
 @Controller
+@RequestMapping("/")
 public class MainController {
     @Autowired
     StudentService studentService;
@@ -29,7 +30,24 @@ public class MainController {
     @Autowired
     ManagerService managerService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping("/")
+    public String indexPage(HttpSession session) {
+        int userType = (int)session.getAttribute("userType");
+
+        switch (userType) {
+            case 0:
+                return "redirect:/course/all";
+            case 1:
+                return "redirect:/course/manage";
+            case 2:
+                return "redirect:/course/approve";
+            default:
+                return "redirect:/login";
+        }
+
+    }
+
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public String loginPage() {
         return "login";
     }

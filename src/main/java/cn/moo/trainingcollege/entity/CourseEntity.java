@@ -19,7 +19,7 @@ public class CourseEntity {
      */
     private int state;
     private String teacher;
-    private String title;
+    private String name;
     private String organId;
 
     @Id
@@ -83,13 +83,13 @@ public class CourseEntity {
     }
 
     @Basic
-    @Column(name = "title", nullable = false, length = 255)
-    public String getTitle() {
-        return title;
+    @Column(name = "name", nullable = false, length = 255)
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
@@ -115,7 +115,7 @@ public class CourseEntity {
         if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
         if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
         if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (organId != null ? !organId.equals(that.organId) : that.organId != null) return false;
 
         return true;
@@ -132,7 +132,7 @@ public class CourseEntity {
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + state;
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (organId != null ? organId.hashCode() : 0);
         return result;
     }

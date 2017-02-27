@@ -110,6 +110,18 @@ public class OrderServiceImpl implements OrderService{
         return (List<OrderAccountEntity>)orderDao.getListByColumn("studentId",studentId);
     }
 
+    @Override
+    public OrderAccountEntity getOrder(int orderId) {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public OrderAccountEntity getOrder(String studentId, int courseId) {
+        //TODO
+        return null;
+    }
+
     private double getPrice(int level, double price){
         switch (level){
             case 1: return price;
