@@ -106,3 +106,53 @@
 </body>
 
 </html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="base/fragment::head('机构信息')"></head>
+
+<body>
+<header th:replace="base/fragment::header(0)"></header>
+
+<div class="wrapper">
+  <div class="container">
+
+    <div class="page-content-left">
+      <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+    </div>
+
+    <div class="page-content">
+      <div class="segment">
+        <div class="segment-title">
+          <div class="title-rect"></div>
+          <h2 class="title">机构信息</h2>
+        </div>
+        <div class="info-list">
+          <div class="info-item">
+            <p class="name">机构ID</p>
+            <p class="value" th:text="${organ.id}">O0000001</p>
+          </div>
+          <div class="info-item">
+            <p class="name">机构名称</p>
+            <p class="value" th:text="${organ.name}">复仇者留学</p>
+          </div>
+          <div class="info-item">
+            <div class="name"></div>
+            <a class="ui button primary" th:href="@{/organ/edit}">修改信息</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::script"/>
+
+</body>
+
+</html>

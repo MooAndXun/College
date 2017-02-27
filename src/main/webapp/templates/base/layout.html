@@ -1,0 +1,27 @@
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="base/fragment::head('布局')"></head>
+
+<body>
+  <header th:replace="base/fragment::header(0)"></header>
+
+  <div class="wrapper">
+    <div class="container">
+
+      <div class="page-content-left">
+        <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer th:replace="base/fragment::footer"></footer>
+
+  <th:block th:replace="base/fragment::script"/>
+
+</body>
+
+</html>

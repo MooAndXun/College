@@ -3,19 +3,18 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragment::head"></head>
+<head th:replace="base/fragment::head(组件)"></head>
 
 <body>
-  <header th:replace="fragment::header"></header>
+  <header th:replace="base/fragment::header(0)"></header>
+
   <div class="wrapper">
     <div class="container">
-      <div class="nav-left">
-        <div class="ui vertical menu">
-          <a class="active item">全部课程</a>
-          <a class="item">我的课程</a>
-          <a class="item">已完成课程</a>
-        </div>
+
+      <div class="page-content-left">
+        <div class="nav-left" th:replace="base/fragment::nav-left"></div>
       </div>
+
       <div class="page-content">
         <div class="segment">
           <div class="segment-title">
@@ -38,7 +37,7 @@
                 <div class="meta">
                   <span class="date">开始于 2013-10-10</span>
                 </div>
-                <div class="meta" th:text="*{name}">尹天仇</div>
+                <div class="meta">尹天仇</div>
                 <div class="price">¥360</div>
               </div>
             </div>
@@ -260,11 +259,10 @@
     </div>
   </div>
 
-  <footer th:replace="fragment::footer"></footer>
+  <footer th:replace="base/fragment::footer"></footer>
 
-  <!-- Scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="/build/semantic/semantic.min.js"></script>
+  <th:block th:replace="base/fragment::script"/>
+
 </body>
 
 </html>
