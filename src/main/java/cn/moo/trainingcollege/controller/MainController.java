@@ -65,14 +65,14 @@ public class MainController {
                 }
                 break;
             case 'O':
-                if(studentService.checkLogin(id, password)) {
+                if(organService.checkLogin(id, password)) {
                     session.setAttribute("user", id);
                     session.setAttribute("userType", 1);
                     return "redirect:/course/manage";
                 }
                 break;
             case 'M':
-                if(studentService.checkLogin(id, password)) {
+                if(managerService.checkLogin(id, password)) {
                     session.setAttribute("user", id);
                     session.setAttribute("userType", 2);
                     return "redirect:/course/approve";
@@ -115,6 +115,13 @@ public class MainController {
                 managerService.addManager(managerEntity);
                 break;
         }
+
+        return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logout(HttpSession session){
+        session.invalidate();
 
         return "redirect:/login";
     }

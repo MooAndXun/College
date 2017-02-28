@@ -30,19 +30,19 @@
 
           <div class="card-group course-card-group">
 
-            <div class="ui card course-card" th:each="course:${courseList}">
+            <a class="ui card course-card" href="#" th:each="course:${courseList}" th:href="@{/course/detail(id=${course.id})}">
               <div class="image">
-                <img src="../build/img/course3.png">
+                <img src="../build/img/course3.png" th:src="@{/build/img/course3.png}">
               </div>
               <div class="content">
-                <a class="header" th:text="${course.name}">演员的自我修养</a>
+                <p class="header" th:text="${course.name}">演员的自我修养</p>
                 <div class="meta">
                   <span class="date">开始于 <th:block th:text="${course.startTime}">2013-10-10</th:block></span>
                 </div>
                 <div class="meta" th:text="${course.teacher}">尹天仇</div>
                 <div class="price">¥<th:block th:text="${course.price}">360</th:block></div>
               </div>
-            </div>
+            </a>
 
           </div>
         </div>

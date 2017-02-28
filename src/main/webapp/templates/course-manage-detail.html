@@ -41,7 +41,7 @@
               <p class="value" th:text="${course.teacher}">尹天仇</p>
             </div>
             <div class="button-group">
-              <button class="ui button primary" th:attr="data-id=${course.id}">购买</button>
+              <a class="ui button primary" th:href="@{/course/edit?id=${course.id}">修改</a>
             </div>
           </div>
         </div>

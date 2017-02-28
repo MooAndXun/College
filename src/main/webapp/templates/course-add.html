@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<head th:replace="base/fragment::head('布局')"></head>
+<head th:replace="base/fragment::head(${course}?'编辑课程':'新增课程')"></head>
 
 <body>
 <header th:replace="base/fragment::header(0)"></header>
@@ -19,12 +19,12 @@
       <div class="segment">
         <div class="segment-title">
           <div class="title-rect"></div>
-          <h2 class="title">新增课程</h2>
+          <h2 class="title" th:text="${course}?'编辑课程':'新增课程'">新增课程</h2>
         </div>
-        <form class="ui form info-form" action="#" th:action="@{/course/add}" method="post">
+        <form class="ui form info-form" action="#" th:action="${course}?@{/course/edit(${course.id})}:@{/course/add}" method="post">
           <div class="ui inline field">
             <label class="info-label">课程名</label>
-            <input type="text" placeholder="课程名">
+            <input type="text" placeholder="课程名" th:value="${course}?${course.name}">
           </div>
           <div class="ui inline field">
             <label>课程图片</label>
@@ -32,28 +32,28 @@
           </div>
           <div class="ui inline field">
             <label class="info-label">价格(¥)</label>
-            <input type="text" placeholder="价格">
+            <input type="text" placeholder="价格" th:value="${course}?${course.price}">
           </div>
           <div class="ui inline field">
             <label>开始时间</label>
-            <input type="date" name="dateExpire" placeholder="dd/mm/yyyy">
+            <input type="date" name="startTime" placeholder="dd/mm/yyyy" th:value="${course}?${course.startTime}">
           </div>
           <div class="ui inline field">
             <label>结束时间</label>
-            <input type="date" name="dateExpire" placeholder="dd/mm/yyyy">
+            <input type="date" name="endTime" placeholder="dd/mm/yyyy" th:value="${course}?${course.endTime}">
           </div>
           <div class="ui inline field">
             <label class="info-label">课程教师</label>
-            <input type="text" placeholder="课程教师">
+            <input type="text" placeholder="课程教师" th:value="${course}?${course.teacher}">
           </div>
           <div class="ui inline field">
             <label>课程简介</label>
-            <textarea placeholder="简介"></textarea>
+            <textarea placeholder="简介" th:value="${course}?${course.teacher}"></textarea>
           </div>
           <div class="ui inline field">
             <label></label>
             <button class="ui button primary">确认</button>
-            <button class="ui button">取消</button>
+            <a class="ui button" onclick="history.go(-1)">取消</a>
           </div>
         </form>
       </div>

@@ -31,7 +31,8 @@ public class PageController {
     @RequestMapping("/course/all")
     public String courseList(Model model) {
         List<Map> list = new ArrayList<>();
-        Map<String, String> course = new HashMap<>();
+        Map<String, Object> course = new HashMap<>();
+        course.put("id", 1);
         course.put("name", "演员的自我修养");
         course.put("startTime", "2015-10-10");
         course.put("endTime", "2015-10-10");
@@ -41,6 +42,23 @@ public class PageController {
 
         model.addAttribute("courseList", list);
         return "course-all";
+    }
+
+    @RequestMapping("/course/manage")
+    public String courseManage(Model model) {
+        List<Map> list = new ArrayList<>();
+        Map<String, Object> course = new HashMap<>();
+        course.put("id", 1);
+        course.put("state", 0);
+        course.put("name", "演员的自我修养");
+        course.put("startTime", "2015-10-10");
+        course.put("endTime", "2015-10-10");
+        course.put("teacher", "尹天仇");
+        course.put("price", "360");
+        list.add(course);
+
+        model.addAttribute("courseList", list);
+        return "course-manage";
     }
 
     @RequestMapping("/course/detail")
