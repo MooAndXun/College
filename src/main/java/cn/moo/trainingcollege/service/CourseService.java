@@ -25,5 +25,16 @@ public interface CourseService {
 
     public List<StudentEntity> getJoinedStudent(int courseId);
 
+    /**
+     * 获得尚未结束的课程列表
+     * @param keyword
+     * @return
+     */
     public List<CourseEntity> getUnclosedCourseList(String keyword);
+
+    /**
+     * 获得未被审批的课程列表
+     * @return
+     */
+    public List<CourseEntity> getUnApproveCourseList();
 }

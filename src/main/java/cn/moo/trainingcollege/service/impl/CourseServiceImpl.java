@@ -32,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
         if(keyword==null||keyword.equals("")) {
             return courseDao.getAll();
         } else {
-            return courseDao.getListByLikeColumn("title", keyword);
+            return courseDao.getListByLikeColumn("name", keyword);
         }
     }
 
@@ -70,5 +70,10 @@ public class CourseServiceImpl implements CourseService {
         //TODO
 
         return getCourseList(keyword);
+    }
+
+    @Override
+    public List<CourseEntity> getUnApproveCourseList() {
+        return null;
     }
 }
