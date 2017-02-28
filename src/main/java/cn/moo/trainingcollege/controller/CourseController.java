@@ -89,7 +89,9 @@ public class CourseController {
     }
 
     @RequestMapping("/approve")
-    public String approvePage() {
-        return null;
+    public String approvePage(Model model) {
+        List<CourseEntity> courseEntityList = courseService.getUnApproveCourseList();
+        model.addAttribute("courseList", courseEntityList);
+        return "approve-course";
     }
 }

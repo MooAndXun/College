@@ -34,12 +34,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudent(StudentEntity student) {
+    public String addStudent(StudentEntity student) {
         int count = studentDao.getCounts();
         count++;
         String id = "S" + String.format("%06d", count);
         student.setId(id);
         studentDao.add(student);
+
+        // TODO(返回用户ID)
+        return null;
     }
 
     @Override

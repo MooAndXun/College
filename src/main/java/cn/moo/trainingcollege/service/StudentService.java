@@ -10,7 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 public interface StudentService {
     public boolean checkLogin(String id, String password);
 
-    public void addStudent(StudentEntity student);
+    /**
+     * 注册学生用户
+     * @param student
+     * @return 用户ID
+     */
+    public String addStudent(StudentEntity student);
 
     public StudentEntity getStudent(String studentId);
 

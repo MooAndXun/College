@@ -28,12 +28,15 @@ public class OrganServiceImpl implements OrganService {
     }
 
     @Override
-    public void addOrgan(OrganizationEntity organization) {
+    public String addOrgan(OrganizationEntity organization) {
         int count = organDao.getCounts();
         count++;
         String id = "O" + String.format("%06d",count);
         organization.setId(id);
         organDao.add(organization);
+
+        // TODO(返回用户ID)
+        return null;
     }
 
     @Override

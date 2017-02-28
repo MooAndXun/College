@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 public interface OrganService {
     public boolean checkLogin(String organId, String password);
 
-    public void addOrgan(OrganizationEntity organization);
+    /**
+     * 注册机构用户
+     * @param organization
+     * @return 用户ID
+     */
+    public String addOrgan(OrganizationEntity organization);
 
     public void updateOrgan(OrganizationEntity organization);
 

@@ -41,8 +41,11 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public void addManager(ManagerEntity manager) {
+    public String addManager(ManagerEntity manager) {
         managerDao.add(manager);
+
+        // TODO(返回用户ID)
+        return null;
     }
 
     @Override
@@ -57,14 +60,12 @@ public class ManagerServiceImpl implements ManagerService {
         courseDao.update(courseEntity);
     }
 
-    /**
-     * quitState:
-     * 0 默认
-     * -1 申请退课
-     * 1 批准退课
-     * 2 拒接退课
-     * @param orderId
-     * @param isApprove
+    /*
+    quitState:
+        0 默认
+        -1 申请退课
+        1 批准退课
+        2 拒接退课
      */
     @Override
     public void approveQuit(int orderId, boolean isApprove) {

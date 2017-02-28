@@ -8,7 +8,12 @@ import cn.moo.trainingcollege.entity.ManagerEntity;
 public interface ManagerService {
     public boolean checkLogin(String id,String password);
 
-    public void addManager(ManagerEntity manager);
+    /**
+     * 注册经理用户
+     * @param manager
+     * @return 用户ID
+     */
+    public String addManager(ManagerEntity manager);
 
     public void updateManager(ManagerEntity manager);
 
