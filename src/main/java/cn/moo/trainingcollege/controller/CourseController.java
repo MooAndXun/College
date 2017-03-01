@@ -5,14 +5,18 @@ import cn.moo.trainingcollege.entity.OrderAccountEntity;
 import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.CourseService;
 import cn.moo.trainingcollege.service.OrderService;
+import cn.moo.trainingcollege.utils.MapUtil;
+import cn.moo.trainingcollege.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * Created by chenmuen on 2017/2/27.
@@ -50,6 +54,26 @@ public class CourseController {
         return "course-detail";
     }
 
+    @RequestMapping("/mine")
+    public String courseMinePage(HttpSession session, Model model) {
+        String userId = (String)session.getAttribute("user");
+        List<CourseEntity> courseEntityList = courseService.getJoinedCourseList(userId);
+
+        List<Map> courseMapList = new ArrayList<>();
+        for (CourseEntity courseEntity:
+             courseEntityList) {
+            int courseId = courseEntity.getId();
+            OrderAccountEntity orderAccountEntity = orderService.getOrder(userId, courseId);
+
+            Map<String, Object> courseMap = MapUtil.beanToMap(courseEntity);
+            courseMap.put("isPaid", orderAccountEntity.isPaid());
+            courseMapList.add(courseMap);
+        }
+
+        model.addAttribute("courseList", courseMapList);
+        return "course-mine";
+    }
+
     @RequestMapping("/manage")
     public String courseManagePage(HttpSession session, Model model) {
         String organId = (String)session.getAttribute("user");
@@ -65,6 +89,9 @@ public class CourseController {
         CourseEntity courseEntity = courseService.getCourse(id);
         List<StudentEntity> studentList = courseService.getJoinedStudent(id);
 
+        for (StudentEntity studentEntity : studentList) {
+            String studentId = studentEntity.getId();
+        }
         // TODO(加入成绩状态的属性)
 
         model.addAttribute("course", courseEntity);
@@ -80,10 +107,12 @@ public class CourseController {
 
     @RequestMapping("/edit")
     public String courseEditPage(@RequestParam("id") int courseId, Model model) {
-        CourseEntity courseEntity = courseService.getCourse(courseId);
-        model.addAttribute("course", courseEntity);
+        Map<String, Object> courseMap = MapUtil.beanToMap(courseService.getCourse(courseId));
+        courseMap.replace("startTime", TimeUtil.timestampToDateString((Timestamp)courseMap.get("startTime")));
+        courseMap.replace("endTime", TimeUtil.timestampToDateString((Timestamp)courseMap.get("endTime")));
 
-        // TODO(日期格式的处理)
+        model.addAttribute("course", courseMap);
+
 
         return "course-add";
     }

@@ -6,8 +6,7 @@ import java.sql.Timestamp;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity
-@Table(name = "settlement", schema = "training", catalog = "")
+@Entity(name = "settlement")
 public class SettlementEntity {
     private int id;
     private String organizationId;
@@ -112,7 +111,7 @@ public class SettlementEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "organization_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "organization_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public OrganizationEntity getOrganizationByOrganizationId() {
         return organizationByOrganizationId;
     }
@@ -122,7 +121,7 @@ public class SettlementEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public CourseEntity getCourseByCourseId() {
         return courseByCourseId;
     }

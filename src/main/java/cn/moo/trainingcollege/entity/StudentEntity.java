@@ -6,8 +6,7 @@ import java.util.Collection;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity
-@Table(name = "student", schema = "training", catalog = "")
+@Entity(name = "student")
 public class StudentEntity {
     private String id;
     private String account;

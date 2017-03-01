@@ -22,13 +22,13 @@
           <h2 class="title">我的课程</h2>
         </div>
         <div class="ui divided items vertical-list">
-          <div class="item">
+          <div class="item" th:each="course:${courseList}">
             <img src="../build/img/course1.png" />
             <div class="content">
               <div class="item-title">
                 <h3 th:name="${course.name}">演员的自我修养</h3>
-                <div class="ui label horizontal blue" th:if="${course.isPaid==true}">已支付</div>
-                <div class="ui label horizontal" th:unless="${course.isPaid==true}">未支付</div>
+                <div class="ui label horizontal blue" th:if="${course.}==true">已支付</div>
+                <div class="ui label horizontal" th:unless="${course.isPaid}==true">未支付</div>
               </div>
               <div class="meta" th:text="${course.teacher}">尹天仇</div>
               <div class="meta">
@@ -36,10 +36,11 @@
               </div>
             </div>
             <div class="button-group">
-              <a class="ui button" th:href="@{/course/detail?id=${course.id}}">详情</a>
-              <a class="ui button red" th:if="${course.isPaid==true}">退课</a>
-              <button class="ui button" th:unless="${course.isPaid==true}">退订</button>
-              <button class="ui button primary" th:unless="${course.isPaid==true}">支付</button>
+              <a class="ui button" th:href="@{/course/detail(id=${course.id})}">详情</a>
+
+              <a class="ui button red" th:if="${course.isPaid}==true">退课</a>
+              <a class="ui button" th:unless="${course.isPaid}==true">退订</a>
+              <a class="ui button primary" th:unless="${course.isPaid}==true">支付</a>
             </div>
           </div>
 

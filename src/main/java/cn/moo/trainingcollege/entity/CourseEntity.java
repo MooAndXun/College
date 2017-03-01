@@ -7,8 +7,7 @@ import java.util.Collection;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity
-@Table(name = "course", schema = "training", catalog = "")
+@Entity(name = "course")
 public class CourseEntity {
     private int id;
     private Timestamp endTime;
@@ -144,7 +143,7 @@ public class CourseEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "organ_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "organ_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public OrganizationEntity getOrganizationByOrganId() {
         return organizationByOrganId;
     }

@@ -6,6 +6,7 @@ import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.ManagerService;
 import cn.moo.trainingcollege.service.OrganService;
 import cn.moo.trainingcollege.service.StudentService;
+import org.codehaus.jackson.map.deser.ValueInstantiators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class MainController extends BaseController {
     @Autowired
     StudentService studentService;
 
