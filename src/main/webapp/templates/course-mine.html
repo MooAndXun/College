@@ -27,7 +27,7 @@
             <div class="content">
               <div class="item-title">
                 <h3 th:name="${course.name}">演员的自我修养</h3>
-                <div class="ui label horizontal blue" th:if="${course.}==true">已支付</div>
+                <div class="ui label horizontal blue" th:if="${course.isPaid}==true">已支付</div>
                 <div class="ui label horizontal" th:unless="${course.isPaid}==true">未支付</div>
               </div>
               <div class="meta" th:text="${course.teacher}">尹天仇</div>

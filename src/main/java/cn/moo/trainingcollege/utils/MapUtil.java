@@ -3,7 +3,10 @@ package cn.moo.trainingcollege.utils;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 
 import java.beans.PropertyDescriptor;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,12 +21,29 @@ public class MapUtil {
             for (int i = 0; i < descriptors.length; i++) {
                 String name = descriptors[i].getName();
                 if (!"class".equals(name)) {
-                    params.put(name, propertyUtilsBean.getNestedProperty(obj, name));
+                    Object attr = propertyUtilsBean.getNestedProperty(obj, name);
+
+                    // 转换Timestamp
+                    if(attr instanceof Timestamp) {
+                        params.put(name, TimeUtil.timestampToDateString((Timestamp) attr));
+                    } else {
+                        params.put(name, attr);
+                    }
+
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return params;
+    }
+
+    public static List<Map> beanListToMap(List list) {
+        List<Map> mapList = new ArrayList<>();
+
+        for (Object o : list) {
+            mapList.add(beanToMap(o));
+        }
+        return mapList;
     }
 }

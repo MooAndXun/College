@@ -76,7 +76,7 @@ public class CourseServiceImpl implements CourseService {
         List<CourseEntity> list = getCourseList(keyword);
         List<CourseEntity> result = new ArrayList<CourseEntity>();
         for (CourseEntity course:list) {
-            if(course.getEndTime().after(TimeUtil.getCurrentTime())){
+            if(TimeUtil.dateStringToTimestamp(course.getEndTime()).after(TimeUtil.getCurrentTime())){
                 result.add(course);
             }
         }
