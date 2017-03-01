@@ -6,7 +6,8 @@ import java.sql.Timestamp;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity(name = "settlement")
+@Entity
+@Table(name = "settlement", schema = "training", catalog = "")
 public class SettlementEntity {
     private int id;
     private String organizationId;
@@ -14,6 +15,8 @@ public class SettlementEntity {
     private double money;
     private double commission;
     private Timestamp createdAt;
+    private OrganizationEntity organizationByOrganizationId;
+    private CourseEntity courseByCourseId;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -106,5 +109,25 @@ public class SettlementEntity {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "organization_id", referencedColumnName = "id", nullable = false)
+    public OrganizationEntity getOrganizationByOrganizationId() {
+        return organizationByOrganizationId;
+    }
+
+    public void setOrganizationByOrganizationId(OrganizationEntity organizationByOrganizationId) {
+        this.organizationByOrganizationId = organizationByOrganizationId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
+    public CourseEntity getCourseByCourseId() {
+        return courseByCourseId;
+    }
+
+    public void setCourseByCourseId(CourseEntity courseByCourseId) {
+        this.courseByCourseId = courseByCourseId;
     }
 }

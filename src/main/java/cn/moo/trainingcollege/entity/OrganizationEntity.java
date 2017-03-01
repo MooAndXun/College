@@ -1,16 +1,20 @@
 package cn.moo.trainingcollege.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity(name = "organization")
+@Entity
+@Table(name = "organization", schema = "training", catalog = "")
 public class OrganizationEntity {
     private String id;
     private String password;
     private double balance;
     private String name;
+    private Collection<CourseEntity> coursesById;
+    private Collection<SettlementEntity> settlementsById;
 
     @Id
     @Column(name = "id", nullable = false, length = 255)
@@ -77,5 +81,23 @@ public class OrganizationEntity {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "organizationByOrganId")
+    public Collection<CourseEntity> getCoursesById() {
+        return coursesById;
+    }
+
+    public void setCoursesById(Collection<CourseEntity> coursesById) {
+        this.coursesById = coursesById;
+    }
+
+    @OneToMany(mappedBy = "organizationByOrganizationId")
+    public Collection<SettlementEntity> getSettlementsById() {
+        return settlementsById;
+    }
+
+    public void setSettlementsById(Collection<SettlementEntity> settlementsById) {
+        this.settlementsById = settlementsById;
     }
 }

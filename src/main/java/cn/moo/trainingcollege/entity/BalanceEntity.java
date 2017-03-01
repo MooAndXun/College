@@ -5,7 +5,8 @@ import javax.persistence.*;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity(name = "balance")
+@Entity
+@Table(name = "balance", schema = "training", catalog = "")
 public class BalanceEntity {
     private int id;
     private double balance;

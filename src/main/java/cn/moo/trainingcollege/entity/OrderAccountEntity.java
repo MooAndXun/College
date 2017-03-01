@@ -6,7 +6,8 @@ import java.sql.Timestamp;
 /**
  * Created by chenmuen on 2017/2/24.
  */
-@Entity(name = "order_account")
+@Entity
+@Table(name = "order_account", schema = "training", catalog = "")
 public class OrderAccountEntity {
     private int id;
     private String studentId;
@@ -17,6 +18,8 @@ public class OrderAccountEntity {
     private boolean isCancel;
     private int score;
     private Timestamp createdAt;
+    private StudentEntity studentByStudentId;
+    private CourseEntity courseByCourseId;
 
     @Id
     @Column(name = "id")
@@ -143,5 +146,25 @@ public class OrderAccountEntity {
         result = 31 * result + score;
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
+    public StudentEntity getStudentByStudentId() {
+        return studentByStudentId;
+    }
+
+    public void setStudentByStudentId(StudentEntity studentByStudentId) {
+        this.studentByStudentId = studentByStudentId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
+    public CourseEntity getCourseByCourseId() {
+        return courseByCourseId;
+    }
+
+    public void setCourseByCourseId(CourseEntity courseByCourseId) {
+        this.courseByCourseId = courseByCourseId;
     }
 }
