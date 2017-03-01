@@ -6,7 +6,8 @@ import java.sql.Timestamp;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity(name = "topup")
+@Entity
+@Table(name = "topup", schema = "training", catalog = "")
 public class TopupEntity {
     private int id;
     private String studentId;
@@ -17,6 +18,7 @@ public class TopupEntity {
      */
     private int type;
     private Timestamp createdAt;
+    private StudentEntity studentByStudentId;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -95,5 +97,15 @@ public class TopupEntity {
         result = 31 * result + type;
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "studentId", referencedColumnName = "id", nullable = false)
+    public StudentEntity getStudentByStudentId() {
+        return studentByStudentId;
+    }
+
+    public void setStudentByStudentId(StudentEntity studentByStudentId) {
+        this.studentByStudentId = studentByStudentId;
     }
 }

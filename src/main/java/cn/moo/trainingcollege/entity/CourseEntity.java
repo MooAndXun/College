@@ -2,11 +2,13 @@ package cn.moo.trainingcollege.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity(name = "course")
+@Entity
+@Table(name = "course", schema = "training", catalog = "")
 public class CourseEntity {
     private int id;
     private Timestamp endTime;
@@ -21,6 +23,10 @@ public class CourseEntity {
     private String teacher;
     private String name;
     private String organId;
+    private OrganizationEntity organizationByOrganId;
+    private Collection<OrderAccountEntity> orderAccountsById;
+    private Collection<OrderCashEntity> orderCashesById;
+    private Collection<SettlementEntity> settlementsById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -135,5 +141,42 @@ public class CourseEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (organId != null ? organId.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "organ_id", referencedColumnName = "id", nullable = false)
+    public OrganizationEntity getOrganizationByOrganId() {
+        return organizationByOrganId;
+    }
+
+    public void setOrganizationByOrganId(OrganizationEntity organizationByOrganId) {
+        this.organizationByOrganId = organizationByOrganId;
+    }
+
+    @OneToMany(mappedBy = "courseByCourseId")
+    public Collection<OrderAccountEntity> getOrderAccountsById() {
+        return orderAccountsById;
+    }
+
+    public void setOrderAccountsById(Collection<OrderAccountEntity> orderAccountsById) {
+        this.orderAccountsById = orderAccountsById;
+    }
+
+    @OneToMany(mappedBy = "courseByCourseId")
+    public Collection<OrderCashEntity> getOrderCashesById() {
+        return orderCashesById;
+    }
+
+    public void setOrderCashesById(Collection<OrderCashEntity> orderCashesById) {
+        this.orderCashesById = orderCashesById;
+    }
+
+    @OneToMany(mappedBy = "courseByCourseId")
+    public Collection<SettlementEntity> getSettlementsById() {
+        return settlementsById;
+    }
+
+    public void setSettlementsById(Collection<SettlementEntity> settlementsById) {
+        this.settlementsById = settlementsById;
     }
 }

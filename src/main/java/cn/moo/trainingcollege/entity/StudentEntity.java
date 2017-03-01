@@ -1,11 +1,13 @@
 package cn.moo.trainingcollege.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity(name = "student")
+@Entity
+@Table(name = "student", schema = "training", catalog = "")
 public class StudentEntity {
     private String id;
     private String account;
@@ -22,6 +24,8 @@ public class StudentEntity {
     private int state;
     private String name;
     private int exp;
+    private Collection<OrderAccountEntity> orderAccountsById;
+    private Collection<TopupEntity> topupsById;
 
     @Id
     @Column(name = "id", nullable = false, length = 255)
@@ -145,5 +149,23 @@ public class StudentEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + exp;
         return result;
+    }
+
+    @OneToMany(mappedBy = "studentByStudentId")
+    public Collection<OrderAccountEntity> getOrderAccountsById() {
+        return orderAccountsById;
+    }
+
+    public void setOrderAccountsById(Collection<OrderAccountEntity> orderAccountsById) {
+        this.orderAccountsById = orderAccountsById;
+    }
+
+    @OneToMany(mappedBy = "studentByStudentId")
+    public Collection<TopupEntity> getTopupsById() {
+        return topupsById;
+    }
+
+    public void setTopupsById(Collection<TopupEntity> topupsById) {
+        this.topupsById = topupsById;
     }
 }
