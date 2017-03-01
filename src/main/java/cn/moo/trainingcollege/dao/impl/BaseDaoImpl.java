@@ -46,7 +46,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
     public List<?> doSqlQuery(String sql){
         Session session = sessionFactory.getCurrentSession();
-        return session.createSQLQuery(sql).list();
+        return session.createSQLQuery(sql).addEntity(entityClass).list();
     }
 
     public List<?> doHqlQuery(String hql) {

@@ -23,7 +23,7 @@ public class CourseTest extends BaseTest {
 
     @Test
     public void getListTest(){
-        System.out.println(courseService.getJoinedStudent(1).size());
-        System.out.println(courseService.getOrganCourseList("O000002").get(0).toString());
+//        System.out.println(courseService.getJoinedStudent(1).size());
+        System.out.println(courseService.getOrganCourseList("O000002").get(0).getName());
     }
 }
