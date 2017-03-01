@@ -33,7 +33,8 @@ public class StudentServiceTest extends BaseTest{
         StudentEntity student = new StudentEntity();
         student.setPassword("111111");
         student.setName("test");
-        student.setAccount("22223232");
-        studentService.addStudent(student);
+        student.setAccount("23232323444044");
+        String id = studentService.addStudent(student);
+        System.out.println(id);
     }
 }

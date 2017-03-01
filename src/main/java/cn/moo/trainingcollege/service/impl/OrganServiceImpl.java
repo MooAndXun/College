@@ -35,8 +35,8 @@ public class OrganServiceImpl implements OrganService {
         organization.setId(id);
         organDao.add(organization);
 
-        // TODO(返回用户ID)
-        return null;
+        // (返回用户ID)
+        return id;
     }
 
     @Override

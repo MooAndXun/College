@@ -42,10 +42,14 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public String addManager(ManagerEntity manager) {
+        int count = managerDao.getCounts();
+        count++;
+        String id = "M" + String.format("%06d", count);
+        manager.setId(id);
         managerDao.add(manager);
 
-        // TODO(返回用户ID)
-        return null;
+        // (返回用户ID)
+        return id;
     }
 
     @Override

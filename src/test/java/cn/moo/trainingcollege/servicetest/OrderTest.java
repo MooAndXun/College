@@ -36,4 +36,9 @@ public class OrderTest extends BaseTest {
     public void getListTest(){
         System.out.println(orderService.getStudentOrder("S000002").size());
     }
+
+    @Test
+    public void getOrderTest(){
+        System.out.println(orderService.getOrder(3).getStudentId());
+    }
 }

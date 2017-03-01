@@ -5,10 +5,12 @@ import cn.moo.trainingcollege.dao.StudentDao;
 import cn.moo.trainingcollege.entity.CourseEntity;
 import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.CourseService;
+import cn.moo.trainingcollege.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +34,11 @@ public class CourseServiceImpl implements CourseService {
         if(keyword==null||keyword.equals("")) {
             return courseDao.getAll();
         } else {
-            return courseDao.getListByLikeColumn("name", keyword);
+            List<CourseEntity> result = courseDao.getListByLikeColumn("name", keyword);
+            if(result == null){
+                result = new ArrayList<CourseEntity>();
+            }
+            return result;
         }
     }
 
@@ -67,13 +73,18 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getUnclosedCourseList(String keyword) {
-        //TODO
-
-        return getCourseList(keyword);
+        List<CourseEntity> list = getCourseList(keyword);
+        List<CourseEntity> result = new ArrayList<CourseEntity>();
+        for (CourseEntity course:list) {
+            if(course.getEndTime().after(TimeUtil.getCurrentTime())){
+                result.add(course);
+            }
+        }
+        return result;
     }
 
     @Override
     public List<CourseEntity> getUnApproveCourseList() {
-        return null;
+        return courseDao.getListByColumn("state",0);
     }
 }

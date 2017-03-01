@@ -140,8 +140,12 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return criteria.list();
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public List<T> getListByLikeColumn(String column, Object value){
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(entityClass)
+                .add(Restrictions.like(column, "%"+value+"%"));
+        return criteria.list();
     }
 
     @Override

@@ -41,8 +41,8 @@ public class StudentServiceImpl implements StudentService {
         student.setId(id);
         studentDao.add(student);
 
-        // TODO(返回用户ID)
-        return null;
+        // (返回用户ID)
+        return id;
     }
 
     @Override

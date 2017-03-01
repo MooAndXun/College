@@ -112,14 +112,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public OrderAccountEntity getOrder(int orderId) {
-        //TODO
-        return null;
+        return orderDao.getByColumn("id",orderId);
     }
 
     @Override
     public OrderAccountEntity getOrder(String studentId, int courseId) {
-        //TODO
-        return null;
+        return orderDao.getByStudentandCourse(studentId,courseId);
     }
 
     private double getPrice(int level, double price){
