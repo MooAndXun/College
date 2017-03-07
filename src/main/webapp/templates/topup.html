@@ -21,7 +21,7 @@
           <div class="title-rect"></div>
           <h2 class="title">会员充值</h2>
         </div>
-        <form class="ui form info-form" action="#" th:action="@{/topup}" method="post">
+        <form class="ui form info-form" action="#" th:action="@{/user/topup}" method="post">
           <div class="ui inline field radio-field">
             <label class="info-label">充值方式</label>
             <div class="ui radio checkbox">
@@ -35,7 +35,7 @@
           </div>
           <div class="ui inline field">
             <label class="info-label">充值金额</label>
-            <input type="text" placeholder="充值金额">
+            <input type="text" placeholder="充值金额" name="money">
           </div>
           <div class="ui inline field">
             <label></label>
