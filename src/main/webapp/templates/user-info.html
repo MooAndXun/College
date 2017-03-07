@@ -7,13 +7,14 @@ xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base/fragment::head('个人信息')"></head>
 
 <body>
-<header th:replace="base/fragment::header(0)"></header>
+<header th:replace="base/fragment::header(${session.userType}, 1)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType},1,0)"></div>
+      <button class="ui primary button">修改机构信息</button>
     </div>
 
     <div class="page-content">
