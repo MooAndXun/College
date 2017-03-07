@@ -1,4 +1,5 @@
 <head th:fragment="head(title)">
+      xmlns:th="http://www.w3.org/1999/xhtml">
   <meta charset="UTF-8">
   <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
   <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
@@ -10,14 +11,23 @@
   <link rel="stylesheet" href="../../build/css/style.css" th:href="@{/build/css/style.css}">
 </head>
 
-<header th:fragment="header(active)">
+<header th:fragment="header(userType, active)">
   <nav>
     <div class="wrapper">
       <a class="nav-logo" href="#">TrainingCollege</a>
-      <div class="nav-item-group">
-        <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course-list}">课程</a>
-        <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user-info}">个人</a>
-        <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#">机构</a>
+      <div class="nav-item-group" th:switch="${userType}">
+        <th:block th:case="0">
+          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/all}">课程</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user/info}">个人</a>
+        </th:block>
+        <th:block th:case="1">
+          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/all}">课程</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user/info}">机构</a>
+        </th:block>
+        <th:block th:case="2">
+          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/all}">课程</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user/info}">机构</a>
+        </th:block>
       </div>
       <div class="nav-button-group">
       </div>
@@ -26,10 +36,43 @@
   <div class="nav-title">Day Day up</div>
 </header>
 
-<div class="ui vertical menu nav-left" th:fragment="nav-left">
-  <a class="active item">全部课程</a>
-  <a class="item">我的课程</a>
-  <a class="item">已完成课程</a>
+<div class="ui vertical menu nav-left" th:fragment="nav-left(userType, active, subActive)" th:switch="${userType}">
+  <th:block th:case="0">
+    <th:block  th:switch="${active}">
+      <th:block th:case="0">
+        <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/all}">全部课程</a>
+        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/course/mine}">我的课程</a>
+        <a class="item" th:class="'item '+(${subActive}==2?'active')" th:href="@{/course/mine}">已完成课程</a>
+      </th:block>
+      <th:block th:case="1">
+        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">个人信息</a>
+        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/user/topup}">充值</a>
+      </th:block>
+    </th:block>
+  </th:block>
+  <th:block th:case="1">
+    <th:block  th:switch="${active}">
+      <th:block th:case="0">
+        <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/manage}">课程管理</a>
+        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/course/manage}">未审批课程</a>
+        <a class="item" th:class="'item '+(${subActive}==2?'active')" th:href="@{/course/manage}">已结束课程</a>
+      </th:block>
+      <th:block th:case="1">
+        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">机构信息</a>
+      </th:block>
+    </th:block>
+  </th:block>
+  <th:block th:case="2">
+    <th:block  th:switch="${active}">
+      <th:block th:case="0">
+        <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/appove}">审批课程</a>
+        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/settlement}">结算课程</a>
+      </th:block>
+      <th:block th:case="1">
+        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">经理信息</a>
+      </th:block>
+    </th:block>
+  </th:block>
 </div>
 
 <footer th:fragment="footer"></footer>
