@@ -87,3 +87,17 @@
   <script src="/build/js/toastr.min.js"></script>
   <script src="/build/js/main.js"></script>
 </th:block>
+
+<div class="ui modal small" id="modal" th:fragment="modal">
+  <i class="close icon"></i>
+  <div class="header">
+    <p>提示</p>
+  </div>
+  <div class="content">
+    <p>你确定购买该课程吗？</p>
+  </div>
+  <div class="actions">
+    <a class="ui deny button">取消</a>
+    <a class="ui primary right button">确认</a>
+  </div>
+</div>

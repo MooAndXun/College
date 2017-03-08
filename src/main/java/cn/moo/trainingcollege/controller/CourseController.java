@@ -29,12 +29,12 @@ public class CourseController {
     @Autowired
     private OrderService orderService;
 
+    /*------------- Page -------------*/
     // DONE
     @RequestMapping("/all")
     public String courseAllPage(Model model) {
         List<CourseEntity> courseEntityList = courseService.getCourseList("");
         model.addAttribute("courseList", MapUtil.beanListToMap(courseEntityList));
-
         return "course-all";
     }
 
@@ -125,11 +125,31 @@ public class CourseController {
     }
 
     // DONE
+    @RequestMapping("/approve")
+    public String approvePage(Model model) {
+        List<CourseEntity> courseEntityList = courseService.getUnApproveCourseList();
+        model.addAttribute("courseList", MapUtil.beanListToMap(courseEntityList));
+        return "course-approve";
+    }
+
+    // DONE
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String courseAddPage() {
         return "course-add";
     }
 
+
+
+    // DONE
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String courseEditPage(@RequestParam("id") int courseId, ModelMap model) {
+        Map<String, Object> courseMap = MapUtil.beanToMap(courseService.getCourse(courseId));
+        model.addAttribute("course", courseMap);
+
+        return "course-add";
+    }
+
+    /*------------- Action -------------*/
     // DONE
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String courseAdd(@ModelAttribute CourseEntity courseEntity, HttpSession session) {
@@ -141,14 +161,6 @@ public class CourseController {
     }
 
     // DONE
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String courseEditPage(@RequestParam("id") int courseId, ModelMap model) {
-        Map<String, Object> courseMap = MapUtil.beanToMap(courseService.getCourse(courseId));
-        model.addAttribute("course", courseMap);
-
-        return "course-add";
-    }
-
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String courseEdit(@ModelAttribute CourseEntity courseEntity, HttpSession session) {
         courseEntity.setOrganId((String)session.getAttribute("user"));
@@ -158,11 +170,12 @@ public class CourseController {
         return "redirect:/course/edit?id="+courseEntity.getId();
     }
 
-    // DONE
-    @RequestMapping("/approve")
-    public String approvePage(Model model) {
-        List<CourseEntity> courseEntityList = courseService.getUnApproveCourseList();
-        model.addAttribute("courseList", MapUtil.beanListToMap(courseEntityList));
-        return "course-approve";
+
+    @RequestMapping(value = "/approve", method = RequestMethod.POST)
+    public String approve(HttpSession session) {
+        String userId = (String)session.getAttribute("user");
+        orderService.orderCourse(userId, 0);
+
+        return "redirect:/course/approve";
     }
 }
