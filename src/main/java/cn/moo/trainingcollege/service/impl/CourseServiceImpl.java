@@ -87,4 +87,10 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseEntity> getUnApproveCourseList() {
         return courseDao.getListByColumn("state",0);
     }
+
+    @Override
+    public List<CourseEntity> getUnSettledCourseList() {
+        //TODO
+        return null;
+    }
 }

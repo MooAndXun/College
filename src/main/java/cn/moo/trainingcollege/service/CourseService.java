@@ -37,4 +37,10 @@ public interface CourseService {
      * @return
      */
     public List<CourseEntity> getUnApproveCourseList();
+
+    /**
+     * 获得已结束但未被结算的课程
+     * @return
+     */
+    public List<CourseEntity> getUnSettledCourseList();
 }
