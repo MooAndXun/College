@@ -1,7 +1,7 @@
 <html lang="zh-CN"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="base/fragment::head('我的课程')"></head>
+<head th:replace="base/fragment::head('退订／退课课程')"></head>
 
 <body>
 <header th:replace="base/fragment::header(${session.userType}, 0)"></header>
@@ -10,7 +10,7 @@
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 0, 1)"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 0, 2)"></div>
     </div>
 
     <div class="page-content">
@@ -25,8 +25,6 @@
             <div class="content">
               <div class="item-title">
                 <h3 th:text="${course.name}">演员的自我修养</h3>
-                <div class="ui label horizontal blue" th:if="${course.isPaid}==true">已支付</div>
-                <div class="ui label horizontal" th:unless="${course.isPaid}==true">未支付</div>
               </div>
               <div class="meta" th:text="${course.teacher}">尹天仇</div>
               <div class="meta">
@@ -34,18 +32,8 @@
               </div>
             </div>
             <div class="button-group">
-              <a class="ui button" th:href="@{/course/detail(id=${course.id})}">详情</a>
-              <th:block th:if="${course.isOver}">
-                <a class="ui button disabled">已结束</a>
-              </th:block>
-              <th:block th:unless="${course.isOver}">
-                <a class="ui button red quit-button" th:if="${course.isPaid}==true">退课</a>
-                <a class="ui button cancel-button" th:unless="${course.isPaid}==true">退订</a>
-                <a class="ui button primary pay-button animated fade" th:unless="${course.isPaid}==true">
-                  <div class="visible content">支付</div>
-                  <div class="hidden content" th:text="'¥'+${course.price}">¥360</div>
-                </a>
-              </th:block>
+              <a class="ui button disabled" th:if="${course.isCancel}==true">已退订</a>
+              <a class="ui button disabled" th:if="${course.isQuit}==true">已退课</a>
             </div>
           </div>
 

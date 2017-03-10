@@ -17,6 +17,8 @@ public interface CourseService {
 
     public List<CourseEntity> getJoinedCourseList(String studentId);
 
+    public List<CourseEntity> getStudentEndedCourseList(String studentId);
+
     public void addCourse(CourseEntity course);
 
     public void updateCourse(CourseEntity course);
@@ -31,6 +33,8 @@ public interface CourseService {
      * @return
      */
     public List<CourseEntity> getUnclosedCourseList(String keyword);
+
+    public List<CourseEntity> search(String keyword, String studentId);
 
     /**
      * 获得未被审批的课程列表

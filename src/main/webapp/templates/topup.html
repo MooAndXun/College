@@ -13,6 +13,7 @@
 
     <div class="page-content-left">
       <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 1, 1)"></div>
+      <a class="ui primary button" th:href="@{/user/edit}">修改个人信息</a>
     </div>
 
     <div class="page-content">
@@ -50,6 +51,8 @@
 </div>
 
 <footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::modal"/>
 
 <th:block th:replace="base/fragment::script"/>
 

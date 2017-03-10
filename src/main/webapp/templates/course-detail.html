@@ -37,7 +37,17 @@
               <p class="value" th:text="${course.teacher}">尹天仇</p>
             </div>
             <div class="button-group">
-              <button class="ui button primary" th:attr="data-id=${course.id}">购买</button>
+              <th:block th:if="${isJoined}">
+                <a class="ui button red quit-button" th:if="${isPaid}==true">退课</a>
+                <a class="ui button primary pay-button animated fade" th:unless="${isPaid}==true">
+                  <div class="visible content">支付</div>
+                  <div class="hidden content" th:text="'¥'+${price}">¥360</div>
+                </a>
+                <a class="ui button cancel-button" th:unless="${isPaid}==true">退订</a>
+              </th:block>
+              <th:block th:unless="${isJoined}">
+                <a class="ui button primary buy-button" th:attr="data-id=${course.id}">购买</a>
+              </th:block>
             </div>
           </div>
         </div>
@@ -76,6 +86,8 @@
 </div>
 
 <footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::modal"/>
 
 <th:block th:replace="base/fragment::script"/>
 

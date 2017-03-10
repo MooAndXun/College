@@ -14,7 +14,7 @@ xmlns:th="http://www.thymeleaf.org">
 
     <div class="page-content-left">
       <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType},1,0)"></div>
-      <button class="ui primary button">修改机构信息</button>
+      <a class="ui primary button" th:href="@{/user/edit}">修改个人信息</a>
     </div>
 
     <div class="page-content">

@@ -14,7 +14,7 @@
 <header th:fragment="header(userType, active)">
   <nav>
     <div class="wrapper">
-      <a class="nav-logo" href="#">TrainingCollege</a>
+      <a class="nav-logo" href="#" th:href="@{/login}">TrainingCollege</a>
       <div class="nav-item-group" th:switch="${userType}">
         <th:block th:case="0">
           <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/all}">课程</a>
@@ -42,7 +42,7 @@
       <th:block th:case="0">
         <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/all}">全部课程</a>
         <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/course/mine}">我的课程</a>
-        <a class="item" th:class="'item '+(${subActive}==2?'active')" th:href="@{/course/mine}">已完成课程</a>
+        <a class="item" th:class="'item '+(${subActive}==2?'active')" th:href="@{/course/over}">退订与退课课程</a>
       </th:block>
       <th:block th:case="1">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">个人信息</a>
@@ -94,10 +94,10 @@
     <p>提示</p>
   </div>
   <div class="content">
-    <p>你确定购买该课程吗？</p>
+    <p id="modal-content">你确定购买该课程吗？</p>
   </div>
   <div class="actions">
     <a class="ui deny button">取消</a>
-    <a class="ui primary right button">确认</a>
+    <a class="ui primary ok button">确认</a>
   </div>
 </div>

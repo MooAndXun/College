@@ -44,9 +44,16 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getJoinedCourseList(String studentId) {
-        String sql = "SELECT * FROM `course` WHERE id IN (SELECT course_id FROM `order_account` WHERE student_id = '"+studentId+"')";
-        return (List<CourseEntity>) courseDao.doSqlQuery(sql);
+        String sql = "SELECT * FROM `course` WHERE id IN (SELECT course_id FROM `order_account` WHERE student_id = '"+studentId+"' AND is_cancel = 0 AND quit_state = 0)";
+        List<CourseEntity> list = (List<CourseEntity>) courseDao.doSqlQuery(sql);
+        return list;
+    }
 
+    @Override
+    public List<CourseEntity> getStudentEndedCourseList(String studentId) {
+        String sql = "SELECT * FROM `course` WHERE id IN (SELECT course_id FROM `order_account` WHERE student_id = '"+studentId+"' AND (is_cancel = 1 OR quit_state = 1))";
+        List<CourseEntity> list = (List<CourseEntity>) courseDao.doSqlQuery(sql);
+        return list;
     }
 
     @Override
@@ -67,7 +74,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<StudentEntity> getJoinedStudent(int courseId) {
-        String sql = "SELECT * FROM `student` WHERE id IN (SELECT student_id from order_account WHERE course_id = "+courseId+")";
+        String sql = "SELECT * FROM `student` WHERE id IN (SELECT student_id from order_account WHERE course_id = "+courseId+" AND (is_cancel=0 OR quit_state=0))";
         return (List<StudentEntity>) studentDao.doSqlQuery(sql);
     }
 
@@ -75,6 +82,22 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseEntity> getUnclosedCourseList(String keyword) {
         List<CourseEntity> list = getCourseList(keyword);
         List<CourseEntity> result = new ArrayList<CourseEntity>();
+        for (CourseEntity course:list) {
+            if(TimeUtil.dateStringToTimestamp(course.getEndTime()).after(TimeUtil.getCurrentTime())){
+                result.add(course);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<CourseEntity> search(String keyword, String studentId) {
+        String sql =
+                "SELECT * FROM `course` WHERE " +
+                        "id NOT IN (SELECT course_id FROM order_account WHERE student_id = '"+studentId+"' AND is_cancel=0 AND quit_state=0)";
+        List<CourseEntity> list = (List<CourseEntity>)courseDao.doSqlQuery(sql);
+        System.out.println(list.size());
+        List<CourseEntity> result = new ArrayList<>();
         for (CourseEntity course:list) {
             if(TimeUtil.dateStringToTimestamp(course.getEndTime()).after(TimeUtil.getCurrentTime())){
                 result.add(course);
