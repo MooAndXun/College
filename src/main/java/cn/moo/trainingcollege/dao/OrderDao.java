@@ -5,6 +5,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.List;
+
 /**
  * Created by 小春 on 2017/2/21.
  */
@@ -12,4 +14,11 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
     public OrderAccountEntity getByStudentandCourse(String studentId,int courseId);
 
     public OrderAccountEntity getOverOrder(String studentId, int courseId);
+
+    /**
+     * 获得会员所参与且无退课的课程列表
+     * @param studentId
+     * @return
+     */
+    public List<OrderAccountEntity> getStudentCourseList(String studentId);
 }

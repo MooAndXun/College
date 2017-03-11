@@ -46,4 +46,14 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
             return (OrderAccountEntity) list.get(0);
         }
     }
+
+    @Override
+    public List<OrderAccountEntity> getStudentCourseList(String studentId) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(OrderAccountEntity.class);
+        criteria.add(Restrictions.eq("studentId", studentId));
+        criteria.add(Restrictions.eq("paid", true));
+        criteria.add(Restrictions.eq("quitState", 0));
+        return criteria.list();
+    }
 }
