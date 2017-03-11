@@ -4,6 +4,7 @@
 $(document).ready(function () {
     toast(message);
     bindButtonEvent();
+    $('.ui.dropdown').dropdown();
 });
 
 function toast(message) {
@@ -101,6 +102,16 @@ function bindLogoutButton() {
     $(document).on("click", ".sign-out-icon", function () {
         post("/logout", null);
     });
+}
+
+function bindMemberTypeCheckBox(value) {
+    if(value=='member') {
+        $('.member-input').removeClass("invisible");
+        $('.non-member-input').addClass('invisible');
+    } else {
+        $('.non-member-input').removeClass('invisible');
+        $('.member-input').addClass("invisible");
+    }
 }
 
 function post(URL, PARAMS) {

@@ -26,7 +26,7 @@
         </div>
         <div class="field">
           <label for="type">类型</label>
-          <select id="type" name="type" class="ui dropdown">
+          <select id="type" name="type" class="ui dropdown scrolling">
             <option value="0">学生</option>
             <option value="1">机构</option>
             <option value="2">经理</option>
@@ -41,10 +41,8 @@
     </div>
   </div>
 
+  <th:block th:replace="base/fragment::modal"/>
   <th:block th:replace="base/fragment::script"/>
-  <script type="text/javascript">
-    $('.ui.dropdown').dropdown();
-  </script>
 
 </body>
 

@@ -167,6 +167,14 @@ public class CourseController extends BaseController {
         return "course-add";
     }
 
+    // DONE
+    @RequestMapping("/join")
+    public String joinPage(Model model) {
+        List<CourseEntity> courseEntityList = courseService.getUnclosedCourseList("");
+        model.addAttribute("courseList", MapUtil.beanListToMap(courseEntityList));
+        return "course-join";
+    }
+
     /*------------- Action -------------*/
     // DONE
     @RequestMapping(value = "/add", method = RequestMethod.POST)
