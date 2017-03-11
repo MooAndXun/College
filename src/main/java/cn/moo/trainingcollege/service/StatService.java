@@ -47,7 +47,7 @@ public interface StatService {
      * @param organId
      * @return
      */
-    public int getOrganIncome(String organId);
+    public double getOrganIncome(String organId);
 
     /**
      * 获得机构的收入曲线
@@ -74,7 +74,7 @@ public interface StatService {
      * 获得网站总收入
      * @return
      */
-    public int getSiteIncome();
+    public double getSiteIncome();
 
     /**
      * 获得网站总人数
@@ -92,7 +92,7 @@ public interface StatService {
      * 获得过去十二个月网站收入曲线
      * @return 收入List，过去十二个月的收入，排序为从前到后
      */
-    public List<Integer> getSiteIncomeLine();
+    public List<Double> getSiteIncomeLine();
 
     /**
      * 获得过去十二个月的加入人数

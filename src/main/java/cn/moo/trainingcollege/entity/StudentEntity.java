@@ -1,16 +1,15 @@
 package cn.moo.trainingcollege.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
- * Created by 小春 on 2017/2/21.
+ * Created by 小春 on 2017/3/11.
  */
 @Entity(name = "student")
 public class StudentEntity {
     private String id;
     private String account;
-    private int balance;
+    private double balance;
     private int level;
     private String password;
     private int point;
@@ -23,8 +22,6 @@ public class StudentEntity {
     private int state;
     private String name;
     private int exp;
-    private Collection<OrderAccountEntity> orderAccountsById;
-    private Collection<TopupEntity> topupsById;
 
     @Id
     @Column(name = "id", nullable = false, length = 255)
@@ -37,7 +34,7 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "account", length = 255)
+    @Column(name = "account", nullable = true, length = 255)
     public String getAccount() {
         return account;
     }
@@ -47,12 +44,12 @@ public class StudentEntity {
     }
 
     @Basic
-    @Column(name = "balance", nullable = false)
-    public int getBalance() {
+    @Column(name = "balance", nullable = false, precision = 2)
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
@@ -123,7 +120,7 @@ public class StudentEntity {
 
         StudentEntity that = (StudentEntity) o;
 
-        if (balance != that.balance) return false;
+        if (Double.compare(that.balance, balance) != 0) return false;
         if (level != that.level) return false;
         if (point != that.point) return false;
         if (state != that.state) return false;
@@ -138,9 +135,12 @@ public class StudentEntity {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result;
+        long temp;
+        result = id != null ? id.hashCode() : 0;
         result = 31 * result + (account != null ? account.hashCode() : 0);
-        result = 31 * result + balance;
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + level;
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + point;
@@ -148,23 +148,5 @@ public class StudentEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + exp;
         return result;
-    }
-
-    @OneToMany(mappedBy = "studentByStudentId")
-    public Collection<OrderAccountEntity> getOrderAccountsById() {
-        return orderAccountsById;
-    }
-
-    public void setOrderAccountsById(Collection<OrderAccountEntity> orderAccountsById) {
-        this.orderAccountsById = orderAccountsById;
-    }
-
-    @OneToMany(mappedBy = "studentByStudentId")
-    public Collection<TopupEntity> getTopupsById() {
-        return topupsById;
-    }
-
-    public void setTopupsById(Collection<TopupEntity> topupsById) {
-        this.topupsById = topupsById;
     }
 }

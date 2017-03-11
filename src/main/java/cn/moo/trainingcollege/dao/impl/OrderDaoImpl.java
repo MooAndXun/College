@@ -4,6 +4,7 @@ import cn.moo.trainingcollege.dao.OrderDao;
 import cn.moo.trainingcollege.entity.OrderAccountEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -55,5 +56,16 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         criteria.add(Restrictions.eq("paid", true));
         criteria.add(Restrictions.eq("quitState", 0));
         return criteria.list();
+    }
+
+    @Override
+    public int getStudentNumofCourse(int courseId) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(OrderAccountEntity.class);
+        criteria.add(Restrictions.eq("courseId", courseId));
+        criteria.add(Restrictions.eq("paid", true));
+        criteria.add(Restrictions.eq("quitState", 0));
+        int count = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
+        return count;
     }
 }
