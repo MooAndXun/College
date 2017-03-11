@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +95,7 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseEntity> search(String keyword, String studentId) {
         String sql =
                 "SELECT * FROM `course` WHERE " +
+                        "state = 1 AND " +
                         "id NOT IN (SELECT course_id FROM order_account WHERE student_id = '"+studentId+"' AND is_cancel=0 AND quit_state=0)";
         List<CourseEntity> list = (List<CourseEntity>)courseDao.doSqlQuery(sql);
         System.out.println(list.size());
@@ -113,7 +115,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getUnSettledCourseList() {
-        //TODO
-        return null;
+        String today = TimeUtil.timestampToDateString(TimeUtil.getCurrentTime());
+        String sql = "SELECT * FROM `course` WHERE end_time < '"+today+"'";
+        return (List<CourseEntity>)courseDao.doSqlQuery(sql);
     }
 }

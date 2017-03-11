@@ -4,6 +4,7 @@ import cn.moo.trainingcollege.entity.CourseEntity;
 import cn.moo.trainingcollege.entity.OrderAccountEntity;
 import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.CourseService;
+import cn.moo.trainingcollege.service.ManagerService;
 import cn.moo.trainingcollege.service.OrderService;
 import cn.moo.trainingcollege.utils.MapUtil;
 import cn.moo.trainingcollege.utils.TimeUtil;
@@ -32,6 +33,9 @@ public class CourseController extends BaseController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private ManagerService managerService;
+
     /*------------- Page -------------*/
     // DONE
     @RequestMapping("/all")
@@ -49,29 +53,10 @@ public class CourseController extends BaseController {
     @RequestMapping("/detail")
     public String courseDetailPage(@RequestParam int id, HttpSession session, Model model){
         CourseEntity courseEntity = courseService.getCourse(id);
-        List<StudentEntity> studentList = courseService.getJoinedStudent(id);
+        String userId = (String)session.getAttribute("user");
+        OrderAccountEntity order = orderService.getOrder(userId, id);
 
-        String studentId = (String)session.getAttribute("user");
-        OrderAccountEntity order = orderService.getOrder(studentId, id);
-
-        List<Map> studentMapList = new ArrayList<>();
-        for (StudentEntity studentEntity : studentList) {
-            OrderAccountEntity orderAccountEntity = orderService.getOrder(studentId, id);
-            if(orderAccountEntity==null) {
-                studentEntity = null;
-            } else {
-                Map<String, Object> studentMap = MapUtil.beanToMap(studentEntity);
-                studentMap.put("score", orderAccountEntity.getScore());
-                studentMap.put("joinTime", TimeUtil.timestampToDateString(orderAccountEntity.getCreatedAt()));
-                studentMapList.add(studentMap);
-            }
-        }
-        for (int i = 0; i < studentList.size(); i++) {
-            if(studentList.get(i)==null) {
-                studentList.remove(i);
-                i--;
-            }
-        }
+        List<Map> studentMapList = getJoinedStudentList(id);
 
         model.addAttribute("course", MapUtil.beanToMap(courseEntity));
         model.addAttribute("isJoined", order != null);
@@ -88,7 +73,6 @@ public class CourseController extends BaseController {
     public String courseMinePage(HttpSession session, Model model) {
         String userId = (String)session.getAttribute("user");
         List<CourseEntity> courseEntityList = courseService.getJoinedCourseList(userId);
-
         List<Map> courseMapList = new ArrayList<>();
         for (CourseEntity courseEntity:
              courseEntityList) {
@@ -148,23 +132,10 @@ public class CourseController extends BaseController {
 
     // DONE
     @RequestMapping("/manage/detail")
-    public String courseManageDetailPage(@RequestParam int id, HttpSession session, Model model){
+    public String courseManageDetailPage(@RequestParam int id, Model model){
         CourseEntity courseEntity = courseService.getCourse(id);
-        List<StudentEntity> studentList = courseService.getJoinedStudent(id);
 
-        List<Map> studentMapList = new ArrayList<>();
-
-        for (StudentEntity studentEntity : studentList) {
-            String studentId = studentEntity.getId();
-            OrderAccountEntity orderAccountEntity = orderService.getOrder(studentId, id);
-            Map<String, Object> studentMap = MapUtil.beanToMap(studentEntity);
-            studentMap.put("isPaid", orderAccountEntity.isPaid());
-            studentMap.put("score", orderAccountEntity.getScore());
-            studentMap.put("joinTime", TimeUtil.timestampToDateString(orderAccountEntity.getCreatedAt()));
-            studentMapList.add(studentMap);
-        }
-        // TODO(加入成绩状态的属性)
-
+        List<Map> studentMapList = getJoinedStudentList(id);
         model.addAttribute("course", MapUtil.beanToMap(courseEntity));
         model.addAttribute("studentList", studentMapList);
 
@@ -219,17 +190,14 @@ public class CourseController extends BaseController {
 
 
     @RequestMapping(value = "/approve", method = RequestMethod.POST)
-    public String approve(HttpSession session, RedirectAttributes redirectAttributes) {
-        String userId = (String)session.getAttribute("user");
-        orderService.orderCourse(userId, 0);
-
+    public String approve(@RequestParam int id, HttpSession session, RedirectAttributes redirectAttributes) {
+        managerService.approve(id, true);
         setMessege(redirectAttributes, "审批成功");
         return "redirect:/course/approve";
     }
 
     @RequestMapping(value = "/reserve", method = RequestMethod.POST)
     public String reserve(@RequestParam int id, HttpSession session, RedirectAttributes redirectAttributes) {
-        //TODO
         String userId = getUserId(session);
         orderService.orderCourse(userId, id);
 
@@ -239,7 +207,6 @@ public class CourseController extends BaseController {
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
     public String pay(@RequestParam int id, RedirectAttributes redirectAttributes) {
-        // TODO
         orderService.pay(id);
         setMessege(redirectAttributes, "支付成功");
         return "redirect:/course/mine";
@@ -247,7 +214,6 @@ public class CourseController extends BaseController {
 
     @RequestMapping(value = "/cancel", method = RequestMethod.POST)
     public String cancel(@RequestParam int id, RedirectAttributes redirectAttributes) {
-        // TODO
         orderService.cancelCourse(id);
         setMessege(redirectAttributes, "退订成功");
         return "redirect:/course/mine";
@@ -255,9 +221,33 @@ public class CourseController extends BaseController {
 
     @RequestMapping(value = "/quit", method = RequestMethod.POST)
     public String quit(@RequestParam int id,  RedirectAttributes redirectAttributes) {
-        // TODO
         orderService.quitCourse(id);
         setMessege(redirectAttributes, "退课成功");
         return "redirect:/course/mine";
+    }
+
+    /*------------- Other -------------*/
+    public List<Map> getJoinedStudentList(int id) {
+        List<StudentEntity> studentList = courseService.getJoinedStudent(id);
+        List<Map> studentMapList = new ArrayList<>();
+        for (StudentEntity studentEntity : studentList) {
+            String studentId = studentEntity.getId();
+            OrderAccountEntity orderAccountEntity = orderService.getOrder(studentId, id);
+            if(orderAccountEntity==null) {
+                studentEntity = null;
+            } else {
+                Map<String, Object> studentMap = MapUtil.beanToMap(studentEntity);
+                studentMap.put("score", orderAccountEntity.getScore());
+                studentMap.put("joinTime", TimeUtil.timestampToDateString(orderAccountEntity.getCreatedAt()));
+                studentMapList.add(studentMap);
+            }
+        }
+        for (int i = 0; i < studentList.size(); i++) {
+            if(studentList.get(i)==null) {
+                studentList.remove(i);
+                i--;
+            }
+        }
+        return studentMapList;
     }
 }

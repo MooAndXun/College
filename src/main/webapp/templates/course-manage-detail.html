@@ -41,7 +41,7 @@
               <p class="value" th:text="${course.teacher}">尹天仇</p>
             </div>
             <div class="button-group">
-              <a class="ui button primary" th:href="@{/course/edit(id=${course.id})}">修改</a>
+              <a class="ui button primary" th:if="session.userType==1" th:href="@{/course/edit(id=${course.id})}">修改</a>
             </div>
           </div>
         </div>

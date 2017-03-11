@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity(name="manage")
+@Entity(name="manager")
 public class ManagerEntity {
     private String id;
     private String password;

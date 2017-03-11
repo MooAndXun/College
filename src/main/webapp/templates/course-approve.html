@@ -22,11 +22,11 @@
           <h2 class="title">待审批课程</h2>
         </div>
         <div class="ui divided items vertical-list">
-          <div class="item" th:each="course:${courseList}" th:attr="data-id=${course.id}">
+          <div class="item" th:each="course:${courseList}" th:data-course-id="${course.id}">
             <img src="../build/img/course1.png" />
             <div class="content">
               <div class="item-title">
-                <h3 th:text="course.name">演员的自我修养</h3>
+                <h3 th:text="${course.name}">演员的自我修养</h3>
                 <div class="ui label horizontal">未审批</div>
               </div>
               <div class="meta" th:text="${course.teacher}">尹天仇</div>
@@ -35,8 +35,8 @@
               </div>
             </div>
             <div class="button-group">
-              <button class="ui button primary">同意</button>
-              <button class="ui button">详情</button>
+              <a class="ui button" th:href="@{/course/manage/detail(id=${course.id})}">详情</a>
+              <a class="ui button primary approve-button">同意</a>
             </div>
           </div>
         </div>
@@ -47,6 +47,8 @@
 </div>
 
 <footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::modal"/>
 
 <th:block th:replace="base/fragment::script"/>
 

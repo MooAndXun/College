@@ -33,7 +33,7 @@ public class MainController extends BaseController {
     @Autowired
     ManagerService managerService;
 
-    @RequestMapping("/")
+    @RequestMapping("")
     public String indexPage(HttpSession session) {
         int userType = (int)session.getAttribute("userType");
 
