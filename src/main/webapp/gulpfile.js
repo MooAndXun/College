@@ -20,13 +20,13 @@ gulp.task('build', ['build-js', 'build-css', 'build-img', 'build-font', 'build-p
 // Minify Custom JS: Run manually with: "gulp build-js"
 gulp.task('build-js', function () {
     return gulp.src('assets/js/*.js')
-        .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter('jshint-stylish'))
-        .pipe(plugins.uglify({
-            output: {
-                'ascii_only': true
-            }
-        }))
+        // .pipe(plugins.jshint())
+        // .pipe(plugins.jshint.reporter('jshint-stylish'))
+        // .pipe(plugins.uglify({
+        //     output: {
+        //         'ascii_only': true
+        //     }
+        // }))
         .pipe(gulp.dest('build/js'));
 });
 

@@ -1,0 +1,71 @@
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="base/fragment::head('学员统计')"></head>
+
+<body>
+  <header th:replace="base/fragment::header(${session.userType}, 0)"></header>
+
+  <div class="wrapper">
+    <div class="container">
+
+      <div class="page-content-left">
+        <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 0, 0)"></div>
+      </div>
+
+      <div class="page-content">
+        <div class="segment">
+          <div class="segment-title">
+            <div class="title-rect"></div>
+            <h2 class="title">数据概况</h2>
+          </div>
+
+          <div class="stat-number">
+            <div class="ui statistics three teal">
+              <div class="statistic">
+                <div class="value"><i class="star icon"></i>90</div>
+                <div class="label">平均成绩</div>
+              </div>
+              <div class="statistic">
+                <div class="value"><i class="yen icon"></i>1000</div>
+                <div class="label">总消费</div>
+              </div>
+              <div class="statistic">
+                <div class="value"><i class="book icon"></i>10</div>
+                <div class="label">加入课程</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="segment">
+          <div class="segment-title">
+            <div class="title-rect"></div>
+            <h2 class="title">图表展示</h2>
+          </div>
+
+          <div class="stat-chart">
+            <div class="chart" id="student-score-bar" style="width: 700px;height:400px;"></div>
+          </div>
+
+          <div class="stat-chart">
+            <div class="chart" id="student-course-line" style="width: 700px;height:400px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer th:replace="base/fragment::footer"></footer>
+
+  <th:block th:replace="base/fragment::modal"/>
+
+  <th:block th:replace="base/fragment::script"/>
+
+
+</body>
+
+</html>
