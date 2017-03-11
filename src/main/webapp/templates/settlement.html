@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<head th:replace="base/fragment::head('布局')"></head>
+<head th:replace="base/fragment::head('结算')"></head>
 
 <body>
 <header th:replace="base/fragment::header(${session.userType}, 0)"></header>
@@ -19,15 +19,16 @@
       <div class="segment">
         <div class="segment-title">
           <div class="title-rect"></div>
-          <h2 class="title">课程列表</h2>
+          <h2 class="title">待结算课程</h2>
         </div>
         <div class="ui divided items vertical-list">
-          <div class="item" th:each="course:${courseList}">
+          <div class="item" th:each="course:${courseList}" th:data-course-id="${course.id}">
             <img src="../build/img/course1.png" />
             <div class="content">
               <div class="item-title">
                 <h3 th:text="${course.name}">演员的自我修养</h3>
-                <div class="ui label horizontal" th:if="${course.isActivate}">未审批</div>
+                <div class="ui label horizontal" th:if="${course.state==0}">未审批</div>
+                <div class="ui label horizontal blue" th:if="${course.state==1}">已审批</div>
               </div>
               <div class="meta" th:text="${course.teacher}">尹天仇</div>
               <div class="meta">
@@ -35,8 +36,8 @@
               </div>
             </div>
             <div class="button-group">
-              <a class="ui button" th:href="@{/course/detail?id=${course.id}}">详情</a>
-              <a class="ui button primary">结算</a>
+              <a class="ui button" th:href="@{/course/detail(id=${course.id})}">详情</a>
+              <a class="ui button primary settlement-button">结算</a>
             </div>
           </div>
         </div>
@@ -48,6 +49,8 @@
 </div>
 
 <footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::modal"/>
 
 <th:block th:replace="base/fragment::script"/>
 

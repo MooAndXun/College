@@ -67,7 +67,7 @@ gulp.task('build-font', function () {
         .pipe(gulp.dest('build/font')).on('error', gutil.log);
 });
 
-gulp.task('build-plugins', ['build-semantic', 'build-toastr']);
+gulp.task('build-plugins', ['build-semantic', 'build-toastr', 'build-jquery']);
 
 gulp.task('build-semantic', function () {
     return gulp.src('semantic/build/**/*')
@@ -84,6 +84,10 @@ gulp.task('build-toastr-js', function () {
             .pipe(gulp.dest('build/js')).on('error', gutil.log);
     }
 );
+gulp.task('build-jquery', function () {
+    return gulp.src('node_modules/jquery/jquery.min.js')
+        .pipe(gulp.dest('build/js')).on('error', gutil.log);
+})
 
 // 静态服务器
 gulp.task('browser-sync', function () {

@@ -21,11 +21,11 @@
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user/info}">个人</a>
         </th:block>
         <th:block th:case="1">
-          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/all}">课程</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/manage}">课程</a>
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user/info}">机构</a>
         </th:block>
         <th:block th:case="2">
-          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/all}">课程</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/approve}">课程</a>
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user/info}">机构</a>
         </th:block>
       </div>
@@ -65,7 +65,7 @@
   <th:block th:case="2">
     <th:block  th:switch="${active}">
       <th:block th:case="0">
-        <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/appove}">审批课程</a>
+        <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/approve}">审批课程</a>
         <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/settlement}">结算课程</a>
       </th:block>
       <th:block th:case="1">
@@ -82,7 +82,7 @@
     var message = [[${message}]]
   </script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/build/js/jquery.min.js"></script>
   <script src="/build/semantic/semantic.min.js"></script>
   <script src="/build/js/toastr.min.js"></script>
   <script src="/build/js/main.js"></script>

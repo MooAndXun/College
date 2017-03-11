@@ -64,6 +64,7 @@ public class OrderServiceImpl implements OrderService{
         OrderAccountEntity order = new OrderAccountEntity();
         order.setStudentId(studentId);
         order.setCourseId(courseId);
+        order.setScore(-1);
         order.setPrice(getPrice(student.getLevel(),course.getPrice()));
         order.setCreatedAt(TimeUtil.getCurrentTime());
         orderDao.add(order);
