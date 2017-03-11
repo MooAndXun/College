@@ -75,7 +75,7 @@ public class MainController extends BaseController {
                 if(organService.checkLogin(id, password)) {
                     session.setAttribute("user", id);
                     session.setAttribute("userType", 1);
-                    redirectAttributes.addAttribute("message", "登录成功");
+                    redirectAttributes.addFlashAttribute("message", "登录成功");
                     return "redirect:/course/manage";
                 }
                 break;
@@ -83,7 +83,7 @@ public class MainController extends BaseController {
                 if(managerService.checkLogin(id, password)) {
                     session.setAttribute("user", id);
                     session.setAttribute("userType", 2);
-                    redirectAttributes.addAttribute("message", "登录成功");
+                    redirectAttributes.addFlashAttribute("message", "登录成功");
                     return "redirect:/course/approve";
                 }
                 break;

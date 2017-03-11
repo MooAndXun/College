@@ -6,13 +6,13 @@
 <head th:replace="base/fragment::head('学员统计')"></head>
 
 <body>
-  <header th:replace="base/fragment::header(${session.userType}, 0)"></header>
+  <header th:replace="base/fragment::header(${session.userType}, 2)"></header>
 
   <div class="wrapper">
     <div class="container">
 
       <div class="page-content-left">
-        <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 0, 0)"></div>
+        <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 2, 0)"></div>
       </div>
 
       <div class="page-content">

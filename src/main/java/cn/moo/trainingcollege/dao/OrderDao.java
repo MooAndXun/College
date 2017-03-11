@@ -26,4 +26,8 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
      * 获得某个课程的学生人数
      */
     public  int getStudentNumofCourse(int courseId);
+
+    public double getCourseNormalIncome(int courseId);
+
+    public double getCourseQuitIncome(int courseId);
 }

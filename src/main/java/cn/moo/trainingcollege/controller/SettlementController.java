@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -33,8 +34,9 @@ public class SettlementController extends BaseController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public String settlement(@RequestParam("id") int courseId, Model model) {
+    public String settlement(@RequestParam("id") int courseId, RedirectAttributes redirectAttributes) {
         settlementService.settlement(courseId);
-        return "settlement";
+        redirectAttributes.addFlashAttribute("message", "结算成功");
+        return "redirect:/settlement";
     }
 }

@@ -116,7 +116,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseEntity> getUnSettledCourseList() {
         String today = TimeUtil.timestampToDateString(TimeUtil.getCurrentTime());
-        String sql = "SELECT * FROM `course` WHERE end_time < '"+today+"'";
+        String sql = "SELECT * FROM `course` WHERE end_time < '"+today+"' and is_settled = 0";
         return (List<CourseEntity>)courseDao.doSqlQuery(sql);
     }
 }

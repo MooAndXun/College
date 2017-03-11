@@ -36,6 +36,7 @@ function bindButtonEvent() {
     bindQuitButton();
     bindApproveButton();
     bindSettlementButton();
+    bindLogoutButton();
 }
 
 function bindBuyButton() {
@@ -93,6 +94,12 @@ function bindSettlementButton() {
             post("/settlement", {id: id});
         }
         modal("你确定结算该课程吗", callback.bind(this));
+    });
+}
+
+function bindLogoutButton() {
+    $(document).on("click", ".sign-out-icon", function () {
+        post("/logout", null);
     });
 }
 
