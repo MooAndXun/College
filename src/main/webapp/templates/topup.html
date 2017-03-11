@@ -6,13 +6,14 @@
 <head th:replace="base/fragment::head('会员充值')"></head>
 
 <body>
-<header th:replace="base/fragment::header(0)"></header>
+<header th:replace="base/fragment::header(${session.userType}, 1)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 1, 1)"></div>
+      <a class="ui primary button" th:href="@{/user/edit}">修改个人信息</a>
     </div>
 
     <div class="page-content">
@@ -21,7 +22,7 @@
           <div class="title-rect"></div>
           <h2 class="title">会员充值</h2>
         </div>
-        <form class="ui form info-form" action="#" th:action="@{/topup}" method="post">
+        <form class="ui form info-form" action="#" th:action="@{/user/topup}" method="post">
           <div class="ui inline field radio-field">
             <label class="info-label">充值方式</label>
             <div class="ui radio checkbox">
@@ -35,7 +36,7 @@
           </div>
           <div class="ui inline field">
             <label class="info-label">充值金额</label>
-            <input type="text" placeholder="充值金额">
+            <input type="text" placeholder="充值金额" name="money">
           </div>
           <div class="ui inline field">
             <label></label>
@@ -50,6 +51,8 @@
 </div>
 
 <footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::modal"/>
 
 <th:block th:replace="base/fragment::script"/>
 

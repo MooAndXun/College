@@ -1,6 +1,8 @@
 package cn.moo.trainingcollege.utils;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -13,5 +15,22 @@ public class TimeUtil {
         return currentTimestamp;
     }
 
+    public static String timestampToDateString(Timestamp ts) {
+        String tsStr = "";
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        tsStr = sdf.format(ts);
+        return tsStr;
+    }
+
+    public static Timestamp dateStringToTimestamp(String dateStr) {
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        dateStr += " 00:00:00";
+        try {
+            ts = Timestamp.valueOf(dateStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ts;
+    }
 
 }

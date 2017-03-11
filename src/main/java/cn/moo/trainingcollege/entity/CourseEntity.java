@@ -1,35 +1,30 @@
 package cn.moo.trainingcollege.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
- * Created by 小春 on 2017/2/21.
+ * Created by chenmuen on 2017/3/1.
  */
-@Entity
-@Table(name = "course", schema = "training", catalog = "")
+@Entity(name="course")
 public class CourseEntity {
     private int id;
-    private Timestamp endTime;
-    private double price;
-    private Timestamp startTime;
-    /**
-     * 0 未审批
-     * 1 审批通过
-     * -1 审批拒绝
-     */
-    private int state;
     private String teacher;
-    private String name;
     private String organId;
+    private String endTime;
+    private String startTime;
+    private double price;
+    private int state;
+    private String name;
+    private String description;
     private OrganizationEntity organizationByOrganId;
     private Collection<OrderAccountEntity> orderAccountsById;
     private Collection<OrderCashEntity> orderCashesById;
     private Collection<SettlementEntity> settlementsById;
 
+
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -39,47 +34,7 @@ public class CourseEntity {
     }
 
     @Basic
-    @Column(name = "end_time", nullable = false)
-    public Timestamp getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
-    }
-
-    @Basic
-    @Column(name = "price", nullable = false, precision = 0)
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    @Basic
-    @Column(name = "start_time", nullable = false)
-    public Timestamp getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
-    }
-
-    @Basic
-    @Column(name = "state", nullable = false)
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    @Basic
-    @Column(name = "teacher", nullable = false, length = 255)
+    @Column(name = "teacher")
     public String getTeacher() {
         return teacher;
     }
@@ -89,7 +44,57 @@ public class CourseEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "organ_id")
+    public String getOrganId() {
+        return organId;
+    }
+
+    public void setOrganId(String organId) {
+        this.organId = organId;
+    }
+
+    @Basic
+    @Column(name = "end_time")
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    @Basic
+    @Column(name = "start_time")
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    @Basic
+    @Column(name = "price")
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Basic
+    @Column(name = "state")
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    @Basic
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -99,13 +104,13 @@ public class CourseEntity {
     }
 
     @Basic
-    @Column(name = "organ_id", nullable = false, length = 255)
-    public String getOrganId() {
-        return organId;
+    @Column(name = "description")
+    public String getDescription() {
+        return description;
     }
 
-    public void setOrganId(String organId) {
-        this.organId = organId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -118,11 +123,12 @@ public class CourseEntity {
         if (id != that.id) return false;
         if (Double.compare(that.price, price) != 0) return false;
         if (state != that.state) return false;
+        if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
+        if (organId != null ? !organId.equals(that.organId) : that.organId != null) return false;
         if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
         if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
-        if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (organId != null ? !organId.equals(that.organId) : that.organId != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
 
         return true;
     }
@@ -132,19 +138,20 @@ public class CourseEntity {
         int result;
         long temp;
         result = id;
+        result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
+        result = 31 * result + (organId != null ? organId.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
+        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + state;
-        result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (organId != null ? organId.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
 
     @ManyToOne
-    @JoinColumn(name = "organ_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "organ_id", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public OrganizationEntity getOrganizationByOrganId() {
         return organizationByOrganId;
     }

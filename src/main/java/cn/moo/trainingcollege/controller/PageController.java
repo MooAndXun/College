@@ -11,7 +11,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/page")
-public class PageController {
+public class PageController extends BaseController {
 
     @RequestMapping("/components")
     public String components(Model model) {

@@ -1,33 +1,30 @@
 <html lang="zh-CN"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
-
-<head th:replace="base/fragment::head('审批课程')"></head>
+<head th:replace="base/fragment::head('退订／退课课程')"></head>
 
 <body>
-<header th:replace="base/fragment::header(0)"></header>
+<header th:replace="base/fragment::header(${session.userType}, 0)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 0, 2)"></div>
     </div>
 
     <div class="page-content">
       <div class="segment">
         <div class="segment-title">
           <div class="title-rect"></div>
-          <h2 class="title">待审批课程</h2>
+          <h2 class="title">我的课程</h2>
         </div>
         <div class="ui divided items vertical-list">
-          <div class="item" th:each="course:${courseList}" th:attr="data-id=${course.id}">
+          <div class="item" th:each="course:${courseList}" th:data-order-id="${course.orderId}">
             <img src="../build/img/course1.png" />
             <div class="content">
               <div class="item-title">
-                <h3 th:text="course.name">演员的自我修养</h3>
-                <div class="ui label horizontal">未审批</div>
+                <h3 th:text="${course.name}">演员的自我修养</h3>
               </div>
               <div class="meta" th:text="${course.teacher}">尹天仇</div>
               <div class="meta">
@@ -35,10 +32,11 @@
               </div>
             </div>
             <div class="button-group">
-              <button class="ui button primary">同意</button>
-              <button class="ui button">详情</button>
+              <a class="ui button disabled" th:if="${course.isCancel}==true">已退订</a>
+              <a class="ui button disabled" th:if="${course.isQuit}==true">已退课</a>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -47,6 +45,8 @@
 </div>
 
 <footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::modal"/>
 
 <th:block th:replace="base/fragment::script"/>
 

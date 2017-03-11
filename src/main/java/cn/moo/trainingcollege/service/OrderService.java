@@ -36,4 +36,6 @@ public interface OrderService {
     public OrderAccountEntity getOrder(int orderId);
 
     public OrderAccountEntity getOrder(String studentId, int courseId);
+
+    public OrderAccountEntity getQuitOrCancelOrder(String studentId, int courseId);
 }

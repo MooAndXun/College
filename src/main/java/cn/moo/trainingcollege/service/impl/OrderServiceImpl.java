@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void quitCourse(int orderId) {
         OrderAccountEntity order = orderDao.getByColumn("id",orderId);
-        order.setQuitState(-1);
+        order.setQuitState(1);
         orderDao.update(order);
 
     }
@@ -118,6 +118,11 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public OrderAccountEntity getOrder(String studentId, int courseId) {
         return orderDao.getByStudentandCourse(studentId,courseId);
+    }
+
+    @Override
+    public OrderAccountEntity getQuitOrCancelOrder(String studentId, int courseId) {
+        return orderDao.getOverOrder(studentId,courseId);
     }
 
     private double getPrice(int level, double price){

@@ -6,8 +6,7 @@ import java.sql.Timestamp;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity
-@Table(name = "topup", schema = "training", catalog = "")
+@Entity(name = "topup")
 public class TopupEntity {
     private int id;
     private String studentId;
@@ -100,7 +99,7 @@ public class TopupEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "studentId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "studentId", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
     public StudentEntity getStudentByStudentId() {
         return studentByStudentId;
     }

@@ -10,4 +10,6 @@ import org.hibernate.criterion.Restrictions;
  */
 public interface OrderDao extends BaseDao<OrderAccountEntity> {
     public OrderAccountEntity getByStudentandCourse(String studentId,int courseId);
+
+    public OrderAccountEntity getOverOrder(String studentId, int courseId);
 }

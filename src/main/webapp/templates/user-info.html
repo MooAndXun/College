@@ -7,13 +7,14 @@ xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base/fragment::head('个人信息')"></head>
 
 <body>
-<header th:replace="base/fragment::header(0)"></header>
+<header th:replace="base/fragment::header(${session.userType}, 1)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType},1,0)"></div>
+      <a class="ui primary button" th:href="@{/user/edit}">修改个人信息</a>
     </div>
 
     <div class="page-content">
@@ -34,6 +35,10 @@ xmlns:th="http://www.thymeleaf.org">
           <div class="info-item">
             <p class="name">银行账户</p>
             <p class="value" th:text="${student.account}">00000000000010</p>
+          </div>
+          <div class="info-item">
+            <p class="name">余额</p>
+            <p class="value" th:text="${student.balance}">1000</p>
           </div>
           <div class="info-item">
             <p class="name">学员等级</p>

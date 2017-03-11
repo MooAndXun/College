@@ -6,13 +6,13 @@
 <head th:replace="base/fragment::head('课程详情')"></head>
 
 <body>
-<header th:replace="base/fragment::header(0)"></header>
+<header th:replace="base/fragment::header(${session.userType},0)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 0, -1)"></div>
     </div>
 
     <div class="page-content">
@@ -41,7 +41,7 @@
               <p class="value" th:text="${course.teacher}">尹天仇</p>
             </div>
             <div class="button-group">
-              <a class="ui button primary" th:href="@{/course/edit?id=${course.id}">修改</a>
+              <a class="ui button primary" th:href="@{/course/edit(id=${course.id})}">修改</a>
             </div>
           </div>
         </div>

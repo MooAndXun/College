@@ -6,13 +6,14 @@ xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base/fragment::head('编辑个人信息')"></head>
 
 <body>
-<header th:replace="base/fragment::header(0)"></header>
+<header th:replace="base/fragment::header(${session.userType}, 1)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType},1,-1)"></div>
+      <a class="ui primary button" th:href="@{/user/edit}">修改个人信息</a>
     </div>
 
     <div class="page-content">
@@ -21,10 +22,10 @@ xmlns:th="http://www.thymeleaf.org">
           <div class="title-rect"></div>
           <h2 class="title">编辑个人信息</h2>
         </div>
-        <form class="ui form info-form" action="#">
+        <form class="ui form info-form" action="#" th:action="@{/user/edit/student}" method="post">
           <div class="ui inline field disabled">
             <label class="info-label">用户ID</label>
-            <input class='disabled' type="text" placeholder="S0000001" th:placeholder="${student.id}">
+            <input class='disabled' name="id" type="text" placeholder="S0000001" th:value="${student.id}">
           </div>
           <div class="ui inline field">
             <label>用户头像</label>
@@ -32,15 +33,15 @@ xmlns:th="http://www.thymeleaf.org">
           </div>
           <div class="ui inline field">
             <label class="info-label">姓名</label>
-            <input type="text" placeholder="姓名" th:placeholder="${student.name}">
+            <input type="text" placeholder="姓名" name="name" th:value="${student.name}">
           </div>
           <div class="ui inline field">
             <label class="info-label">银行账户</label>
-            <input type="text" placeholder="银行账户" th:placeholder="${student.account}">
+            <input type="text" placeholder="银行账户" name="account" th:value="${student.account}">
           </div>
           <div class="ui inline field">
             <label></label>
-            <button class="ui button primary">确认</button>
+            <button class="ui button primary" type="submit">确认</button>
             <a class="ui button" onclick="history.go(-1)">取消</a>
           </div>
         </form>
@@ -51,18 +52,18 @@ xmlns:th="http://www.thymeleaf.org">
           <div class="title-rect"></div>
           <h2 class="title">修改密码</h2>
         </div>
-        <form class="ui form info-form" action="#">
-          <div class="ui inline field disabled">
+        <form class="ui form info-form" action="#" th:action="@{/user/password}" method="post">
+          <div class="ui inline field">
             <label class="info-label">原密码</label>
-            <input class='disabled' type="password" placeholder="原密码">
+            <input type="password" placeholder="原密码" name="oldPassword">
           </div>
           <div class="ui inline field">
             <label class="info-label">新密码</label>
-            <input type="text" placeholder="新密码">
+            <input type="password" placeholder="新密码" name="newPassword">
           </div>
           <div class="ui inline field">
             <label class="info-label">确认密码</label>
-            <input type="text" placeholder="确认新密码">
+            <input type="password" placeholder="确认新密码">
           </div>
           <div class="ui inline field">
             <label></label>
@@ -72,7 +73,6 @@ xmlns:th="http://www.thymeleaf.org">
         </form>
       </div>
     </div>
-
   </div>
 </div>
 

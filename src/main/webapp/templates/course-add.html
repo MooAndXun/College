@@ -6,13 +6,13 @@
 <head th:replace="base/fragment::head(${course}?'编辑课程':'新增课程')"></head>
 
 <body>
-<header th:replace="base/fragment::header(0)"></header>
+<header th:replace="base/fragment::header(${session.userType}, 0)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 0, -1)"></div>
     </div>
 
     <div class="page-content">
@@ -21,10 +21,10 @@
           <div class="title-rect"></div>
           <h2 class="title" th:text="${course}?'编辑课程':'新增课程'">新增课程</h2>
         </div>
-        <form class="ui form info-form" action="#" th:action="${course}?@{/course/edit(${course.id})}:@{/course/add}" method="post">
+        <form class="ui form info-form" action="#" th:action="${course}?@{/course/edit(id=${course.id})}:@{/course/add}" method="post">
           <div class="ui inline field">
             <label class="info-label">课程名</label>
-            <input type="text" placeholder="课程名" th:value="${course}?${course.name}">
+            <input type="text" name="name" placeholder="课程名" th:value="${course}?${course.name}">
           </div>
           <div class="ui inline field">
             <label>课程图片</label>
@@ -32,7 +32,7 @@
           </div>
           <div class="ui inline field">
             <label class="info-label">价格(¥)</label>
-            <input type="text" placeholder="价格" th:value="${course}?${course.price}">
+            <input type="text" name="price" placeholder="价格"  th:value="${course}?${course.price}">
           </div>
           <div class="ui inline field">
             <label>开始时间</label>
@@ -44,15 +44,15 @@
           </div>
           <div class="ui inline field">
             <label class="info-label">课程教师</label>
-            <input type="text" placeholder="课程教师" th:value="${course}?${course.teacher}">
+            <input type="text" name="teacher" placeholder="课程教师" th:value="${course}?${course.teacher}">
           </div>
           <div class="ui inline field">
             <label>课程简介</label>
-            <textarea placeholder="简介" th:value="${course}?${course.teacher}"></textarea>
+            <textarea name="description" placeholder="简介" th:text="${course}?${course.description}"></textarea>
           </div>
           <div class="ui inline field">
             <label></label>
-            <button class="ui button primary">确认</button>
+            <button class="ui button primary" type="submit">确认</button>
             <a class="ui button" onclick="history.go(-1)">取消</a>
           </div>
         </form>
