@@ -120,4 +120,17 @@ public class PageController extends BaseController {
         model.addAttribute("course", course);
         return "course-manage-detail";
     }
+
+    @RequestMapping("/stat/student")
+    public String StudentStat() {
+        return "student-stat";
+    }
+    @RequestMapping("/stat/organ")
+    public String OrganStat() {
+        return "organ-stat";
+    }
+    @RequestMapping("/stat/site")
+    public String SiteStat() {
+        return "site-stat";
+    }
 }

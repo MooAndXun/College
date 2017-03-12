@@ -1,0 +1,70 @@
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="base/fragment::head('网站统计')"></head>
+
+<body>
+  <header th:replace="base/fragment::header(${session.userType}, 1)"></header>
+
+  <div class="wrapper">
+    <div class="container">
+
+      <div class="page-content-left">
+        <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 1, 0)"></div>
+      </div>
+
+      <div class="page-content">
+        <div class="segment">
+          <div class="segment-title">
+            <div class="title-rect"></div>
+            <h2 class="title">数据概况</h2>
+          </div>
+
+          <div class="stat-number">
+            <div class="ui statistics three teal">
+              <div class="statistic">
+                <div class="value"><i class="child icon"></i>360</div>
+                <div class="label">总人数</div>
+              </div>
+              <div class="statistic">
+                <div class="value"><i class="yen icon"></i>20120</div>
+                <div class="label">总收入</div>
+              </div>
+              <div class="statistic">
+                <div class="value"><i class="book icon"></i>49</div>
+                <div class="label">总课程</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="segment">
+          <div class="segment-title">
+            <div class="title-rect"></div>
+            <h2 class="title">图表展示</h2>
+          </div>
+          <div class="stat-chart">
+            <div class="chart" id="site-income-line" style="width: 700px;height:400px;"></div>
+          </div>
+
+          <div class="stat-chart">
+            <div class="chart" id="site-member-line" style="width: 700px;height:400px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer th:replace="base/fragment::footer"></footer>
+
+  <th:block th:replace="base/fragment::modal"/>
+
+  <th:block th:replace="base/fragment::script"/>
+
+
+</body>
+
+</html>

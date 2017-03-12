@@ -6,7 +6,8 @@ import java.util.Collection;
 /**
  * Created by chenmuen on 2017/3/1.
  */
-@Entity(name="course")
+@Entity
+@Table(name = "course", schema = "training", catalog = "")
 public class CourseEntity {
     private int id;
     private String teacher;
@@ -21,7 +22,7 @@ public class CourseEntity {
     private Collection<OrderAccountEntity> orderAccountsById;
     private Collection<OrderCashEntity> orderCashesById;
     private Collection<SettlementEntity> settlementsById;
-
+    private boolean isSettled;
 
     @Id
     @Column(name = "id")
@@ -185,5 +186,15 @@ public class CourseEntity {
 
     public void setSettlementsById(Collection<SettlementEntity> settlementsById) {
         this.settlementsById = settlementsById;
+    }
+
+    @Basic
+    @Column(name = "is_settled")
+    public boolean isSettled() {
+        return isSettled;
+    }
+
+    public void setSettled(boolean settled) {
+        isSettled = settled;
     }
 }

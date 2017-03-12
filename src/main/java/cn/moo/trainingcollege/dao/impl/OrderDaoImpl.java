@@ -3,6 +3,7 @@ package cn.moo.trainingcollege.dao.impl;
 import cn.moo.trainingcollege.dao.OrderDao;
 import cn.moo.trainingcollege.entity.OrderAccountEntity;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -67,5 +68,25 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         criteria.add(Restrictions.eq("quitState", 0));
         int count = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
         return count;
+    }
+
+    @Override
+    public double getCourseNormalIncome(int courseId) {
+        String hql = "SELECT SUM(price) FROM order_account WHERE courseId = :courseId AND cancel = false AND quitState = 0 AND paid = true";
+
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery(hql).setInteger("courseId", courseId);
+        Object result = query.uniqueResult();
+        return result==null?0:(double)result;
+    }
+
+    @Override
+    public double getCourseQuitIncome(int courseId) {
+        String hql = "SELECT SUM(price) FROM order_account WHERE courseId = :courseId AND quitState = 1";
+
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery(hql).setInteger("courseId", courseId);
+        Object result = query.uniqueResult();
+        return result==null?0:(((double)result)/2);
     }
 }
