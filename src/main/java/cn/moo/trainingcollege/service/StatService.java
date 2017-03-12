@@ -54,7 +54,7 @@ public interface StatService {
      * @param organId
      * @return 收入List，过去十二个月的收入，顺序为从前到后
      */
-    public List<Integer> getOrganIncomeLine(String organId);
+    public List<Double> getOrganIncomeLine(String organId);
 
     /**
      * 获得机构的参加课程人数曲线（各个月之间不用去重）

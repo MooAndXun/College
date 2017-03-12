@@ -114,8 +114,17 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public List<Integer> getOrganIncomeLine(String organId) {
-        return null;
+    public List<Double> getOrganIncomeLine(String organId) {
+        List<Double> list = settlementDao.getOrganIncomeLine(organId);
+        int count = list.size()>12?12:list.size();
+        List<Double> result = new ArrayList<Double>();
+        for (int i = 0; i < 12-count; i++) {
+            result.add(0.0);
+        }
+        for (Double num:list) {
+            result.add(num);
+        }
+        return result;
     }
 
     @Override

@@ -52,6 +52,14 @@ public class StatTest extends BaseTest {
     public void getSiteIncome(){
         System.out.println(statService.getSiteIncome());
     }
+
+    @Test
+    public void getOrganIncomeLine(){
+        List<Double> list = statService.getOrganIncomeLine("O000001");
+        for (Double num:list) {
+            System.out.println(num);
+        }
+    }
 }
 
 
