@@ -128,7 +128,7 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public List<Double> getOrganMemberLine(String organId) {
+    public List<Integer> getOrganMemberLine(String organId) {
         return null;
     }
 
@@ -159,7 +159,7 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public List<Double> getSiteMemberLine() {
+    public List<Integer> getSiteMemberLine() {
         return null;
     }
 }

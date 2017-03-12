@@ -61,7 +61,7 @@ public interface StatService {
      * @param organId
      * @return 人数List，过去十二个月加入的人数，顺序为从前到后
      */
-    public List<Double> getOrganMemberLine(String organId);
+    public List<Integer> getOrganMemberLine(String organId);
 
     /**
      * 获得机构参与人数最高的课程名及其人数
@@ -98,6 +98,6 @@ public interface StatService {
      * 获得过去十二个月的加入人数
      * @return 人数List，过去十二个月加入的人数，排序为从前到后
      */
-    public List<Double> getSiteMemberLine();
+    public List<Integer> getSiteMemberLine();
 
 }
