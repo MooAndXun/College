@@ -53,6 +53,11 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+    public ManagerEntity getManager(String id) {
+        return managerDao.getById(id);
+    }
+
+    @Override
     public void updateManager(ManagerEntity manager) {
         managerDao.update(manager);
     }

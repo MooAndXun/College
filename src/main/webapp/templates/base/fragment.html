@@ -71,6 +71,7 @@
       </th:block>
       <th:block th:case="1">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">机构信息</a>
+        <a class="active item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/course/join}">添加学员</a>
       </th:block>
       <th:block th:case="2">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/stat/organ}">统计信息</a>
@@ -95,6 +96,7 @@
 <th:block th:fragment="script">
   <script th:inline="javascript">
       var message = [[${message}]]
+      var error_message = [[${errorMessage}]]
   </script>
 
   <script src="/build/js/jquery.min.js"></script>
@@ -117,4 +119,23 @@
     <a class="ui deny button">取消</a>
     <a class="ui primary ok button">确认</a>
   </div>
+</div>
+
+<div class="ui modal small" id="score-modal" th:fragment="score-modal">
+  <i class="close icon"></i>
+  <div class="header">
+    <p>登记成绩</p>
+  </div>
+    <div class="content">
+      <form class="ui form info-form" th:action="@{/course/score}" onsubmit="return false">
+        <div class="ui inline field score-field">
+          <label class="info-label">成绩</label>
+          <input class="fluid" type="text" placeholder="输入0至100中任意数字" id="score-input">
+        </div>
+      </form>
+    </div>
+    <div class="actions">
+      <a class="ui deny button">取消</a>
+      <a class="ui primary ok button">确认</a>
+    </div>
 </div>

@@ -60,33 +60,53 @@ public class MainController extends BaseController {
                         @RequestParam String password,
                         HttpSession session,
                         RedirectAttributes redirectAttributes) {
-        char type = id.charAt(0);
+        if(id==null||id.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage","账号为空");
+            return "redirect:login";
+        }
 
+        char type = id.charAt(0);
         switch (type) {
             case 'S':
-                if(studentService.checkLogin(id, password)) {
+                if(studentService.getStudent(id)==null){
+                    redirectAttributes.addFlashAttribute("message", "查无此ID");
+                } else if(studentService.checkLogin(id, password)) {
                     session.setAttribute("user", id);
                     session.setAttribute("userType", 0);
                     redirectAttributes.addFlashAttribute("message", "登录成功");
                     return "redirect:/course/all";
+                } else {
+                    redirectAttributes.addFlashAttribute("errorMessage", "密码错误");
                 }
                 break;
             case 'O':
-                if(organService.checkLogin(id, password)) {
+                if(organService.getOrgan(id)==null){
+                    redirectAttributes.addFlashAttribute("errorMessage", "查无此ID");
+                } else if(organService.checkLogin(id, password)) {
                     session.setAttribute("user", id);
                     session.setAttribute("userType", 1);
                     redirectAttributes.addFlashAttribute("message", "登录成功");
                     return "redirect:/course/manage";
+                } else {
+                    redirectAttributes.addFlashAttribute("errorMessage", "密码错误");
                 }
                 break;
             case 'M':
-                if(managerService.checkLogin(id, password)) {
+                if(managerService.getManager(id)==null){
+                    redirectAttributes.addFlashAttribute("errorMessage", "查无此ID");
+                } else if(managerService.checkLogin(id, password)) {
                     session.setAttribute("user", id);
                     session.setAttribute("userType", 2);
                     redirectAttributes.addFlashAttribute("message", "登录成功");
                     return "redirect:/course/approve";
+                } else {
+                    redirectAttributes.addFlashAttribute("errorMessage", "密码错误");
                 }
                 break;
+            default:
+                redirectAttributes.addFlashAttribute("errorMessage", "查无此ID");
+                break;
+
         }
 
         return "redirect:/login";

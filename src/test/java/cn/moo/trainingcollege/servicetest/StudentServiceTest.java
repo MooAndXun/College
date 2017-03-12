@@ -15,7 +15,7 @@ public class StudentServiceTest extends BaseTest{
 
     @Test
     public void getStudentTest(){
-        System.out.println(studentService.getStudent("S1").getId());
+        System.out.println(studentService.getStudent("S000002").getId());
     }
 
     @Test

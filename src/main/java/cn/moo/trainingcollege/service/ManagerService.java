@@ -17,6 +17,8 @@ public interface ManagerService {
 
     public void updateManager(ManagerEntity manager);
 
+    public ManagerEntity getManager(String id);
+
     public void approve(int courseId, boolean isApprove);
 
     public void approveQuit(int orderId, boolean isApprove);
