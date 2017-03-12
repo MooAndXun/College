@@ -56,6 +56,7 @@
       <th:block th:case="1">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">个人信息</a>
         <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/user/topup}">充值</a>
+        <a class="item" th:class="'item '+(${subActive}==2?'active')" th:href="@{/user/exchange}">积分兑换</a>
       </th:block>
       <th:block th:case="2">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/stat/student}">统计信息</a>

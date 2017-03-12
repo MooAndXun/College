@@ -24,4 +24,6 @@ public interface StudentService {
     public void topUp(String studentId, int money);
 
     public void cancel(String studentId);
+
+    public void exchange(String studentId, int point);
 }

@@ -88,6 +88,17 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    @Override
+    public void exchange(String studentId, int point) {
+        StudentEntity student = studentDao.getById(studentId);
+        if(student != null) {
+            int currentPoint = student.getPoint();
+            student.setPoint(currentPoint-point>=0?(currentPoint-point):0);
+            student.setBalance(student.getBalance()+(double)point);
+            studentDao.update(student);
+        }
+    }
+
     private int getLevel(int exp){
         if(exp<2000){
             return 1;

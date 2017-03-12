@@ -85,6 +85,11 @@ public class UserController extends BaseController {
         return "topup";
     }
 
+    @RequestMapping(value = "/exchange", method = RequestMethod.GET)
+    public String exchangePage() {
+        return "exchange";
+    }
+
 
     /*------------- Action -------------*/
     @RequestMapping(value = "/topup", method = RequestMethod.POST)
@@ -155,5 +160,22 @@ public class UserController extends BaseController {
         }
 
         return "redirect:/user/edit";
+    }
+
+    @RequestMapping(value = "/exchange", method = RequestMethod.POST)
+    public String exchange(@RequestParam int point, HttpSession session, RedirectAttributes redirectAttributes) {
+        String studentId = getUserId(session);
+        studentService.exchange(studentId, point);
+
+        redirectAttributes.addFlashAttribute("message", "兑换积分成功");
+        return "redirect:/user/info";
+    }
+
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public String cancel(HttpSession session, RedirectAttributes redirectAttributes) {
+        String studentId = getUserId(session);
+        studentService.cancel(studentId);
+        redirectAttributes.addFlashAttribute("message", "注销用户成功，该用户不可再被使用");
+        return "redirect:/login";
     }
 }

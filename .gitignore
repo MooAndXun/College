@@ -19,3 +19,4 @@ src/main/webapp/assets
 src/main/webapp/node_modules
 src/main/webapp/semantic
 src/main/webapp/semantic.json
+/src/main/webapp/templates_origin/
