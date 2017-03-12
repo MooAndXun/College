@@ -29,4 +29,13 @@ public class SettlementDaoImpl extends BaseDaoImpl<SettlementEntity> implements 
         double income = (double)list.get(0);
         return income;
     }
+
+    @Override
+    public List<Double> getOrganIncomeLine(String organId) {
+        String sql = "SELECT SUM(money) AS income FROM settlement WHERE organization_id = '"+organId+"' AND created_at > DATE_SUB(NOW(),INTERVAL 1 YEAR) GROUP BY DATE_FORMAT(created_at,'%y%m') ORDER BY DATE_FORMAT(created_at,'%y%m');";
+        Session session = sessionFactory.getCurrentSession();
+        List<Double> list = (List<Double>)session.createSQLQuery(sql).list();
+        return list;
+
+    }
 }
