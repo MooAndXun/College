@@ -10,6 +10,7 @@ import cn.moo.trainingcollege.service.StatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -116,25 +117,28 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<Double> getOrganIncomeLine(String organId) {
         List<Double> list = settlementDao.getOrganIncomeLine(organId);
-        int count = list.size()>12?12:list.size();
-        List<Double> result = new ArrayList<Double>();
-        for (int i = 0; i < 12-count; i++) {
-            result.add(0.0);
-        }
-        for (Double num:list) {
-            result.add(num);
-        }
+        List<Double> result  = changeSizeOfList(list);
         return result;
     }
 
     @Override
     public List<Integer> getOrganMemberLine(String organId) {
-        return null;
+        List<BigInteger> list = settlementDao.getOrganMemberLine(organId);
+        int count = list.size()>12?12:list.size();
+        List<Integer> result = new ArrayList<Integer>();
+        for (int i = 0; i < 12-count; i++) {
+            result.add(0);
+        }
+        for (BigInteger num:list) {
+            result.add(num.intValue());
+        }
+        return result;
     }
 
     @Override
     public Map<String, Object> getOrganTopCourse(String organId) {
-        return null;
+
+        return settlementDao.getOrganTopCourse(organId);
     }
 
     @Override
@@ -155,11 +159,25 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public List<Double> getSiteIncomeLine() {
-        return null;
+        List<Double> list = settlementDao.getSiteIncomeLine();
+        List<Double> result  = changeSizeOfList(list);
+        return result;
     }
 
     @Override
     public List<Integer> getSiteMemberLine() {
         return null;
+    }
+
+    private List<Double> changeSizeOfList(List<Double> list){
+        int count = list.size()>12?12:list.size();
+        List<Double> result = new ArrayList<Double>();
+        for (int i = 0; i < 12-count; i++) {
+            result.add(0.0);
+        }
+        for (Double num:list) {
+            result.add(num);
+        }
+        return result;
     }
 }

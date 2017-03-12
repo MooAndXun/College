@@ -66,7 +66,7 @@ public interface StatService {
     /**
      * 获得机构参与人数最高的课程名及其人数
      * @param organId
-     * @return 拥有两个List的Map，names-课程名列表List<String>，members-成员名列表List<Integet>，排序为从高到低
+     * @return 拥有两个List的Map，names-课程名列表List<String>，members-成员数列表List<Integet>，排序为从高到低
      */
     public Map<String, Object> getOrganTopCourse(String organId);
 

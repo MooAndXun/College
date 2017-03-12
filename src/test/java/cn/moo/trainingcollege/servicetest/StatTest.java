@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 小春 on 2017/3/11.
@@ -58,6 +59,23 @@ public class StatTest extends BaseTest {
         List<Double> list = statService.getOrganIncomeLine("O000001");
         for (Double num:list) {
             System.out.println(num);
+        }
+    }
+
+    @Test
+    public void getOrganMemberLine(){
+        List<Integer> list = statService.getOrganMemberLine("O000001");
+        for (Integer num:list) {
+            System.out.println(num);
+        }
+    }
+
+    @Test
+    public void getOrganTopCourse(){
+        Map<String,Object> map = statService.getOrganTopCourse("O000002");
+        List<String> list = (List<String>)map.get("names");
+        for (String name:list) {
+            System.out.println(name);
         }
     }
 }
