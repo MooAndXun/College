@@ -129,19 +129,25 @@ public class MainController extends BaseController {
                 StudentEntity studentEntity = new StudentEntity();
                 studentEntity.setName(name);
                 studentEntity.setPassword(password);
-                studentService.addStudent(studentEntity);
+                id = studentService.addStudent(studentEntity);
+                redirectAttributes.addFlashAttribute("id", id);
+                redirectAttributes.addFlashAttribute("message", "注册成功，请记住账号");
                 break;
             case 1:
                 OrganizationEntity organizationEntity = new OrganizationEntity();
                 organizationEntity.setName(name);
                 organizationEntity.setPassword(password);
-                organService.addOrgan(organizationEntity);
+                id = organService.addOrgan(organizationEntity);
+                redirectAttributes.addFlashAttribute("id", id);
+                redirectAttributes.addFlashAttribute("message", "注册成功，请记住账号");
                 break;
             case 2:
                 ManagerEntity managerEntity = new ManagerEntity();
                 managerEntity.setName(name);
                 managerEntity.setPassword(password);
-                managerService.addManager(managerEntity);
+                id = managerService.addManager(managerEntity);
+                redirectAttributes.addFlashAttribute("id", id);
+                redirectAttributes.addFlashAttribute("message", "注册成功，请记住账号");
                 break;
         }
 

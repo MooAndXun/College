@@ -60,6 +60,14 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
     }
 
     @Override
+    public List<Integer> getStudentJoinedCourseMonth(String studentId) {
+        String sql = "SELECT COUNT(course_id) FROM `order_account` WHERE student_id = '"+studentId+"' AND is_cancel=0 AND quit_state=0 AND created_at > DATE_SUB(NOW(),INTERVAL 1 YEAR) GROUP BY DATE_FORMAT(created_at,'%y%m') ORDER BY DATE_FORMAT(created_at,'%y%m');";
+        Session session = sessionFactory.getCurrentSession();
+        List<Integer> list = (List<Integer>)session.createSQLQuery(sql).list();
+        return list;
+    }
+
+    @Override
     public int getStudentNumofCourse(int courseId) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(OrderAccountEntity.class);

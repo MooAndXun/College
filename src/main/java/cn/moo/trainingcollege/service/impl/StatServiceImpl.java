@@ -9,6 +9,7 @@ import cn.moo.trainingcollege.entity.OrderAccountEntity;
 import cn.moo.trainingcollege.service.StatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Map;
  * Created by 小春 on 2017/3/11.
  */
 @Service
+@Transactional
 public class StatServiceImpl implements StatService {
     @Autowired
     OrderDao orderDao;
@@ -53,6 +55,11 @@ public class StatServiceImpl implements StatService {
         }
 
         return score/count;
+    }
+
+    @Override
+    public List<Integer> getStudentCourseLine(String studentId) {
+        return null;
     }
 
     /**

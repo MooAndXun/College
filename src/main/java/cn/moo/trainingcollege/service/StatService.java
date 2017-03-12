@@ -29,6 +29,13 @@ public interface StatService {
     public List<Integer> getStudentScoreDistribution(String studentId);
 
     /**
+     * 获得学生加入课程时间线
+     * @param studentId
+     * @return
+     */
+    public List<Integer> getStudentCourseLine(String studentId);
+
+    /**
      * 获得机构课程总数
      * @param organId
      * @return

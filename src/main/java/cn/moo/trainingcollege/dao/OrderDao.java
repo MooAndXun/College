@@ -22,6 +22,8 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
      */
     public List<OrderAccountEntity> getStudentCourseList(String studentId);
 
+    public List<Integer> getStudentJoinedCourseMonth(String studentId);
+
     /**
      * 获得某个课程的学生人数
      */

@@ -16,7 +16,7 @@
         <div id="first-divider" class="ui divider"></div>
         <div class="field">
           <label for="name">账号</label>
-          <input id="name" class="ui input" type="text" placeholder="用户名" name="id">
+          <input id="name" class="ui input" type="text" placeholder="用户名" name="id" th:value="${id}?${id}">
         </div>
         <div class="field">
           <label for="password">密码</label>
