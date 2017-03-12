@@ -64,7 +64,7 @@
           <h2 class="title">当前学员</h2>
         </div>
         <div class="ui relaxed divided list member-list">
-          <div class="item member-item" th:each="student:${studentList}">
+          <div class="item member-item" th:each="student:${studentList}" th:data-order-id="${student.orderId}" th:data-course-id="${course.id}">
             <!--<img src="" alt="" class="avatar">-->
             <i class="circular inverted large user middle aligned icon avatar"></i>
             <div class="content middle aligned">
@@ -72,10 +72,10 @@
               <div class="description">于 <span th:text="${student.joinTime}">2016-10-12</span> 加入</div>
             </div>
 
-            <th:block th:if="${student.score==(-1)}">
-              <button class="ui button">登记成绩</button>
+            <th:block th:if="${student.score}==(-1)">
+              <button class="ui button score-button">登记成绩</button>
             </th:block>
-            <th:block th:unless="${student.score==(-1)}">
+            <th:block th:unless="${student.score}==(-1)">
               <p class="score"><span th:text="${student.score}">96</span> 分</p>
             </th:block>
 
@@ -88,6 +88,8 @@
 </div>
 
 <footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::score-modal"/>
 
 <th:block th:replace="base/fragment::script"/>
 

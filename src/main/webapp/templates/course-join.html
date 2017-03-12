@@ -13,7 +13,7 @@
 
     <div class="page-content-left">
       <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 1, 1)"></div>
-      <a class="ui primary button" th:href="@{/user/edit}">修改个人信息</a>
+      <a class="ui primary button" th:href="@{/user/edit}">修改机构信息</a>
     </div>
 
     <div class="page-content">
@@ -26,11 +26,11 @@
           <div class="ui inline field radio-field">
             <label class="info-label">学员类型</label>
             <div class="ui radio checkbox">
-              <input type="radio" name="type" value="member" checked="checked" onchange="bindMemberTypeCheckBox(this.value)">
+              <input type="radio" name="type" value="member" checked="checked" onchange="bindMemberTypeCheckbox(this.value)">
               <label>会员</label>
             </div>
             <div class="ui radio checkbox">
-              <input type="radio" name="type" value="non-member" onchange="bindMemberTypeCheckBox(this.value)">
+              <input type="radio" name="type" value="non-member" onchange="bindMemberTypeCheckbox(this.value)">
               <label>非会员</label>
             </div>
           </div>

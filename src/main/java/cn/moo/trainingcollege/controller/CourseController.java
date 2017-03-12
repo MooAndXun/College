@@ -6,6 +6,7 @@ import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.CourseService;
 import cn.moo.trainingcollege.service.ManagerService;
 import cn.moo.trainingcollege.service.OrderService;
+import cn.moo.trainingcollege.service.StudentService;
 import cn.moo.trainingcollege.utils.MapUtil;
 import cn.moo.trainingcollege.utils.TimeUtil;
 import com.sun.deploy.util.ArrayUtil;
@@ -36,12 +37,15 @@ public class CourseController extends BaseController {
     @Autowired
     private ManagerService managerService;
 
+    @Autowired
+    private StudentService studentService;
+
     /*------------- Page -------------*/
     // DONE
     @RequestMapping("/all")
-    public String courseAllPage(@RequestParam(required = false)String keywords, Model model, HttpSession session) {
+    public String courseAllPage(@RequestParam(required = false) String keywords, Model model, HttpSession session) {
         String userId = getUserId(session);
-        if(keywords==null) {
+        if (keywords == null) {
             model.addAttribute("courseList", MapUtil.beanListToMap(courseService.search("", userId)));
         } else {
             model.addAttribute("courseList", MapUtil.beanListToMap(courseService.search(keywords, userId)));
@@ -51,9 +55,9 @@ public class CourseController extends BaseController {
 
     // DONE
     @RequestMapping("/detail")
-    public String courseDetailPage(@RequestParam int id, HttpSession session, Model model){
+    public String courseDetailPage(@RequestParam int id, HttpSession session, Model model) {
         CourseEntity courseEntity = courseService.getCourse(id);
-        String userId = (String)session.getAttribute("user");
+        String userId = (String) session.getAttribute("user");
         OrderAccountEntity order = orderService.getOrder(userId, id);
 
         List<Map> studentMapList = getJoinedStudentList(id);
@@ -71,11 +75,11 @@ public class CourseController extends BaseController {
     //DONE
     @RequestMapping("/mine")
     public String courseMinePage(HttpSession session, Model model) {
-        String userId = (String)session.getAttribute("user");
+        String userId = (String) session.getAttribute("user");
         List<CourseEntity> courseEntityList = courseService.getJoinedCourseList(userId);
         List<Map> courseMapList = new ArrayList<>();
-        for (CourseEntity courseEntity:
-             courseEntityList) {
+        for (CourseEntity courseEntity :
+                courseEntityList) {
             int courseId = courseEntity.getId();
             OrderAccountEntity orderAccountEntity = orderService.getOrder(userId, courseId);
 
@@ -94,18 +98,18 @@ public class CourseController extends BaseController {
     //DONE
     @RequestMapping("/over")
     public String courseOverPage(HttpSession session, Model model) {
-        String userId = (String)session.getAttribute("user");
+        String userId = (String) session.getAttribute("user");
         List<CourseEntity> courseEntityList = courseService.getStudentEndedCourseList(userId);
 
         List<Map> courseMapList = new ArrayList<>();
-        for (CourseEntity courseEntity:
+        for (CourseEntity courseEntity :
                 courseEntityList) {
             int courseId = courseEntity.getId();
             OrderAccountEntity orderAccountEntity = orderService.getQuitOrCancelOrder(userId, courseId);
 
             Map<String, Object> courseMap = MapUtil.beanToMap(courseEntity);
             courseMap.put("isCancel", orderAccountEntity.isCancel());
-            courseMap.put("isQuit", orderAccountEntity.getQuitState()==1);
+            courseMap.put("isQuit", orderAccountEntity.getQuitState() == 1);
             courseMap.put("orderId", orderAccountEntity.getId());
             courseMap.put("price", orderAccountEntity.getPrice());
             courseMapList.add(courseMap);
@@ -118,7 +122,7 @@ public class CourseController extends BaseController {
     // DONE
     @RequestMapping("/manage")
     public String courseManagePage(HttpSession session, Model model) {
-        String organId = (String)session.getAttribute("user");
+        String organId = (String) session.getAttribute("user");
         List<CourseEntity> courseEntityList = courseService.getOrganCourseList(organId);
         List<Map> courseMapList = new ArrayList<>();
         for (CourseEntity courseEntity : courseEntityList) {
@@ -132,10 +136,10 @@ public class CourseController extends BaseController {
 
     // DONE
     @RequestMapping("/manage/detail")
-    public String courseManageDetailPage(@RequestParam int id, Model model){
+    public String courseManageDetailPage(@RequestParam int id, Model model) {
         CourseEntity courseEntity = courseService.getCourse(id);
-
         List<Map> studentMapList = getJoinedStudentList(id);
+
         model.addAttribute("course", MapUtil.beanToMap(courseEntity));
         model.addAttribute("studentList", studentMapList);
 
@@ -157,7 +161,6 @@ public class CourseController extends BaseController {
     }
 
 
-
     // DONE
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String courseEditPage(@RequestParam("id") int courseId, ModelMap model) {
@@ -169,8 +172,9 @@ public class CourseController extends BaseController {
 
     // DONE
     @RequestMapping("/join")
-    public String joinPage(Model model) {
-        List<CourseEntity> courseEntityList = courseService.getUnclosedCourseList("");
+    public String joinPage(HttpSession session, Model model) {
+        String organId = getUserId(session);
+        List<CourseEntity> courseEntityList = courseService.getOrganCourseList(organId);
         model.addAttribute("courseList", MapUtil.beanListToMap(courseEntityList));
         return "course-join";
     }
@@ -179,7 +183,7 @@ public class CourseController extends BaseController {
     // DONE
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String courseAdd(@ModelAttribute CourseEntity courseEntity, HttpSession session) {
-        String organId = (String)session.getAttribute("user");
+        String organId = (String) session.getAttribute("user");
         courseEntity.setOrganId(organId);
         courseService.addCourse(courseEntity);
 
@@ -189,11 +193,11 @@ public class CourseController extends BaseController {
     // DONE
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String courseEdit(@ModelAttribute CourseEntity courseEntity, HttpSession session) {
-        courseEntity.setOrganId((String)session.getAttribute("user"));
+        courseEntity.setOrganId((String) session.getAttribute("user"));
         System.out.println(MapUtil.beanToMap(courseEntity));
         courseService.updateCourse(courseEntity);
 
-        return "redirect:/course/edit?id="+courseEntity.getId();
+        return "redirect:/course/edit?id=" + courseEntity.getId();
     }
 
 
@@ -228,11 +232,60 @@ public class CourseController extends BaseController {
     }
 
     @RequestMapping(value = "/quit", method = RequestMethod.POST)
-    public String quit(@RequestParam int id,  RedirectAttributes redirectAttributes) {
+    public String quit(@RequestParam int id, RedirectAttributes redirectAttributes) {
         orderService.quitCourse(id);
         setMessege(redirectAttributes, "退课成功");
         return "redirect:/course/mine";
     }
+
+    @RequestMapping(value = "/join", method = RequestMethod.POST)
+    public String join(@RequestParam(required = false) String id,
+                       @RequestParam(required = false) String name,
+                       @RequestParam int courseId,
+                       @RequestParam String type,
+                       RedirectAttributes redirectAttributes) {
+        CourseEntity courseEntity = courseService.getCourse(courseId);
+        if (TimeUtil.isBeforeToday(courseEntity.getEndTime())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "该课程已过期");
+        } else {
+            switch (type) {
+                case "member":
+                    System.out.println(studentService);
+                    StudentEntity studentEntity = studentService.getStudent(id);
+                    if (studentEntity == null) {
+                        redirectAttributes.addFlashAttribute("errorMessage", "该会员不存在");
+
+                    } else if (orderService.getOrder(id, courseId) != null) {
+                        redirectAttributes.addFlashAttribute("errorMessage", "会员已加入该课程");
+                    } else {
+                        orderService.orderCourse(id, courseId);
+                        redirectAttributes.addFlashAttribute("message", "加入课程成功");
+
+                    }
+                    break;
+                case "non-member":
+                    orderService.orderCourseCash(name, courseId);
+                    redirectAttributes.addFlashAttribute("message", "加入课程成功");
+                    break;
+                default:
+                    redirectAttributes.addFlashAttribute("errorMessage", "参数错误");
+                    break;
+            }
+        }
+
+        return "redirect:/course/join";
+    }
+
+    @RequestMapping(value = "score", method = RequestMethod.POST)
+    public String score(@RequestParam int orderId,
+                        @RequestParam int courseId,
+                        @RequestParam int score,
+                        RedirectAttributes redirectAttributes) {
+        orderService.score(orderId, score);
+        redirectAttributes.addFlashAttribute("message", "登记成绩成功");
+        return "redirect: /course/manage/detail?id="+courseId;
+    }
+
 
     /*------------- Other -------------*/
     public List<Map> getJoinedStudentList(int id) {
@@ -241,17 +294,18 @@ public class CourseController extends BaseController {
         for (StudentEntity studentEntity : studentList) {
             String studentId = studentEntity.getId();
             OrderAccountEntity orderAccountEntity = orderService.getOrder(studentId, id);
-            if(orderAccountEntity==null) {
+            if (orderAccountEntity == null) {
                 studentEntity = null;
             } else {
                 Map<String, Object> studentMap = MapUtil.beanToMap(studentEntity);
+                studentMap.put("orderId", orderAccountEntity.getId());
                 studentMap.put("score", orderAccountEntity.getScore());
                 studentMap.put("joinTime", TimeUtil.timestampToDateString(orderAccountEntity.getCreatedAt()));
                 studentMapList.add(studentMap);
             }
         }
         for (int i = 0; i < studentList.size(); i++) {
-            if(studentList.get(i)==null) {
+            if (studentList.get(i) == null) {
                 studentList.remove(i);
                 i--;
             }

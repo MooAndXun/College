@@ -33,4 +33,8 @@ public class TimeUtil {
         return ts;
     }
 
+    public static boolean isBeforeToday(String dateStr) {
+        return dateStringToTimestamp(dateStr).before(getCurrentTime());
+    }
+
 }
