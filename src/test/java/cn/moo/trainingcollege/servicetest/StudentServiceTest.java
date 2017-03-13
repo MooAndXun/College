@@ -1,10 +1,13 @@
 package cn.moo.trainingcollege.servicetest;
 
 import cn.moo.trainingcollege.BaseTest;
+import cn.moo.trainingcollege.dao.StudentDao;
 import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.StudentService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * Created by chenmuen on 2017/2/12.
@@ -12,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class StudentServiceTest extends BaseTest{
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    StudentDao studentDao;
 
     @Test
     public void getStudentTest(){
@@ -36,5 +42,11 @@ public class StudentServiceTest extends BaseTest{
         student.setAccount("23232323444044");
         String id = studentService.addStudent(student);
         System.out.println(id);
+    }
+
+    @Test
+    public void getSiteStudentCount() {
+        List<Integer> list = studentDao.getSiteStudentLine();
+        System.out.println(list);
     }
 }

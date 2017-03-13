@@ -91,14 +91,14 @@ function initStudentScoreChart() {
 }
 
 function initStudentCourseChart() {
-    // $.get("/stat/student/course", function (message) {
-    var xData = ['Jen', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var yData = message ? message.data : [1, 2, 2, 3, 1, 1, 2, 2, 3, 1, 1, 2];
+    $.get("/stat/student/course/line?studentId="+userId, function (message) {
+        var xData = getMonthList();
+        var yData = message ? message : [1, 2, 2, 3, 1, 1, 2, 2, 3, 1, 1, 2];
 
-    if ($("#student-course-line").length > 0) {
-        lineChart("student-course-line", "参与课程数量曲线图", "月份", "课程数", xData, yData);
-    }
-    // });
+        if ($("#student-course-line").length > 0) {
+            lineChart("student-course-line", "参与课程数量曲线图", "月份", "课程数", xData, yData);
+        }
+    });
 
     // if($('#student-course-line').length > 0) {
     //     var myChart = echarts.init(document.getElementById('student-course-line'));

@@ -32,4 +32,6 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
     public double getCourseNormalIncome(int courseId);
 
     public double getCourseQuitIncome(int courseId);
+
+    public List<Integer> getStudentCourseLine(String studentId);
 }

@@ -57,5 +57,5 @@ public interface BaseDao<T> {
     public int getCounts();
 
     @SuppressWarnings("rawtypes")
-    public int getCounts(String columnName, String keyword);
+    public int getCounts(String columnName, Object value);
 }

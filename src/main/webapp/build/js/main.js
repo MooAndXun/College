@@ -133,7 +133,7 @@ function bindMemberTypeCheckbox(value) {
 
 function modal(message, callback) {
     $("#modal-content").html(message);
-    $(".ui.modal")
+    $(".ui.modal#modal")
         .modal('setting', 'transition', "FadeUp")
         .modal({
             inverted: true,

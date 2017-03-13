@@ -17,7 +17,7 @@ public interface SettlementDao extends BaseDao<SettlementEntity> {
 
     public List<Double> getOrganIncomeLine(String organId);
 
-    public  List<BigInteger> getOrganMemberLine(String organId);
+    public  List<Integer> getOrganMemberLine(String organId);
 
     public List<Double> getSiteIncomeLine();
 

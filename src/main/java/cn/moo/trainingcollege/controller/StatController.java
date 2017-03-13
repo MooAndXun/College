@@ -65,7 +65,7 @@ public class StatController extends BaseController {
     @RequestMapping("/student/course/line")
     @ResponseBody
     public List studentCourse(@RequestParam String studentId) {
-        return null;
+        return statService.getStudentCourseLine(studentId);
     }
 
     @RequestMapping("/organ/income/line")

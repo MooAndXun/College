@@ -59,7 +59,7 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public List<Integer> getStudentCourseLine(String studentId) {
-        return null;
+        return orderDao.getStudentCourseLine(studentId);
     }
 
     /**
@@ -124,22 +124,13 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<Double> getOrganIncomeLine(String organId) {
         List<Double> list = settlementDao.getOrganIncomeLine(organId);
-        List<Double> result  = changeSizeOfList(list);
-        return result;
+        return list;
     }
 
     @Override
     public List<Integer> getOrganMemberLine(String organId) {
-        List<BigInteger> list = settlementDao.getOrganMemberLine(organId);
-        int count = list.size()>12?12:list.size();
-        List<Integer> result = new ArrayList<Integer>();
-        for (int i = 0; i < 12-count; i++) {
-            result.add(0);
-        }
-        for (BigInteger num:list) {
-            result.add(num.intValue());
-        }
-        return result;
+        List<Integer> list = settlementDao.getOrganMemberLine(organId);
+        return list;
     }
 
     @Override
@@ -160,20 +151,19 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public int getSiteCourseCount() {
-        int result = courseDao.getCounts("state","0") + courseDao.getCounts("state","1");
+        int result = courseDao.getCounts("state",1) + courseDao.getCounts("state",0);
         return result;
     }
 
     @Override
     public List<Double> getSiteIncomeLine() {
         List<Double> list = settlementDao.getSiteIncomeLine();
-        List<Double> result  = changeSizeOfList(list);
-        return result;
+        return list;
     }
 
     @Override
     public List<Integer> getSiteMemberLine() {
-        return null;
+        return studentDao.getSiteStudentLine();
     }
 
     private List<Double> changeSizeOfList(List<Double> list){

@@ -1,6 +1,7 @@
 package cn.moo.trainingcollege.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Created by 小春 on 2017/3/11.
@@ -22,6 +23,7 @@ public class StudentEntity {
     private int state;
     private String name;
     private int exp;
+    private Timestamp createdAt;
 
     @Id
     @Column(name = "id", nullable = false, length = 255)
@@ -148,5 +150,15 @@ public class StudentEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + exp;
         return result;
+    }
+
+    @Basic
+    @Column(name = "created_at")
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createAt) {
+        this.createdAt = createAt;
     }
 }

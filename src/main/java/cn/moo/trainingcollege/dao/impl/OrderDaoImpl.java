@@ -97,4 +97,18 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         Object result = query.uniqueResult();
         return result==null?0:(((double)result)/2);
     }
+
+    @Override
+    public List<Integer> getStudentCourseLine(String studentId) {
+        String sql =
+                "SELECT DATE_FORMAT(created_at, '%c') AS month, COUNT(DISTINCT course_id) AS num " +
+                "FROM order_account " +
+                "WHERE student_id = '"+studentId+"' " +
+                "      AND is_cancel = 0 " +
+                "      AND created_at > DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
+                "GROUP BY DATE_FORMAT(created_at, '%y%m') " +
+                "ORDER BY DATE_FORMAT(created_at, '%y%m') ";
+
+        return getIntTimeLine(sql);
+    }
 }

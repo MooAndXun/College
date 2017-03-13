@@ -71,7 +71,9 @@
               <a class="header" th:text="${student.name}">托尼·斯塔克</a>
               <div class="description">于 <span th:text="${student.joinTime}">2016-10-12</span> 加入</div>
             </div>
-
+            <th:block th:if="${student.score}==(-1)">
+              <button class="ui button quit-button">退课</button>
+            </th:block>
             <th:block th:if="${student.score}==(-1)">
               <button class="ui button score-button">登记成绩</button>
             </th:block>
@@ -88,6 +90,8 @@
 </div>
 
 <footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::modal"/>
 
 <th:block th:replace="base/fragment::score-modal"/>
 

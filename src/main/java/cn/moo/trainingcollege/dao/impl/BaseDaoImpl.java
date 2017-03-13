@@ -8,12 +8,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Moo on 2017/1/13.
@@ -177,6 +182,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @SuppressWarnings("rawtypes")
+    @Override
     public int getCounts(){
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(entityClass);
@@ -184,12 +190,66 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return count;
     }
 
-    public int getCounts(String columnName, String keyword){
+    @Override
+    public int getCounts(String columnName, Object value){
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(entityClass)
-                .add(Restrictions.like(columnName, "%"+keyword+"%"));
+                .add(Restrictions.eq(columnName, value));
         int count = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
         return count;
     }
+
+    public List<Integer> getIntTimeLine(String sql) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Map<String, Object>> list = session.createSQLQuery(sql)
+                .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+                .list();
+
+        List<Integer> results = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            results.add(0);
+        }
+        for (Map<String, Object> map : list) {
+            int month = Integer.valueOf((String)map.get("month"));
+            int member = ((BigInteger)map.get("num")).intValue();
+            results.set(month-1, member);
+        }
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+
+        List<Integer> tempList1 = results.subList(0, month);
+        List<Integer> tempList2 = results.subList(month, results.size());
+
+        tempList2.addAll(tempList1);
+
+        return tempList2;
+    }
+
+    public List<Double> getDoubleTimeLine(String sql) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Map<String, Object>> list = session.createSQLQuery(sql)
+                .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+                .list();
+
+        List<Double> results = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            results.add(0.0);
+        }
+        for (Map<String, Object> map : list) {
+            int month = Integer.valueOf((String)map.get("month"));
+            double member = (Double)map.get("num");
+            results.set(month-1, member);
+        }
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+
+        List<Double> tempList1 = results.subList(0, month);
+        List<Double> tempList2 = results.subList(month, results.size());
+
+        tempList2.addAll(tempList1);
+
+        return tempList2;
+    }
+
 
 }
