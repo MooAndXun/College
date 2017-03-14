@@ -41,7 +41,7 @@ function bindBuyButton() {
             post("/course/reserve", {id: id});
         }
 
-        modal("你确定购买该课程吗？", callback.bind(this));
+        modal("你确定预订该课程吗？", callback.bind(this));
     });
 }
 
@@ -52,7 +52,7 @@ function bindPayButton() {
             post("/course/pay", {id: id});
         }
 
-        modal("你确定支付该课程吗？", callback.bind(this));
+        modal("你确定支付该课程吗？(支付后退课仅返还50%费用)", callback.bind(this));
     });
 }
 function bindCancelButton() {
@@ -129,6 +129,14 @@ function bindMemberTypeCheckbox(value) {
     } else if (value == 'non-member') {
         $('.member-input').addClass("invisible");
         $('.non-member-input').removeClass("invisible");
+    }
+}
+
+function bindRegisterTypeCheckBox(option) {
+    if(option==0) {
+        $("#account-input").removeClass("invisible");
+    } else {
+        $("#account-input").addClass("invisible");
     }
 }
 

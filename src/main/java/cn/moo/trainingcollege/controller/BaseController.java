@@ -26,4 +26,7 @@ public abstract class BaseController {
     public void setMessege(RedirectAttributes redirectAttributes, String message) {
         redirectAttributes.addFlashAttribute("message", message);
     }
+    public void setErrorMessege(RedirectAttributes redirectAttributes, String message) {
+        redirectAttributes.addFlashAttribute("errorMessage", message);
+    }
 }

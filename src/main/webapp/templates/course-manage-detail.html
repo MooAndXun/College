@@ -41,7 +41,8 @@
               <p class="value" th:text="${course.teacher}">尹天仇</p>
             </div>
             <div class="button-group">
-              <a class="ui button primary" th:if="session.userType==1" th:href="@{/course/edit(id=${course.id})}">修改</a>
+              <a class="ui button primary" th:if="${session.userType}==1"
+                 th:href="@{/course/edit(id=${course.id})}">修改</a>
             </div>
           </div>
         </div>
@@ -63,26 +64,32 @@
           <div class="title-rect"></div>
           <h2 class="title">会员学员</h2>
         </div>
-        <div class="ui relaxed divided list member-list">
-          <div class="item member-item" th:each="student:${studentList}" th:data-order-id="${student.orderId}" th:data-course-id="${course.id}">
-            <!--<img src="" alt="" class="avatar">-->
-            <i class="circular inverted large user middle aligned icon avatar"></i>
-            <div class="content middle aligned">
-              <a class="header" th:text="${student.name}">托尼·斯塔克</a>
-              <div class="description">于 <span th:text="${student.joinTime}">2016-10-12</span> 加入</div>
-            </div>
-            <th:block th:if="${student.score}==(-1)">
-              <button class="ui button quit-button">退课</button>
-            </th:block>
-            <th:block th:if="${student.score}==(-1)">
-              <button class="ui button score-button">登记成绩</button>
-            </th:block>
-            <th:block th:unless="${student.score}==(-1)">
-              <p class="score"><span th:text="${student.score}">96</span> 分</p>
-            </th:block>
+        <th:block th:if="${#lists.size(studentList)!=0}">
+          <div class="ui relaxed divided list member-list">
+            <div class="item member-item" th:each="student:${studentList}" th:data-order-id="${student.orderId}"
+                 th:data-course-id="${course.id}">
+              <!--<img src="" alt="" class="avatar">-->
+              <i class="circular inverted large user middle aligned icon avatar"></i>
+              <div class="content middle aligned">
+                <a class="header" th:text="${student.name}">托尼·斯塔克</a>
+                <div class="description">于 <span th:text="${student.joinTime}">2016-10-12</span> 加入</div>
+              </div>
+              <th:block th:if="${student.score}==(-1)">
+                <button class="ui button quit-button">退课</button>
+              </th:block>
+              <th:block th:if="${student.score}==(-1)">
+                <button class="ui button score-button">登记成绩</button>
+              </th:block>
+              <th:block th:unless="${student.score}==(-1)">
+                <p class="score"><span th:text="${student.score}">96</span> 分</p>
+              </th:block>
 
+            </div>
           </div>
-        </div>
+        </th:block>
+        <th:block th:unless="${#lists.size(studentList)!=0}">
+          <p class="blank-text">该课程暂无学员</p>
+        </th:block>
       </div>
 
       <div class="segment">
@@ -90,27 +97,32 @@
           <div class="title-rect"></div>
           <h2 class="title">非会员学员</h2>
         </div>
-        <div class="ui relaxed divided list member-list">
-          <div class="item member-item" th:each="student:${nonMemberList}" th:data-order-id="${student.orderId}" th:data-course-id="${course.id}">
-            <!--<img src="" alt="" class="avatar">-->
-            <i class="circular inverted large user middle aligned icon avatar"></i>
-            <div class="content middle aligned">
-              <a class="header" th:text="${student.name}">托尼·斯塔克</a>
-              <div class="description">于 <span th:text="${student.joinTime}">2016-10-12</span> 加入</div>
+        <th:block th:if="${#lists.size(nonMemberList)!=0}">
+          <div class="ui relaxed divided list member-list">
+            <div class="item member-item" th:each="student:${nonMemberList}" th:data-order-id="${student.orderId}"
+                 th:data-course-id="${course.id}">
+              <!--<img src="" alt="" class="avatar">-->
+              <i class="circular inverted large user middle aligned icon avatar"></i>
+              <div class="content middle aligned">
+                <a class="header" th:text="${student.name}">托尼·斯塔克</a>
+                <div class="description">于 <span th:text="${student.joinTime}">2016-10-12</span> 加入</div>
+              </div>
+              <th:block th:if="${student.score}==(-1)">
+                <button class="ui button quit-button">退课</button>
+              </th:block>
+              <th:block th:if="${student.score}==(-1)">
+                <button class="ui button score-button">登记成绩</button>
+              </th:block>
+              <th:block th:unless="${student.score}==(-1)">
+                <p class="score"><span th:text="${student.score}">96</span> 分</p>
+              </th:block>
             </div>
-            <th:block th:if="${student.score}==(-1)">
-              <button class="ui button quit-button">退课</button>
-            </th:block>
-            <th:block th:if="${student.score}==(-1)">
-              <button class="ui button score-button">登记成绩</button>
-            </th:block>
-            <th:block th:unless="${student.score}==(-1)">
-              <p class="score"><span th:text="${student.score}">96</span> 分</p>
-            </th:block>
           </div>
-        </div>
+        </th:block>
+        <th:block th:unless="${#lists.size(nonMemberList)!=0}">
+          <p class="blank-text">该课程暂无学员</p>
+        </th:block>
       </div>
-
     </div>
   </div>
 </div>

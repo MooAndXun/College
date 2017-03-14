@@ -34,7 +34,6 @@ public class OrganServiceImpl implements OrganService {
         String id = "O" + String.format("%06d",count);
         organization.setId(id);
         organDao.add(organization);
-
         // (返回用户ID)
         return id;
     }

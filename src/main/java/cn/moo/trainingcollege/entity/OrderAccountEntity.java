@@ -6,7 +6,8 @@ import java.sql.Timestamp;
 /**
  * Created by chenmuen on 2017/2/24.
  */
-@Entity(name = "order_account")
+@Entity
+@Table(name = "order_account", schema = "training", catalog = "")
 public class OrderAccountEntity {
     private int id;
     private String studentId;

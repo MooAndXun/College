@@ -43,8 +43,8 @@ public class SettlementDaoImpl extends BaseDaoImpl<SettlementEntity> implements 
 
     @Override
     public List<Integer> getOrganMemberLine(String organId) {
-        String sql = " SELECT  DATE_FORMAT(created_at,'%c') AS month, COUNT(DISTINCT student_id) as num FROM order_account WHERE is_paid = 1 " +
-                "AND quit_state = 0 " +
+        String sql = " SELECT  DATE_FORMAT(created_at,'%c') AS month, COUNT(DISTINCT student_id) as num FROM order_account " +
+                "WHERE is_paid = 1 " +
                 "AND created_at > DATE_SUB(NOW(),INTERVAL 1 YEAR) " +
                 "AND course_id IN (SELECT id FROM course WHERE organ_id = '"+organId+"') " +
                 "GROUP BY DATE_FORMAT(created_at,'%y%m') " +

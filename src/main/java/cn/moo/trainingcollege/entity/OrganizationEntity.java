@@ -104,7 +104,7 @@ public class OrganizationEntity {
     }
 
     @Basic
-    @Column(name = "location")
+    @Column(name = "location", nullable = false, length = 255)
     public String getLocation() {
         return location;
     }
@@ -114,7 +114,7 @@ public class OrganizationEntity {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     public String getDescription() {
         return description;
     }

@@ -9,6 +9,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -24,10 +25,10 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         criteria.add(Restrictions.eq("quitState", 0));
         criteria.add(Restrictions.eq("studentId", studentId));
         criteria.add(Restrictions.eq("courseId", courseId));
-        List<OrderAccountEntity> list =  criteria.list();
-        if ((list.size()) == 0){
+        List<OrderAccountEntity> list = criteria.list();
+        if ((list.size()) == 0) {
             return null;
-        }else{
+        } else {
             return (OrderAccountEntity) list.get(0);
         }
     }
@@ -41,10 +42,10 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                 Restrictions.eq("quitState", 1)));
         criteria.add(Restrictions.eq("studentId", studentId));
         criteria.add(Restrictions.eq("courseId", courseId));
-        List<OrderAccountEntity> list =  criteria.list();
-        if ((list.size()) == 0){
+        List<OrderAccountEntity> list = criteria.list();
+        if ((list.size()) == 0) {
             return null;
-        }else{
+        } else {
             return (OrderAccountEntity) list.get(0);
         }
     }
@@ -61,53 +62,79 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
 
     @Override
     public List<Integer> getStudentJoinedCourseMonth(String studentId) {
-        String sql = "SELECT COUNT(course_id) FROM `order_account` WHERE student_id = '"+studentId+"' AND is_cancel=0 AND quit_state=0 AND created_at > DATE_SUB(NOW(),INTERVAL 1 YEAR) GROUP BY DATE_FORMAT(created_at,'%y%m') ORDER BY DATE_FORMAT(created_at,'%y%m');";
+        String sql = "SELECT COUNT(course_id) FROM `order_account` WHERE student_id = '" + studentId + "' AND is_cancel=0 AND quit_state=0 AND created_at > DATE_SUB(NOW(),INTERVAL 1 YEAR) GROUP BY DATE_FORMAT(created_at,'%y%m') ORDER BY DATE_FORMAT(created_at,'%y%m');";
         Session session = sessionFactory.getCurrentSession();
-        List<Integer> list = (List<Integer>)session.createSQLQuery(sql).list();
+        List<Integer> list = (List<Integer>) session.createSQLQuery(sql).list();
         return list;
     }
 
     @Override
-    public int getStudentNumofCourse(int courseId) {
+    public double getStudentConsume(String studentId) {
+        String sql1 = "SELECT SUM(price) AS consume FROM OrderAccountEntity WHERE studentId=:studentId AND paid=true";
+        String sql2 = "SELECT SUM(price)*0.5 AS consume FROM OrderAccountEntity WHERE studentId=:studentId AND quitState=1";
         Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(OrderAccountEntity.class);
-        criteria.add(Restrictions.eq("courseId", courseId));
-        criteria.add(Restrictions.eq("paid", true));
-        criteria.add(Restrictions.eq("quitState", 0));
-        int count = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
+        Object result1 = session.createQuery(sql1).setString("studentId", studentId).uniqueResult();
+        Object result2 = session.createQuery(sql2).setString("studentId", studentId).uniqueResult();
+
+        double consume = 0;
+        double quitConsume = 0;
+
+        if (result1 != null)
+            consume = (double) result1;
+        if (result2 != null)
+            consume = (double) result2;
+
+        return consume + quitConsume;
+    }
+
+    @Override
+    public int getStudentNumOfOrgan(String organId) {
+        Session session = sessionFactory.getCurrentSession();
+//        Criteria criteria = session.createCriteria(OrderAccountEntity.class);
+//        criteria.add(Restrictions.eq("courseId", organId));
+//        criteria.add(Restrictions.eq("paid", true));
+//        criteria.add(Restrictions.eq("quitState", 0));
+//        int count = Integer.parseInt(criteria.setProjection(Projections.rowCount()).uniqueResult().toString());
+
+        String sql = "SELECT COUNT(DISTINCT orderA.student_id) AS num FROM order_account AS orderA " +
+                "JOIN course AS course ON orderA.course_id=course.id " +
+                "WHERE course.organ_id = :organId " +
+                "AND is_paid=1";
+        int count = ((BigInteger) session.createSQLQuery(sql).setString("organId", organId).uniqueResult()).intValue();
+
         return count;
     }
 
     @Override
     public double getCourseNormalIncome(int courseId) {
-        String hql = "SELECT SUM(price) FROM order_account WHERE courseId = :courseId AND cancel = false AND quitState = 0 AND paid = true";
+        String hql = "SELECT SUM(price) FROM OrderAccountEntity WHERE courseId = :courseId AND cancel = false AND quitState = 0 AND paid = true";
 
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery(hql).setInteger("courseId", courseId);
         Object result = query.uniqueResult();
-        return result==null?0:(double)result;
+        return result == null ? 0 : (double) result;
     }
 
     @Override
     public double getCourseQuitIncome(int courseId) {
-        String hql = "SELECT SUM(price) FROM order_account WHERE courseId = :courseId AND quitState = 1";
+        String hql = "SELECT SUM(price) FROM OrderAccountEntity WHERE courseId = :courseId AND quitState = 1";
 
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery(hql).setInteger("courseId", courseId);
         Object result = query.uniqueResult();
-        return result==null?0:(((double)result)/2);
+        return result == null ? 0 : (((double) result) / 2);
     }
 
     @Override
     public List<Integer> getStudentCourseLine(String studentId) {
         String sql =
                 "SELECT DATE_FORMAT(created_at, '%c') AS month, COUNT(DISTINCT course_id) AS num " +
-                "FROM order_account " +
-                "WHERE student_id = '"+studentId+"' " +
-                "      AND is_cancel = 0 " +
-                "      AND created_at > DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
-                "GROUP BY DATE_FORMAT(created_at, '%y%m') " +
-                "ORDER BY DATE_FORMAT(created_at, '%y%m') ";
+                        "FROM order_account " +
+                        "WHERE student_id = '" + studentId + "' " +
+                        "      AND is_cancel = 0 " +
+                        "      AND created_at > DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
+                        "GROUP BY DATE_FORMAT(created_at, '%y%m') " +
+                        "ORDER BY DATE_FORMAT(created_at, '%y%m') ";
 
         return getIntTimeLine(sql);
     }

@@ -21,11 +21,11 @@
         </div>
         <div class="ui divided items vertical-list">
           <div class="item" th:each="course:${courseList}" th:data-order-id="${course.orderId}">
-            <img src="../build/img/course1.png" />
+            <img src="../build/img/course1.jpg" th:src="@{'/build/img/course'+(${courseStat.index}%5)+'.jpg'}" />
             <div class="content">
               <div class="item-title">
                 <h3 th:text="${course.name}">演员的自我修养</h3>
-                <div class="ui label horizontal blue" th:if="${course.isPaid}==true">已支付</div>
+                <div class="ui label horizontal teal" th:if="${course.isPaid}==true">已支付</div>
                 <div class="ui label horizontal" th:unless="${course.isPaid}==true">未支付</div>
               </div>
               <div class="meta" th:text="${course.teacher}">尹天仇</div>

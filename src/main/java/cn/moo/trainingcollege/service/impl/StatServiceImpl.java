@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,12 @@ public class StatServiceImpl implements StatService {
             }
         }
 
-        return score/count;
+        return count==0?0:(score/count);
+    }
+
+    @Override
+    public double getStudentConsume(String studentId) {
+        return orderDao.getStudentConsume(studentId);
     }
 
     @Override
@@ -108,12 +112,7 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public int getOrganMemberCount(String organId) {
-        List<CourseEntity> courseList = courseDao.getListByColumn("organId",organId);
-        int result = 0;
-        for (CourseEntity course:courseList) {
-            result += orderDao.getStudentNumofCourse(course.getId());
-        }
-        return result;
+        return orderDao.getStudentNumOfOrgan(organId);
     }
 
     @Override

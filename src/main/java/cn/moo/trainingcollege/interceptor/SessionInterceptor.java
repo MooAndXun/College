@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        if(httpServletRequest.getServletPath().equals("/login")) {
+        if(httpServletRequest.getServletPath().equals("/login")||httpServletRequest.getServletPath().equals("/register")) {
             return true;
         } else if(httpServletRequest.getSession().getAttribute("user")==null) {
             httpServletResponse.sendRedirect("/login");

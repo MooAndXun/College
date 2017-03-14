@@ -50,7 +50,10 @@
                 <a class="ui button cancel-button" th:unless="${isPaid}==true">退订</a>
               </th:block>
               <th:block th:unless="${isJoined}">
-                <a class="ui button primary buy-button" th:attr="data-id=${course.id}">购买</a>
+                <a class="ui button primary buy-button animated fade" th:data-id="${course.id}">
+                  <div class="visible content">预订</div>
+                  <div class="hidden content" th:text="'¥'+${course.price}">¥360</div>
+                </a>
               </th:block>
             </div>
           </div>
@@ -72,16 +75,21 @@
           <div class="title-rect"></div>
           <h2 class="title">当前学员</h2>
         </div>
-        <div class="ui relaxed divided list member-list">
-          <div class="item member-item" th:each="student:${studentList}">
-            <!--<img src="" alt="" class="avatar">-->
-            <i class="circular inverted large user middle aligned icon avatar"></i>
-            <div class="content middle aligned">
-              <a class="header" th:text="${student.name}">托尼·斯塔克</a>
-              <div class="description">于 <span th:text="${student.joinTime}">2016-10-12</span> 加入</div>
+        <th:block th:if="${#lists.size(studentList)!=0}">
+          <div class="ui relaxed divided list member-list">
+            <div class="item member-item" th:each="student:${studentList}">
+              <!--<img src="" alt="" class="avatar">-->
+              <i class="circular inverted large user middle aligned icon avatar"></i>
+              <div class="content middle aligned">
+                <a class="header" th:text="${student.name}">托尼·斯塔克</a>
+                <div class="description">于 <span th:text="${student.joinTime}">2016-10-12</span> 加入</div>
+              </div>
             </div>
           </div>
-        </div>
+        </th:block>
+        <th:block th:unless="${#lists.size(studentList)!=0}">
+          <p class="blank-text">该课程暂无学员</p>
+        </th:block>
       </div>
 
     </div>

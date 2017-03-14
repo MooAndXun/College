@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<head th:replace="base/fragment::head('布局')"></head>
+<head th:replace="base/fragment::head('修改机构信息')"></head>
 
 <body>
 <header th:replace="base/fragment::header(${session.userType}, 1)"></header>
@@ -22,18 +22,22 @@
           <div class="title-rect"></div>
           <h2 class="title">用户信息</h2>
         </div>
-        <form class="ui form info-form" action="#">
+        <form class="ui form info-form" action="#" th:action="@{/user/edit/organ}" method="post">
           <div class="ui inline field disabled">
             <label class="info-label">机构ID</label>
-            <input class='disabled' type="text" placeholder="S0000001" th:placeholder="${orgin.id}">
+            <input class='disabled' type="text" placeholder="机构ID" name="id" th:value="${organ.id}">
           </div>
           <div class="ui inline field">
             <label class="info-label">机构名</label>
-            <input type="text" placeholder="机构名" th:placeholder="${orgin.name}">
+            <input type="text" placeholder="机构名" name="name" th:value="${organ.name}">
           </div>
           <div class="ui inline field">
-            <label class="info-label">银行账户</label>
-            <input type="text" placeholder="银行账户">
+            <label class="info-label">机构地址</label>
+            <input type="text" placeholder="机构地址" name="location" th:value="${organ.location}">
+          </div>
+          <div class="ui inline field">
+            <label class="info-label"><nobr>机构简介</nobr></label>
+            <textarea placeholder="机构简介" name="description" th:text="${organ.description}"></textarea>
           </div>
           <div class="ui inline field button-field">
             <label></label>
@@ -49,9 +53,9 @@
           <h2 class="title">修改密码</h2>
         </div>
         <form class="ui form info-form" action="#" th:action="@{/organ/edit/password}">
-          <div class="ui inline field disabled">
+          <div class="ui inline field">
             <label class="info-label">原密码</label>
-            <input class='disabled' type="password" placeholder="原密码">
+            <input type="password" placeholder="原密码">
           </div>
           <div class="ui inline field">
             <label class="info-label">新密码</label>

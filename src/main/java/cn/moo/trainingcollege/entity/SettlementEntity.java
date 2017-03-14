@@ -6,7 +6,8 @@ import java.sql.Timestamp;
 /**
  * Created by 小春 on 2017/2/21.
  */
-@Entity(name = "settlement")
+@Entity
+@Table(name = "settlement", schema = "training", catalog = "")
 public class SettlementEntity {
     private int id;
     private String organizationId;

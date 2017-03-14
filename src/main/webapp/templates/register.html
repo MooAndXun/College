@@ -24,9 +24,13 @@
           <label for="password-confirm">确认密码</label>
           <input id="password-confirm" name="confirm" class="ui input" type="password" placeholder="确认密码">
         </div>
+        <div class="field" id="account-input">
+          <label for="account">银行账号</label>
+          <input id="account" name="account" class="ui input" type="text" placeholder="银行账号">
+        </div>
         <div class="field">
           <label for="type">类型</label>
-          <select id="type" name="type" class="ui dropdown scrolling">
+          <select id="type" name="type" class="ui dropdown scrolling register-type-select" onchange="bindRegisterTypeCheckBox(this.value)">
             <option value="0">学生</option>
             <option value="1">机构</option>
             <option value="2">经理</option>

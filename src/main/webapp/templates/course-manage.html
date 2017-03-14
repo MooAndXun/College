@@ -24,7 +24,7 @@
         </div>
         <div class="ui divided items vertical-list">
           <div class="item" th:each="course:${courseList}" th:data-course-id="${course.id}">
-            <img src="../build/img/course1.png" />
+            <img src="../build/img/course1.png" th:src="@{'/build/img/course'+${courseStat.index%5}+'.jpg'}"/>
             <div class="content">
               <div class="item-title">
                 <h3 th:text="${course.name}">演员的自我修养</h3>

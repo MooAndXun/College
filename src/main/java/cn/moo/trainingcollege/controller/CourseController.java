@@ -197,9 +197,14 @@ public class CourseController extends BaseController {
     // DONE
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String courseEdit(@ModelAttribute CourseEntity courseEntity, HttpSession session) {
-        courseEntity.setOrganId((String) session.getAttribute("user"));
-        System.out.println(MapUtil.beanToMap(courseEntity));
-        courseService.updateCourse(courseEntity);
+        CourseEntity originEntity = courseService.getCourse(courseEntity.getId());
+        originEntity.setName(courseEntity.getName());
+        originEntity.setStartTime(courseEntity.getStartTime());
+        originEntity.setEndTime(courseEntity.getEndTime());
+        originEntity.setDescription(courseEntity.getDescription());
+        originEntity.setTeacher(courseEntity.getTeacher());
+        originEntity.setPrice(courseEntity.getPrice());
+        courseService.updateCourse(originEntity);
 
         return "redirect:/course/edit?id=" + courseEntity.getId();
     }
@@ -215,17 +220,30 @@ public class CourseController extends BaseController {
     @RequestMapping(value = "/reserve", method = RequestMethod.POST)
     public String reserve(@RequestParam int id, HttpSession session, RedirectAttributes redirectAttributes) {
         String userId = getUserId(session);
-        orderService.orderCourse(userId, id);
-
-        setMessege(redirectAttributes, "预订成功");
-        return "redirect:/course/all";
+        StudentEntity studentEntity = studentService.getStudent(userId);
+        if(studentEntity.getState()==0||studentEntity.getState()==2) {
+            setErrorMessege(redirectAttributes, "账户未激活或被冻结，请充值以激活账户");
+            return "redirect:/user/topup";
+        } else {
+            orderService.orderCourse(userId, id);
+            setMessege(redirectAttributes, "预订成功");
+            return "redirect:/course/mine";
+        }
     }
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public String pay(@RequestParam int id, RedirectAttributes redirectAttributes) {
-        orderService.pay(id);
-        setMessege(redirectAttributes, "支付成功");
-        return "redirect:/course/mine";
+    public String pay(@RequestParam int id, RedirectAttributes redirectAttributes, HttpSession session) {
+        String userId = getUserId(session);
+        StudentEntity studentEntity = studentService.getStudent(userId);
+        OrderAccountEntity orderAccountEntity = orderService.getOrder(id);
+        if(studentEntity.getBalance()-orderAccountEntity.getPrice()>=0) {
+            orderService.pay(id);
+            setMessege(redirectAttributes, "支付成功");
+            return "redirect:/course/mine";
+        } else {
+            setErrorMessege(redirectAttributes, "余额不足");
+            return "redirect:/user/topup";
+        }
     }
 
     @RequestMapping(value = "/cancel", method = RequestMethod.POST)

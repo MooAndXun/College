@@ -13,7 +13,7 @@
 
     <div class="page-content-left">
       <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, (${session.userType}==3)?0:1, (${session.userType}==3)?0:1)"></div>
-      <a class="ui primary button" th:href="@{/user/edit}">修改个人信息</a>
+      <a class="ui primary button" th:href="@{/user/edit}" th:unless="${session.userType}==3">修改个人信息</a>
     </div>
 
     <div class="page-content">
@@ -38,11 +38,13 @@
             <label class="info-label">充值金额</label>
             <input type="text" placeholder="充值金额" name="money">
           </div>
-          <div class="ui icon message info">
-            <i class="dollar icon normal"></i>
-            <div class="content">
-              <p>每充值100元可获得1积分，积分用于兑换余额</p>
-            </div>
+          <div class="ui warning message">
+            <div class="header">注意</div>
+            <ul class="list">
+              <li>初次注册用户，需要先充值1000元以激活账户</li>
+              <li>正常用户，当账户余额低于50元时，账户将被冻结，需重新充值激活</li>
+              <li>被冻结账户超过一年，会员卡将永久停用</li>
+            </ul>
           </div>
           <div class="ui inline field button-field">
             <label></label>

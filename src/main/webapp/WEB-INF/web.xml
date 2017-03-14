@@ -11,6 +11,11 @@
     </context-param>
     <!-- openSessionInView配置 -->
 
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/build/*</url-pattern>
+    </servlet-mapping>
+
     <!--spring mvc 配置 -->
     <servlet>
         <servlet-name>springMVC</servlet-name>

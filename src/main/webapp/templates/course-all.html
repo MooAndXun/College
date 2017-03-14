@@ -32,7 +32,7 @@
 
             <a class="ui card course-card" href="#" th:each="course:${courseList}" th:href="@{/course/detail(id=${course.id})}">
               <div class="image">
-                <img src="../build/img/course3.png" th:src="@{/build/img/course4.jpg}">
+                <img src="../build/img/course3.png" th:src="@{'/build/img/course'+(${courseStat.index}%4)+'.jpg'}">
               </div>
               <div class="content">
                 <p class="header" th:text="${course.name}">演员的自我修养</p>

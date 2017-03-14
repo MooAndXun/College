@@ -22,6 +22,13 @@ public interface StatService {
     public int getStudentAverageScore(String studentId);
 
     /**
+     * 获得学生总消费
+     * @param studentId
+     * @return
+     */
+    public double getStudentConsume(String studentId);
+
+    /**
      * 获得学生成绩分布
      * @param studentId
      * @return 分布数组，分别成绩在0-60，60-70，70-80，80-90，90-100的个数

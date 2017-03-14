@@ -132,6 +132,7 @@ public class MainController extends BaseController {
     public String register(@RequestParam String name,
                            @RequestParam String password,
                            @RequestParam int type,
+                           @RequestParam(required = false) String account,
                            RedirectAttributes redirectAttributes) {
         String id = null;
 
@@ -140,6 +141,8 @@ public class MainController extends BaseController {
                 StudentEntity studentEntity = new StudentEntity();
                 studentEntity.setName(name);
                 studentEntity.setPassword(password);
+                studentEntity.setAccount(account);
+                studentEntity.setState(0);
                 id = studentService.addStudent(studentEntity);
                 redirectAttributes.addFlashAttribute("id", id);
                 redirectAttributes.addFlashAttribute("message", "注册成功，请记住账号");
@@ -148,6 +151,8 @@ public class MainController extends BaseController {
                 OrganizationEntity organizationEntity = new OrganizationEntity();
                 organizationEntity.setName(name);
                 organizationEntity.setPassword(password);
+                organizationEntity.setLocation("");
+                organizationEntity.setDescription("");
                 id = organService.addOrgan(organizationEntity);
                 redirectAttributes.addFlashAttribute("id", id);
                 redirectAttributes.addFlashAttribute("message", "注册成功，请记住账号");

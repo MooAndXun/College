@@ -93,12 +93,15 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void pay(int orderId) {
         OrderAccountEntity orderAccountEntity = orderDao.getByColumn("id",orderId);
+        StudentEntity studentEntity = studentDao.getById(orderAccountEntity.getStudentId());
         orderAccountEntity.setPaid(true);
         double price = orderAccountEntity.getPrice();
         BalanceEntity balanceEntity = balanceDao.getByColumn("id",1);
         balanceEntity.setBalance(balanceEntity.getBalance()+price);
+        studentEntity.setBalance(studentEntity.getBalance()-price);
         orderDao.update(orderAccountEntity);
         balanceDao.update(balanceEntity);
+        studentDao.update(studentEntity);
     }
 
     @Override

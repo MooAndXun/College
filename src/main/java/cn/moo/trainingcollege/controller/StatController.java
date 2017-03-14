@@ -27,9 +27,10 @@ public class StatController extends BaseController {
         String userId = getUserId(session);
         int courseCount = statService.getStudentCourseCount(userId);
         int scoreAvg = statService.getStudentAverageScore(userId);
+        double consume = statService.getStudentConsume(userId);
         model.addAttribute("courseCount", courseCount);
         model.addAttribute("scoreAvg", scoreAvg);
-
+        model.addAttribute("consume", consume);
         return "student-stat";
     }
     @RequestMapping("/organ")

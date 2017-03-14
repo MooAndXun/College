@@ -96,21 +96,38 @@ public class UserController extends BaseController {
     public String topUp(@RequestParam int money, HttpSession session, RedirectAttributes redirectAttributes) {
         String userId = (String)session.getAttribute("user");
         int userType = (int)session.getAttribute("userType");
+        StudentEntity studentEntity = studentService.getStudent(userId);
 
-        if(userType==0) {
+        if(studentEntity.getState()==0) {
+            if(studentEntity.getBalance()+money>=1000) {
+                studentService.topUp(userId, money);
+                session.setAttribute("userType", 0);
+                setMessege(redirectAttributes, "充值成功，账户已激活");
+                return "redirect:/user/info";
+            } else {
+                studentService.topUp(userId, money);
+                setMessege(redirectAttributes, "充值成功，充值金额不足以激活");
+                return "redirect:/user/topup";
+            }
+        } else if(studentEntity.getState()==1) {
             studentService.topUp(userId, money);
             setMessege(redirectAttributes, "充值成功");
             return "redirect:/user/info";
-        } else if(userType==3) {
+        } else if(studentEntity.getState()==2) {
             studentService.topUp(userId, money);
-            session.setAttribute("userType", 0);
-            setMessege(redirectAttributes, "充值成功，账户激活成功");
-            return "redirect:/user/info";
-        } else {
-            setMessege(redirectAttributes, "没有权限，请登录");
-            return "redirect:/login";
+            if(studentEntity.getBalance()+money>=50) {
+                studentService.topUp(userId, money);
+                session.setAttribute("userType", 0);
+                setMessege(redirectAttributes, "充值成功，账户已激活");
+                return "redirect:/user/info";
+            } else {
+                studentService.topUp(userId, money);
+                setMessege(redirectAttributes, "充值成功，充值金额不足以激活");
+                return "redirect:/user/topup";
+            }
         }
-
+        setMessege(redirectAttributes, "没有权限，请登录");
+        return "redirect:/login";
     }
 
     @RequestMapping(value="edit/student", method = RequestMethod.POST)
@@ -122,6 +139,23 @@ public class UserController extends BaseController {
             studentEntity.setName(student.getName());
             studentEntity.setAccount(student.getAccount());
             studentService.updateStudent(studentEntity);
+            setMessege(redirectAttributes, "修改信息成功");
+            return "redirect:/user/edit";
+        }
+        setMessege(redirectAttributes, "没有权限，请登录");
+        return "redirect:/login";
+    }
+
+    @RequestMapping(value="edit/organ", method = RequestMethod.POST)
+    public String organEdit(OrganizationEntity organ,
+                           HttpSession session,
+                           RedirectAttributes redirectAttributes) {
+        if(organ.getId().equals(session.getAttribute("user"))) {
+            OrganizationEntity organizationEntity = organService.getOrgan(organ.getId());
+            organizationEntity.setName(organ.getName());
+            organizationEntity.setLocation(organ.getLocation());
+            organizationEntity.setDescription(organ.getDescription());
+            organService.updateOrgan(organizationEntity);
             setMessege(redirectAttributes, "修改信息成功");
             return "redirect:/user/edit";
         }
@@ -170,10 +204,17 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/exchange", method = RequestMethod.POST)
     public String exchange(@RequestParam int point, HttpSession session, RedirectAttributes redirectAttributes) {
         String studentId = getUserId(session);
-        studentService.exchange(studentId, point);
+        StudentEntity studentEntity = studentService.getStudent(studentId);
+        if(studentEntity.getPoint()>=point) {
+            studentService.exchange(studentId, point);
+            redirectAttributes.addFlashAttribute("message", "兑换积分成功");
+            return "redirect:/user/info";
+        } else {
+            setErrorMessege(redirectAttributes, "积分不足");
+            return "redirect:/user/exchange";
+        }
 
-        redirectAttributes.addFlashAttribute("message", "兑换积分成功");
-        return "redirect:/user/info";
+
     }
 
     @RequestMapping(value = "/cancel", method = RequestMethod.POST)

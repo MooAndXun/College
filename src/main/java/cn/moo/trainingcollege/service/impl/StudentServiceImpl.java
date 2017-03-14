@@ -59,13 +59,13 @@ public class StudentServiceImpl implements StudentService {
     public void topUp(String studentId, int money) {
         StudentEntity student = studentDao.getById(studentId);
         if(student != null) {
+            if((student.getState() == 0) && (student.getBalance()+money >= 1000)){
+                student.setState(1);
+            }
+            if(student.getState() == 2 && (student.getBalance()+money >= 50)){
+                student.setState(1);
+            }
             student.setBalance(student.getBalance()+money);
-            if((student.getState() == 0) && (money >= 1000)){
-                student.setState(1);
-            }
-            if(student.getState() == 2 && (student.getBalance() >= 50)){
-                student.setState(1);
-            }
             student.setPoint(student.getPoint()+(money/100));
             student.setExp((student.getExp()+money));
             student.setLevel(getLevel(student.getExp()));
