@@ -91,14 +91,15 @@ function initStudentScoreChart() {
 }
 
 function initStudentCourseChart() {
-    $.get("/stat/student/course/line?studentId="+userId, function (message) {
-        var xData = getMonthList();
-        var yData = message ? message : [1, 2, 2, 3, 1, 1, 2, 2, 3, 1, 1, 2];
+    if ($("#student-course-line").length > 0) {
 
-        if ($("#student-course-line").length > 0) {
+        $.get("/stat/student/course/line?studentId=" + userId, function (message) {
+            var xData = getMonthList();
+            var yData = message ? message : [1, 2, 2, 3, 1, 1, 2, 2, 3, 1, 1, 2];
+
             lineChart("student-course-line", "参与课程数量曲线图", "月份", "课程数", xData, yData);
-        }
-    });
+        });
+    }
 
     // if($('#student-course-line').length > 0) {
     //     var myChart = echarts.init(document.getElementById('student-course-line'));
@@ -161,14 +162,16 @@ function initStudentCourseChart() {
 
 /*---------------------------- 机构统计图 ----------------------------*/
 function initOrganIncomeChart() {
-    $.get("/stat/organ/income/line?organId=" + userId, function (message) {
-        var xData = getMonthList();
-        var yData = message ? message : [1000, 2000, 2000, 3000, 1231, 988, 2322, 10000, 5990, 2400, 1000, 2000];
+    if ($("#organ-income-line").length > 0) {
 
-        if ($("#organ-income-line").length > 0) {
+        $.get("/stat/organ/income/line?organId=" + userId, function (message) {
+            var xData = getMonthList();
+            var yData = message ? message : [1000, 2000, 2000, 3000, 1231, 988, 2322, 10000, 5990, 2400, 1000, 2000];
+
             lineChart("organ-income-line", "机构收入曲线图", "月份", "收入／¥", xData, yData);
-        }
-    });
+        });
+    }
+
 
     // if($("#organ-income-line").length > 0){
     //     var myChart = echarts.init(document.getElementById('organ-income-line'));
@@ -230,14 +233,16 @@ function initOrganIncomeChart() {
 }
 
 function initOrganMemberLineChart() {
-    $.get("/stat/organ/member/line?organId=" + userId, function (message) {
-        var xData = getMonthList();
-        var yData = message ? message : [10, 14, 50, 70, 100, 120, 150, 178, 200, 219, 250, 290];
+    if ($("#organ-member-line").length > 0) {
 
-        if ($("#organ-member-line").length > 0) {
+        $.get("/stat/organ/member/line?organId=" + userId, function (message) {
+            var xData = getMonthList();
+            var yData = message ? message : [10, 14, 50, 70, 100, 120, 150, 178, 200, 219, 250, 290];
+
             lineChart("organ-member-line", "机构学员变化曲线图", "月份", "学员人数", xData, yData);
-        }
-    });
+        });
+    }
+
 
     // if ($("#organ-member-line").length > 0) {
     //     var myChart = echarts.init(document.getElementById('organ-member-line'));
@@ -299,14 +304,16 @@ function initOrganMemberLineChart() {
 }
 
 function initOrganMemberBarChart() {
-    $.get("/stat/organ/member/bar?organId=" + userId, function (message) {
-        var xData = message ? message.names : ['J2EE', '心理学入门', '变态心理学', '演员的自我修养', '演员的自我修养1'];
-        var yData = message ? message.members : [100, 70, 55, 32, 29];
+    if ($("#organ-member-bar").length > 0) {
 
-        if ($("#organ-member-bar").length > 0) {
+        $.get("/stat/organ/member/bar?organId=" + userId, function (message) {
+            var xData = message ? message.names : ['J2EE', '心理学入门', '变态心理学', '演员的自我修养', '演员的自我修养1'];
+            var yData = message ? message.members : [100, 70, 55, 32, 29];
+
             barChart("organ-member-bar", "课程学员人数排名图", "月份", "学员人数", xData, yData);
-        }
-    });
+        });
+    }
+
 
     // if ($("#organ-member-bar").length > 0) {
     //     var myChart = echarts.init(document.getElementById('organ-member-bar'));
@@ -372,14 +379,15 @@ function initOrganMemberBarChart() {
 
 /*---------------------------- 站点统计图 ----------------------------*/
 function initSiteIncomeLineChart() {
-    $.get("/stat/site/income/line", function (message) {
-        var xData = getMonthList();
-        var yData = message ? message : [1000, 2000, 2000, 3000, 1231, 988, 2322, 10000, 5990, 2400, 1000, 2000];
+    if ($("#site-income-line").length > 0) {
 
-        if ($("#site-income-line").length > 0) {
+        $.get("/stat/site/income/line", function (message) {
+            var xData = getMonthList();
+            var yData = message ? message : [1000, 2000, 2000, 3000, 1231, 988, 2322, 10000, 5990, 2400, 1000, 2000];
+
             lineChart("site-income-line", "网站收入曲线图", "月份", "收入／¥", xData, yData);
-        }
-    });
+        });
+    }
 
     // if ($("#site-income-line").length > 0) {
     //     var myChart = echarts.init(document.getElementById('site-income-line'));
@@ -439,14 +447,15 @@ function initSiteIncomeLineChart() {
 }
 
 function initSiteMemberLineChart() {
-    $.get("/stat/site/member/line", function (message) {
-        var xData = getMonthList();
-        var yData = message ? message : [10, 14, 50, 70, 100, 120, 150, 178, 200, 219, 250, 290];
+    if ($("#site-member-line").length > 0) {
+        $.get("/stat/site/member/line", function (message) {
+            var xData = getMonthList();
+            var yData = message ? message : [10, 14, 50, 70, 100, 120, 150, 178, 200, 219, 250, 290];
 
-        if ($("#site-member-line").length > 0) {
             lineChart("site-member-line", "网站学员变化曲线图", "月份", "学员人数", xData, yData);
-        }
-    });
+        });
+    }
+
 
     // if ($("#site-member-line").length > 0) {
     //     var myChart = echarts.init(document.getElementById('site-member-line'));

@@ -32,8 +32,8 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         <!-- <property name="poolPreparedStatements" value="true" /> <property name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
 
         <property name="validationQuery" value="${validationQuery}" />
-        <property name="testOnBorrow" value="false" />
-        <property name="testOnReturn" value="false" />
+        <property name="testOnBorrow" value="true" />
+        <property name="testOnReturn" value="true" />
         <property name="testWhileIdle" value="true" />
 
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->

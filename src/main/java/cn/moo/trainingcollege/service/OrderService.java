@@ -1,6 +1,7 @@
 package cn.moo.trainingcollege.service;
 
 import cn.moo.trainingcollege.entity.OrderAccountEntity;
+import cn.moo.trainingcollege.entity.OrderCashEntity;
 import org.hibernate.internal.CriteriaImpl;
 import org.springframework.stereotype.Service;
 
@@ -38,4 +39,6 @@ public interface OrderService {
     public OrderAccountEntity getOrder(String studentId, int courseId);
 
     public OrderAccountEntity getQuitOrCancelOrder(String studentId, int courseId);
+
+    public List<OrderCashEntity> getOrderCashEntityList(int courseId);
 }

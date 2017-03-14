@@ -31,6 +31,7 @@ function bindButtonEvent() {
     bindSettlementButton();
     bindLogoutButton();
     bindScoreButton();
+    bindMemberCancelButton();
 }
 
 function bindBuyButton() {
@@ -129,6 +130,16 @@ function bindMemberTypeCheckbox(value) {
         $('.member-input').addClass("invisible");
         $('.non-member-input').removeClass("invisible");
     }
+}
+
+function bindMemberCancelButton() {
+    $(document).on("click", ".member-cancel-button", function () {
+        function callback() {
+            post("/user/cancel", {});
+        }
+
+        modal("注销后账号将永久不能使用！你确定注销你的会员资格吗？", callback.bind(this));
+    });
 }
 
 function modal(message, callback) {

@@ -2,6 +2,7 @@ package cn.moo.trainingcollege.controller;
 
 import cn.moo.trainingcollege.entity.CourseEntity;
 import cn.moo.trainingcollege.entity.OrderAccountEntity;
+import cn.moo.trainingcollege.entity.OrderCashEntity;
 import cn.moo.trainingcollege.entity.StudentEntity;
 import cn.moo.trainingcollege.service.CourseService;
 import cn.moo.trainingcollege.service.ManagerService;
@@ -43,12 +44,12 @@ public class CourseController extends BaseController {
     /*------------- Page -------------*/
     // DONE
     @RequestMapping("/all")
-    public String courseAllPage(@RequestParam(required = false) String keywords, Model model, HttpSession session) {
+    public String courseAllPage(@RequestParam(required = false) String keyword, Model model, HttpSession session) {
         String userId = getUserId(session);
-        if (keywords == null) {
+        if (keyword == null) {
             model.addAttribute("courseList", MapUtil.beanListToMap(courseService.search("", userId)));
         } else {
-            model.addAttribute("courseList", MapUtil.beanListToMap(courseService.search(keywords, userId)));
+            model.addAttribute("courseList", MapUtil.beanListToMap(courseService.search(keyword, userId)));
         }
         return "course-all";
     }
@@ -88,6 +89,7 @@ public class CourseController extends BaseController {
             courseMap.put("isOver", TimeUtil.dateStringToTimestamp(courseEntity.getEndTime()).before(TimeUtil.getCurrentTime()));
             courseMap.put("orderId", orderAccountEntity.getId());
             courseMap.put("price", orderAccountEntity.getPrice());
+            courseMap.put("score", orderAccountEntity.getScore());
             courseMapList.add(courseMap);
         }
 
@@ -139,9 +141,11 @@ public class CourseController extends BaseController {
     public String courseManageDetailPage(@RequestParam int id, Model model) {
         CourseEntity courseEntity = courseService.getCourse(id);
         List<Map> studentMapList = getJoinedStudentList(id);
+        List<Map> nomMemberMapList = getJoinedNonMemberList(id);
 
         model.addAttribute("course", MapUtil.beanToMap(courseEntity));
         model.addAttribute("studentList", studentMapList);
+        model.addAttribute("nonMemberList", nomMemberMapList);
 
         return "course-manage-detail";
     }
@@ -310,6 +314,24 @@ public class CourseController extends BaseController {
                 i--;
             }
         }
+        return studentMapList;
+    }
+
+    public List<Map> getJoinedNonMemberList(int id) {
+        List<OrderCashEntity> orderCashEntities = orderService.getOrderCashEntityList(id);
+        List<Map> studentMapList = new ArrayList<>();
+
+        System.out.println(orderCashEntities);
+        if(orderCashEntities!=null) {
+            for (OrderCashEntity orderCashEntity : orderCashEntities) {
+                Map<String, Object> studentMap = MapUtil.beanToMap(orderCashEntity);
+                studentMap.put("name", orderCashEntity.getStudentName());
+                studentMap.put("orderId", studentMap.get("id"));
+                studentMap.put("joinTime", TimeUtil.timestampToDateString(orderCashEntity.getCreatedAt()));
+                studentMapList.add(studentMap);
+            }
+        }
+
         return studentMapList;
     }
 }

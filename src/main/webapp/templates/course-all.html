@@ -21,18 +21,18 @@
             <div class="title-rect"></div>
             <h2 class="title">课程列表</h2>
           </div>
-          <div class="ui action input search-input">
-            <input type="text" placeholder="Search...">
-            <button class="ui icon button primary">
+          <form class="ui action input search-input" th:action="@{/course/all}">
+            <input type="text" placeholder="Search..." name="keyword">
+            <button class="ui icon button primary" type="submit">
               <i class="search icon"></i>
             </button>
-          </div>
+          </form>
 
           <div class="card-group course-card-group">
 
             <a class="ui card course-card" href="#" th:each="course:${courseList}" th:href="@{/course/detail(id=${course.id})}">
               <div class="image">
-                <img src="../build/img/course3.png" th:src="@{/build/img/course3.png}">
+                <img src="../build/img/course3.png" th:src="@{/build/img/course4.jpg}">
               </div>
               <div class="content">
                 <p class="header" th:text="${course.name}">演员的自我修养</p>

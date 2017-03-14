@@ -65,16 +65,27 @@ public class MainController extends BaseController {
             return "redirect:login";
         }
 
+        StudentEntity studentEntity;
         char type = id.charAt(0);
         switch (type) {
             case 'S':
-                if(studentService.getStudent(id)==null){
+                if((studentEntity=studentService.getStudent(id))==null){
                     redirectAttributes.addFlashAttribute("message", "查无此ID");
+                } else if(studentEntity.getState()==3){
+                    redirectAttributes.addFlashAttribute("errorMessage", "该账号已注销，请重新注册");
+                    return "redirect:/login";
                 } else if(studentService.checkLogin(id, password)) {
                     session.setAttribute("user", id);
-                    session.setAttribute("userType", 0);
-                    redirectAttributes.addFlashAttribute("message", "登录成功");
-                    return "redirect:/course/all";
+                    if(studentEntity.getState()==2) {
+                        session.setAttribute("userType", 3);
+                        redirectAttributes.addFlashAttribute("errorMessage", "账户被暂停，请充值激活");
+                        return "redirect:/user/topup";
+                    } else {
+                        session.setAttribute("userType", 0);
+                        redirectAttributes.addFlashAttribute("message", "登录成功");
+                        return "redirect:/course/all";
+                    }
+
                 } else {
                     redirectAttributes.addFlashAttribute("errorMessage", "密码错误");
                 }

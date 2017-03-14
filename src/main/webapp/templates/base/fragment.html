@@ -34,6 +34,9 @@
           <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/approve}">课程</a>
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/stat/site}">统计</a>
         </th:block>
+        <th:block th:case="3">
+          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/user/TO}">个人</a>
+        </th:block>
       </div>
       <div class="nav-button-group">
         <div class="sign-out-icon" data-tooltip="登出" data-position="bottom right">
@@ -87,6 +90,13 @@
       </th:block>
       <th:block th:case="1">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/stat/site}">统计信息</a>
+      </th:block>
+    </th:block>
+  </th:block>
+  <th:block th:case="3">
+    <th:block th:switch="${active}">
+      <th:block th:case="0">
+        <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/approve}">充值</a>
       </th:block>
     </th:block>
   </th:block>

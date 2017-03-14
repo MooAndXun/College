@@ -96,6 +96,7 @@ public class CourseServiceImpl implements CourseService {
         String sql =
                 "SELECT * FROM `course` WHERE " +
                         "state = 1 AND " +
+                        "name like '%"+keyword+"%' AND " +
                         "id NOT IN (SELECT course_id FROM order_account WHERE student_id = '"+studentId+"' AND is_cancel=0 AND quit_state=0)";
         List<CourseEntity> list = (List<CourseEntity>)courseDao.doSqlQuery(sql);
         System.out.println(list.size());

@@ -36,6 +36,10 @@
               <p class="name">课程教师</p>
               <p class="value" th:text="${course.teacher}">尹天仇</p>
             </div>
+            <div class="course-brief-text">
+              <p class="name">价格</p>
+              <p class="value" th:text="${course.price}">100</p>
+            </div>
             <div class="button-group">
               <th:block th:if="${isJoined}">
                 <a class="ui button red quit-button" th:if="${isPaid}==true">退课</a>
@@ -79,7 +83,6 @@
           </div>
         </div>
       </div>
-
 
     </div>
   </div>

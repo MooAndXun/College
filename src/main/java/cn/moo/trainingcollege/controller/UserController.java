@@ -101,6 +101,11 @@ public class UserController extends BaseController {
             studentService.topUp(userId, money);
             setMessege(redirectAttributes, "充值成功");
             return "redirect:/user/info";
+        } else if(userType==3) {
+            studentService.topUp(userId, money);
+            session.setAttribute("userType", 0);
+            setMessege(redirectAttributes, "充值成功，账户激活成功");
+            return "redirect:/user/info";
         } else {
             setMessege(redirectAttributes, "没有权限，请登录");
             return "redirect:/login";
