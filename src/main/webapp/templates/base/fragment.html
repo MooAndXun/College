@@ -35,7 +35,7 @@
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/stat/site}">统计</a>
         </th:block>
         <th:block th:case="3">
-          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/user/TO}">个人</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/user/info}">个人</a>
         </th:block>
       </div>
       <div class="nav-button-group">
@@ -70,8 +70,7 @@
     <th:block th:switch="${active}">
       <th:block th:case="0">
         <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/manage}">课程管理</a>
-        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/course/manage}">未审批课程</a>
-        <a class="item" th:class="'item '+(${subActive}==2?'active')" th:href="@{/course/manage}">已结束课程</a>
+        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/course/manage/over}">已结束课程</a>
       </th:block>
       <th:block th:case="1">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">机构信息</a>
@@ -96,7 +95,8 @@
   <th:block th:case="3">
     <th:block th:switch="${active}">
       <th:block th:case="0">
-        <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/course/approve}">充值</a>
+        <a class="item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">个人信息</a>
+        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/user/topup}">充值</a>
       </th:block>
     </th:block>
   </th:block>

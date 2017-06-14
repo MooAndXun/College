@@ -2,15 +2,21 @@ package cn.moo.trainingcollege.dao.impl;
 
 import cn.moo.trainingcollege.dao.OrderDao;
 import cn.moo.trainingcollege.entity.OrderAccountEntity;
+import org.apache.commons.collections.map.HashedMap;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.ResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 小春 on 2017/2/21.
@@ -137,5 +143,31 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "ORDER BY DATE_FORMAT(created_at, '%y%m') ";
 
         return getIntTimeLine(sql);
+    }
+
+    @Override
+    public Map<String, Object> getSiteTopOrgan() {
+        String sql =
+                "SELECT organization.name AS name, COUNT(DISTINCT student_id) AS num " +
+                "FROM organization " +
+                "  LEFT JOIN course ON organization.id = organ_id " +
+                "  LEFT JOIN order_account ON course_id = course.id " +
+                "  WHERE is_paid=1 " +
+                "GROUP BY organ_id, organization.name " +
+                "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5";
+        Session session = sessionFactory.getCurrentSession();
+        List<Map> objects = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+
+        List<String> names = new ArrayList<>();
+        List<Integer> nums = new ArrayList<>();
+        for (Map object : objects) {
+            names.add((String)object.get("name"));
+            nums.add(((BigInteger)object.get("num")).intValue());
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("names", names);
+        resultMap.put("nums", nums);
+
+        return resultMap;
     }
 }

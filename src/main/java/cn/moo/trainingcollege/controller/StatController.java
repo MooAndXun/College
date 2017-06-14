@@ -103,4 +103,11 @@ public class StatController extends BaseController {
         List<Integer> memberList = statService.getSiteMemberLine();
         return memberList;
     }
+
+    @RequestMapping("/site/organ/bar")
+    @ResponseBody
+    public Map siteCourse() {
+        Map map = statService.getSiteTopOrgan();
+        return map;
+    }
 }

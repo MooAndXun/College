@@ -125,7 +125,7 @@ public class CourseController extends BaseController {
     @RequestMapping("/manage")
     public String courseManagePage(HttpSession session, Model model) {
         String organId = (String) session.getAttribute("user");
-        List<CourseEntity> courseEntityList = courseService.getOrganCourseList(organId);
+        List<CourseEntity> courseEntityList = courseService.getOrganNoOverCourseList(organId);
         List<Map> courseMapList = new ArrayList<>();
         for (CourseEntity courseEntity : courseEntityList) {
             courseMapList.add(MapUtil.beanToMap(courseEntity));
@@ -134,6 +134,24 @@ public class CourseController extends BaseController {
         model.addAttribute("courseList", courseMapList);
 
         return "course-manage";
+    }
+
+    // DONE
+    @RequestMapping("/manage/over")
+    public String courseManageOverPage(HttpSession session, Model model) {
+        String organId = (String) session.getAttribute("user");
+        List<CourseEntity> courseEntityList = courseService.getOrganOverCourseList(organId);
+        List<Map> courseMapList = new ArrayList<>();
+        for (CourseEntity courseEntity : courseEntityList) {
+            Map<String, Object> map = MapUtil.beanToMap(courseEntity);
+            if(courseEntity.isSettled()){
+                map.put("income", courseService.getSettlementIncome(courseEntity.getId()));
+            }
+            courseMapList.add(map);
+        }
+        model.addAttribute("courseList", courseMapList);
+
+        return "course-manage-over";
     }
 
     // DONE
@@ -254,10 +272,14 @@ public class CourseController extends BaseController {
     }
 
     @RequestMapping(value = "/quit", method = RequestMethod.POST)
-    public String quit(@RequestParam int id, RedirectAttributes redirectAttributes) {
+    public String quit(@RequestParam int id, @RequestParam int courseId, RedirectAttributes redirectAttributes) {
         orderService.quitCourse(id);
         setMessege(redirectAttributes, "退课成功");
-        return "redirect:/course/mine";
+        if(courseId==-1) {
+            return "redirect:/course/mine";
+        } else {
+            return "redirect:/course/manage/detail?id="+courseId;
+        }
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.POST)

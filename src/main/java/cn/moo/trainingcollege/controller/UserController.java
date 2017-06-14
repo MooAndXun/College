@@ -38,6 +38,7 @@ public class UserController extends BaseController {
 
         switch (userType) {
             case 0:
+            case 3:
                 pageStr = "user-info";
                 StudentEntity studentEntity = studentService.getStudent(userId);
                 model.addAttribute("student", MapUtil.beanToMap(studentEntity));
@@ -46,9 +47,6 @@ public class UserController extends BaseController {
                 pageStr = "organ-info";
                 OrganizationEntity organizationEntity = organService.getOrgan(userId);
                 model.addAttribute("organ", MapUtil.beanToMap(organizationEntity));
-                break;
-            case 2:
-
                 break;
         }
 
@@ -114,7 +112,6 @@ public class UserController extends BaseController {
             setMessege(redirectAttributes, "充值成功");
             return "redirect:/user/info";
         } else if(studentEntity.getState()==2) {
-            studentService.topUp(userId, money);
             if(studentEntity.getBalance()+money>=50) {
                 studentService.topUp(userId, money);
                 session.setAttribute("userType", 0);

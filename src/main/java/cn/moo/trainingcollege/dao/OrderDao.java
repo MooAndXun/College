@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 小春 on 2017/2/21.
@@ -36,4 +37,6 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
     public double getCourseQuitIncome(int courseId);
 
     public List<Integer> getStudentCourseLine(String studentId);
+
+    public Map<String, Object> getSiteTopOrgan();
 }

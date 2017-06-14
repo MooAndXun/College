@@ -47,4 +47,10 @@ public interface CourseService {
      * @return
      */
     public List<CourseEntity> getUnSettledCourseList();
+
+    public List<CourseEntity> getOrganOverCourseList(String organId);
+
+    public List<CourseEntity> getOrganNoOverCourseList(String organId);
+
+    public double getSettlementIncome(int courseId);
 }

@@ -1,9 +1,12 @@
 package cn.moo.trainingcollege.service.impl;
 
 import cn.moo.trainingcollege.dao.CourseDao;
+import cn.moo.trainingcollege.dao.SettlementDao;
 import cn.moo.trainingcollege.dao.StudentDao;
 import cn.moo.trainingcollege.entity.CourseEntity;
+import cn.moo.trainingcollege.entity.SettlementEntity;
 import cn.moo.trainingcollege.entity.StudentEntity;
+import cn.moo.trainingcollege.interceptor.SessionInterceptor;
 import cn.moo.trainingcollege.service.CourseService;
 import cn.moo.trainingcollege.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class CourseServiceImpl implements CourseService {
     CourseDao courseDao;
     @Autowired
     StudentDao studentDao;
+    @Autowired
+    SettlementDao settlementDao;
 
     @Override
     public CourseEntity getCourse(int courseId) {
@@ -119,5 +124,23 @@ public class CourseServiceImpl implements CourseService {
         String today = TimeUtil.timestampToDateString(TimeUtil.getCurrentTime());
         String sql = "SELECT * FROM `course` WHERE end_time < '"+today+"' and is_settled = 0";
         return (List<CourseEntity>)courseDao.doSqlQuery(sql);
+    }
+
+    @Override
+    public List<CourseEntity> getOrganOverCourseList(String organId) {
+        String sql = "SELECT * FROM `course` WHERE organ_id = '"+organId+"' AND end_time < now()";
+        return (List<CourseEntity>)courseDao.doSqlQuery(sql);
+    }
+
+    @Override
+    public List<CourseEntity> getOrganNoOverCourseList(String organId) {
+        String sql = "SELECT * FROM `course` WHERE organ_id = '"+organId+"' AND end_time >= now()";
+        return (List<CourseEntity>)courseDao.doSqlQuery(sql);
+    }
+
+    @Override
+    public double getSettlementIncome(int courseId) {
+        SettlementEntity settlementEntity = settlementDao.getByColumn("courseId", courseId);
+        return settlementEntity.getMoney();
     }
 }

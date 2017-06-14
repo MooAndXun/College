@@ -165,6 +165,11 @@ public class StatServiceImpl implements StatService {
         return studentDao.getSiteStudentLine();
     }
 
+    @Override
+    public Map<String, Object> getSiteTopOrgan() {
+        return orderDao.getSiteTopOrgan();
+    }
+
     private List<Double> changeSizeOfList(List<Double> list){
         int count = list.size()>12?12:list.size();
         List<Double> result = new ArrayList<Double>();

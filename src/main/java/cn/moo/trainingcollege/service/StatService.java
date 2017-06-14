@@ -114,4 +114,6 @@ public interface StatService {
      */
     public List<Integer> getSiteMemberLine();
 
+    public Map<String, Object> getSiteTopOrgan();
+
 }

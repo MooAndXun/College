@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<head th:replace="base/fragment::head('审批课程')"></head>
+<head th:replace="base/fragment::head('已结束课程')"></head>
 
 <body>
 <header th:replace="base/fragment::header(${session.userType}, 0)"></header>
@@ -12,36 +12,45 @@
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType},0,0)"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 0, 1)"></div>
+      <a class="ui button primary" th:href="@{/course/add}">新增课程</a>
     </div>
 
     <div class="page-content">
       <div class="segment">
         <div class="segment-title">
           <div class="title-rect"></div>
-          <h2 class="title">待审批课程</h2>
+          <h2 class="title">已结束课程</h2>
         </div>
         <div class="ui divided items vertical-list">
           <div class="item" th:each="course:${courseList}" th:data-course-id="${course.id}">
-            <img src="../build/img/course1.png"  th:src="@{'/build/img/course'+${courseStat.index%5}+'.jpg'}"/>
+            <img src="../build/img/course1.png" th:src="@{'/build/img/course'+${courseStat.index%5}+'.jpg'}"/>
             <div class="content">
               <div class="item-title">
                 <h3 th:text="${course.name}">演员的自我修养</h3>
-                <div class="ui label horizontal">未审批</div>
+                <div class="ui label horizontal teal" th:if="${course.settled}">已结算</div>
+                <div class="ui label horizontal " th:unless="${course.settled}">未结算</div>
               </div>
               <div class="meta" th:text="${course.teacher}">尹天仇</div>
               <div class="meta">
                 <span class="date">开始于 <span th:text="${course.startTime}">2013-10-10</span></span>
               </div>
             </div>
-            <div class="button-group">
-              <a class="ui button" th:href="@{/course/manage/detail(id=${course.id})}">详情</a>
-              <a class="ui button primary approve-button">同意</a>
-            </div>
+            <th:block th:if="${course.settled}">
+              <p class="score">+¥<span th:text="${course.income}">96</span></p>
+            </th:block>
+            <th:block th:unless="${course.settled}">
+              <div class="button-group">
+                <a class="ui button" th:href="@{/course/manage/detail(id=${course.id})}">详情</a>
+                <a class="ui button" th:href="@{/course/edit(id=${course.id})}">修改</a>
+              </div>
+            </th:block>
           </div>
+
         </div>
       </div>
     </div>
+
   </div>
 </div>
 

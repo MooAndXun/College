@@ -13,6 +13,7 @@ function initChart() {
     initOrganMemberBarChart();
     initSiteIncomeLineChart();
     initSiteMemberLineChart();
+    initSiteOrganBarChart();
 }
 
 var primaryColor = "#20C4C8";
@@ -515,6 +516,16 @@ function initSiteMemberLineChart() {
     // }
 }
 
+function initSiteOrganBarChart() {
+    if ($("#site-organ-bar").length > 0) {
+        $.get("/stat/site/organ/bar", function (message) {
+            var xData = message ? message.names:[];
+            var yData = message ? message.nums:[];
+            barChart("site-organ-bar", "网站机构招生情况", "机构", "学员人数", xData, yData);
+        });
+    }
+}
+
 function lineChart(id, title, xName, yName, xData, yData) {
     var myChart = echarts.init(document.getElementById(id));
     var option = {
@@ -599,6 +610,7 @@ function barChart(id, title, xName, yName, xData, yData) {
                 name: xName,
                 nameGap: 25,
                 axisLabel: {
+                    interval: 0,
                     textStyle: {
                         fontSize: 14
                     }

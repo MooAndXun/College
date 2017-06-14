@@ -7,14 +7,14 @@ xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base/fragment::head('个人信息')"></head>
 
 <body>
-<header th:replace="base/fragment::header(${session.userType}, 1)"></header>
+<header th:replace="base/fragment::header(${session.userType}, (${session.userType}==3)?0:1)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType},1,0)"></div>
-      <a class="ui primary button" th:href="@{/user/edit}">修改个人信息</a>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType},(${session.userType}==3)?0:1,0)"></div>
+      <a class="ui primary button" th:href="@{/user/edit}" th:unless="${session.userType}==3">修改个人信息</a>
     </div>
 
     <div class="page-content">
@@ -48,7 +48,7 @@ xmlns:th="http://www.thymeleaf.org">
             <p class="name">学员积分</p>
             <p class="value" th:text="${student.point}">1000</p>
           </div>
-          <div class="info-item button-item">
+          <div class="info-item button-item" th:unless="${session.userType}==3">
             <a class="ui button primary" th:href="@{/user/edit}">修改信息</a>
             <a class="ui button member-cancel-button">注销会员</a>
           </div>

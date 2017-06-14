@@ -31,4 +31,9 @@ public class CourseTest extends BaseTest {
     public void getUnclosedCourseListTest(){
         System.out.println(courseService.getUnclosedCourseList("tes").size());
     }
+
+    @Test
+    public void getOrganCourseList() {
+        System.out.println(courseService.getOrganOverCourseList("O000001"));
+    }
 }

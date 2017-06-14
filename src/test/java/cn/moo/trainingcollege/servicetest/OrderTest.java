@@ -1,6 +1,7 @@
 package cn.moo.trainingcollege.servicetest;
 
 import cn.moo.trainingcollege.BaseTest;
+import cn.moo.trainingcollege.dao.OrderDao;
 import cn.moo.trainingcollege.service.OrderService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OrderTest extends BaseTest {
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    OrderDao orderDao;
 
     @Test
     public void addOrderTest(){
@@ -40,5 +44,10 @@ public class OrderTest extends BaseTest {
     @Test
     public void getOrderTest(){
         System.out.println(orderService.getOrder(3).getStudentId());
+    }
+
+    @Test
+    public void getTopOrgan() {
+        System.out.println(orderDao.getSiteTopOrgan());
     }
 }
