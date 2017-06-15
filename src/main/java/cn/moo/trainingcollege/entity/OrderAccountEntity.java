@@ -20,6 +20,7 @@ public class OrderAccountEntity {
     private Timestamp createdAt;
     private StudentEntity studentByStudentId;
     private CourseEntity courseByCourseId;
+    private int satisfaction;
 
     @Id
     @Column(name = "id")
@@ -125,6 +126,7 @@ public class OrderAccountEntity {
         if (isPaid != that.isPaid) return false;
         if (isCancel != that.isCancel) return false;
         if (score != that.score) return false;
+        if (satisfaction != that.satisfaction) return false;
         if (studentId != null ? !studentId.equals(that.studentId) : that.studentId != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
 
@@ -144,6 +146,7 @@ public class OrderAccountEntity {
         result = 31 * result + (isPaid ? 1 : 0);
         result = 31 * result + (isCancel ? 1 : 0);
         result = 31 * result + score;
+        result = 31 * result + satisfaction;
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
     }
@@ -166,5 +169,15 @@ public class OrderAccountEntity {
 
     public void setCourseByCourseId(CourseEntity courseByCourseId) {
         this.courseByCourseId = courseByCourseId;
+    }
+
+    @Basic
+    @Column(name = "satisfaction")
+    public int getSatisfaction() {
+        return satisfaction;
+    }
+
+    public void setSatisfaction(int satisfaction) {
+        this.satisfaction = satisfaction;
     }
 }

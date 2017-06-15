@@ -37,6 +37,7 @@
               <th:block th:if="${course.score}==(-1)">
                 <a class="ui button" th:href="@{/course/detail(id=${course.id})}">详情</a>
                 <th:block th:if="${course.isOver}">
+                  <a class="ui button primary comment-button" th:if="${course.satisfaction}==(0)">评价</a>
                   <a class="ui button disabled">已结束</a>
                 </th:block>
                 <th:block th:unless="${course.isOver}">
@@ -50,6 +51,7 @@
               </th:block>
               <th:block th:unless="${course.score}==-1">
                 <p class="score"><span th:text="${course.score}">96</span> 分</p>
+                <a class="ui button primary comment-button" th:if="${course.satisfaction}==(0)">评价</a>
               </th:block>
             </div>
           </div>

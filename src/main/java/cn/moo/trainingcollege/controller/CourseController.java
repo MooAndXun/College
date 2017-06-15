@@ -90,6 +90,7 @@ public class CourseController extends BaseController {
             courseMap.put("orderId", orderAccountEntity.getId());
             courseMap.put("price", orderAccountEntity.getPrice());
             courseMap.put("score", orderAccountEntity.getScore());
+            courseMap.put("satisfaction", orderAccountEntity.getSatisfaction());
             courseMapList.add(courseMap);
         }
 
@@ -328,6 +329,14 @@ public class CourseController extends BaseController {
         orderService.score(orderId, score);
         redirectAttributes.addFlashAttribute("message", "登记成绩成功");
         return "redirect: /course/manage/detail?id="+courseId;
+    }
+
+    @RequestMapping(value = "satisfaction", method = RequestMethod.POST)
+    public String satisfaction(@RequestParam int orderId,
+                        @RequestParam int courseId,
+                        @RequestParam int satisfaction,
+                        RedirectAttributes redirectAttributes) {
+        return null;
     }
 
 
