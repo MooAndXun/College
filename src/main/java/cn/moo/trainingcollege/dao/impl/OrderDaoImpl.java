@@ -2,6 +2,7 @@ package cn.moo.trainingcollege.dao.impl;
 
 import cn.moo.trainingcollege.dao.OrderDao;
 import cn.moo.trainingcollege.entity.OrderAccountEntity;
+import cn.moo.trainingcollege.utils.StatTimeType;
 import org.apache.commons.collections.map.HashedMap;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -167,6 +168,102 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("names", names);
         resultMap.put("nums", nums);
+
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "";
+
+        switch (statTimeType) {
+            case YEAR:
+                sql = "SELECT course.name AS name, COUNT(DISTINCT student_id) AS num\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5";
+                break;
+            case MONTH:
+                sql = "SELECT course.name AS name, COUNT(DISTINCT student_id) AS num\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE DATE_FORMAT(created_at,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m') \n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5";
+                break;
+            case WEEK:
+                sql = "SELECT course.name AS name, COUNT(DISTINCT student_id) AS num\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5;";
+                break;
+            default:
+                break;
+        }
+        List<Map> data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+
+        List<String> names = new ArrayList<>();
+        List<Integer> nums = new ArrayList<>();
+        for (Map object : data) {
+            names.add((String)object.get("name"));
+            nums.add(((BigInteger)object.get("num")).intValue());
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("names", names);
+        resultMap.put("nums", nums);
+
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getSiteIncomeRank(StatTimeType statTimeType) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "";
+
+        switch (statTimeType) {
+            case YEAR:
+                sql = "SELECT course.name AS name, SUM(order_account.price) AS price\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY SUM(order_account.price) DESC LIMIT 5";
+                break;
+            case MONTH:
+                sql = "SELECT course.name AS name, SUM(order_account.price) AS price\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY SUM(order_account.price) DESC LIMIT 5;";
+                break;
+            case WEEK:
+                sql = "SELECT course.name AS name, SUM(order_account.price) AS price\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY SUM(order_account.price) DESC LIMIT 5;";
+                break;
+            default:
+                break;
+        }
+        List<Map> data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+
+        List<String> names = new ArrayList<>();
+        List<Integer> incomes = new ArrayList<>();
+        for (Map object : data) {
+            names.add((String)object.get("name"));
+            incomes.add(((BigInteger)object.get("income")).intValue());
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("names", names);
+        resultMap.put("incomes", incomes);
 
         return resultMap;
     }

@@ -1,6 +1,7 @@
 package cn.moo.trainingcollege.dao;
 
 import cn.moo.trainingcollege.entity.OrderAccountEntity;
+import cn.moo.trainingcollege.utils.StatTimeType;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -39,4 +40,9 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
     public List<Integer> getStudentCourseLine(String studentId);
 
     public Map<String, Object> getSiteTopOrgan();
+
+    // New
+    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType);
+
+    public Map<String, Object> getSiteIncomeRank(StatTimeType statTimeType);
 }

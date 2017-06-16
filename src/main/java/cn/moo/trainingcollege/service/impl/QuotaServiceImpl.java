@@ -1,7 +1,11 @@
 package cn.moo.trainingcollege.service.impl;
 
+import cn.moo.trainingcollege.dao.CourseDao;
+import cn.moo.trainingcollege.dao.OrderDao;
+import cn.moo.trainingcollege.service.OrderService;
 import cn.moo.trainingcollege.service.QuotaService;
 import cn.moo.trainingcollege.utils.StatTimeType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +18,15 @@ import java.util.Map;
 @Service
 @Transactional
 public class QuotaServiceImpl implements QuotaService {
+    private final OrderDao orderDao;
+    private final CourseDao courseDao;
+
+    @Autowired
+    public QuotaServiceImpl(CourseDao courseDao, OrderDao orderDao) {
+        this.courseDao = courseDao;
+        this.orderDao = orderDao;
+    }
+
     @Override
     public Map<String, Object> getSiteQuitRateRank() {
         return null;
@@ -26,46 +39,52 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Override
     public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType) {
-        return null;
+        return orderDao.getSiteOrderRank(statTimeType);
     }
 
     @Override
     public Map<String, Object> getSitePriceRank(StatTimeType statTimeType) {
-        return null;
+        return courseDao.getSitePriceRank(statTimeType);
     }
 
     @Override
     public Map<String, Object> getSiteCourseIncomeRank(StatTimeType statTimeType) {
-        return null;
+        return orderDao.getSiteIncomeRank(statTimeType);
     }
 
     @Override
     public List<Double> getQuitRate(StatTimeType statTimeType) {
+        // TODO
         return null;
     }
 
     @Override
     public List<Double> getSatisfactionRate(StatTimeType statTimeType) {
+        // TODO
         return null;
     }
 
     @Override
     public List<Double> getConsumptionConversionRate(StatTimeType statTimeType) {
+        // TODO
         return null;
     }
 
     @Override
     public List<Double> getOrderConversionRate(StatTimeType statTimeType) {
+        // TODO
         return null;
     }
 
     @Override
     public List<Double> getSiteIncomeYearToYearRate() {
+        // TODO
         return null;
     }
 
     @Override
     public List<Double> getSiteMemberYearToYearRate() {
+        // TODO
         return null;
     }
 }
