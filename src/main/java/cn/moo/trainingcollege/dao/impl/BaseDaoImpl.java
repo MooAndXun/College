@@ -1,6 +1,7 @@
 package cn.moo.trainingcollege.dao.impl;
 
 import cn.moo.trainingcollege.dao.BaseDao;
+import cn.moo.trainingcollege.utils.TimeUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -199,7 +201,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return count;
     }
 
-    public List<Integer> getIntTimeLine(String sql) {
+    List<Integer> getIntTimeLine(String sql) {
         Session session = sessionFactory.getCurrentSession();
         List<Map<String, Object>> list = session.createSQLQuery(sql)
                 .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
@@ -225,7 +227,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return tempList2;
     }
 
-    public List<Double> getDoubleTimeLine(String sql) {
+    List<Double> getDoubleTimeLine(String sql) {
         Session session = sessionFactory.getCurrentSession();
         List<Map<String, Object>> list = session.createSQLQuery(sql)
                 .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
@@ -251,5 +253,86 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return tempList2;
     }
 
+    List getYearTimeLine(List<Map<String, Object>> dbData, boolean isDouble, String dataKey) {
+        List<Object> resultList = new ArrayList<>();
+        int yearGap = 3;
+
+        for (int i = 0; i < yearGap; i++) {
+            resultList.add(isDouble?0.0:0);
+        }
+
+        int currentYear = TimeUtil.getCurrentYear();
+        for (Map<String, Object> dataMap :
+                dbData) {
+            int year = Integer.valueOf((String) dataMap.get("year"));
+            if(currentYear-year<yearGap) {
+                if(isDouble) {
+                    Object originalData = dataMap.get(dataKey);
+                        double data = originalData instanceof BigDecimal?((BigDecimal)originalData).doubleValue():(Double)originalData;
+                        resultList.set((yearGap-1)+year-currentYear, data);
+                } else {
+                    int data = ((BigInteger)dataMap.get(dataKey)).intValue();
+                    resultList.set((yearGap-1)+year-currentYear, data);
+                }
+            }
+        }
+        return resultList;
+    }
+
+    List getMonthTimeLine(List<Map<String, Object>> dbData, boolean isDouble, String dataKey) {
+        List<Object> resultList = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            resultList.add(isDouble?0.0:0);
+        }
+
+        for (Map<String, Object> dataMap :
+                dbData) {
+            int month = Integer.valueOf((String) dataMap.get("month"));
+            if(isDouble) {
+                Object originalData = dataMap.get(dataKey);
+                double data = originalData instanceof BigDecimal?((BigDecimal)originalData).doubleValue():(Double)originalData;
+                resultList.set(month-1, data);
+            } else {
+                int data = ((BigInteger)dataMap.get(dataKey)).intValue();
+                resultList.set(month-1, data);
+            }
+        }
+
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+        List<Object> tempList1 = resultList.subList(0, month);
+        List<Object> tempList2 = resultList.subList(month, resultList.size());
+        tempList2.addAll(tempList1);
+        resultList = tempList2;
+
+        return resultList;
+    }
+
+    List getWeekTimeLine(List<Map<String, Object>> dbData, boolean isDouble, String dataKey) {
+        List<Object> resultList = new ArrayList<>();
+        int weekGap = 8;
+
+        for (int i = 0; i < weekGap; i++) {
+            resultList.add(isDouble?0.0:0);
+        }
+
+        int currentWeek = TimeUtil.getCurrentWeek();
+        for (Map<String, Object> dataMap :
+                dbData) {
+            int week = Integer.valueOf((String) dataMap.get("week"));
+            if(currentWeek-week<weekGap) {
+                if(isDouble) {
+                    Object originalData = dataMap.get(dataKey);
+                    double data = originalData instanceof BigDecimal?((BigDecimal)originalData).doubleValue():(Double)originalData;
+                    resultList.set((weekGap-1)+week-currentWeek, data);
+                } else {
+                    int data = ((BigInteger)dataMap.get(dataKey)).intValue();
+                    resultList.set((weekGap-1)+week-currentWeek, data);
+                }
+            }
+        }
+        return resultList;
+    }
 
 }

@@ -29,11 +29,13 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Override
     public Map<String, Object> getSiteQuitRateRank() {
+        //TODO
         return null;
     }
 
     @Override
     public Map<String, Object> getSiteSatisfactionRank() {
+        //TODO
         return null;
     }
 
@@ -54,14 +56,12 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Override
     public List<Double> getQuitRate(StatTimeType statTimeType) {
-        // TODO
-        return null;
+        return orderDao.getSiteQuitRate(statTimeType);
     }
 
     @Override
     public List<Double> getSatisfactionRate(StatTimeType statTimeType) {
-        // TODO
-        return null;
+        return orderDao.getSiteSatisfactionRate(statTimeType);
     }
 
     @Override

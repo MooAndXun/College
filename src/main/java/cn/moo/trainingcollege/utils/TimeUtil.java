@@ -37,4 +37,13 @@ public class TimeUtil {
         return dateStringToTimestamp(dateStr).before(getCurrentTime());
     }
 
+    public static int getCurrentYear() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR);
+    }
+
+    public static int getCurrentWeek() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.WEEK_OF_YEAR);
+    }
 }
