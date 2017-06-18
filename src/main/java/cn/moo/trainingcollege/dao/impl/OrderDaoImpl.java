@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -261,6 +262,102 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("names", names);
         resultMap.put("incomes", incomes);
+
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getSiteQuitRank(StatTimeType statTimeType) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "";
+
+        switch (statTimeType) {
+            case YEAR:
+                sql = "SELECT course.name AS name, (COUNT(quit_state=1 or null)/COUNT(*)) AS rate\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY (COUNT(quit_state=1 or null)/COUNT(*)) DESC LIMIT 5";
+                break;
+            case MONTH:
+                sql = "SELECT course.name AS name, (COUNT(quit_state=1 or null)/COUNT(*)) AS rate\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY (COUNT(quit_state=1 or null)/COUNT(*)) DESC LIMIT 5;";
+                break;
+            case WEEK:
+                sql = "SELECT course.name AS name, (COUNT(quit_state=1 or null)/COUNT(*)) AS rate\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY (COUNT(quit_state=1 or null)/COUNT(*)) DESC LIMIT 5;";
+                break;
+            default:
+                break;
+        }
+        List<Map> data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+
+        List<String> names = new ArrayList<>();
+        List<Double> rates = new ArrayList<>();
+        for (Map object : data) {
+            names.add((String)object.get("name"));
+            rates.add(((BigDecimal)object.get("rate")).doubleValue());
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("names", names);
+        resultMap.put("rates", rates);
+
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "";
+
+        switch (statTimeType) {
+            case YEAR:
+                sql = "SELECT course.name AS name, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY (SUM(satisfaction)/COUNT(satisfaction>0 or null)) DESC LIMIT 5";
+                break;
+            case MONTH:
+                sql = "SELECT course.name AS name, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY (SUM(satisfaction)/COUNT(satisfaction>0 or null)) DESC LIMIT 5;";
+                break;
+            case WEEK:
+                sql = "SELECT course.name AS name, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY course_id\n" +
+                        "ORDER BY (SUM(satisfaction)/COUNT(satisfaction>0 or null)) DESC LIMIT 5;";
+                break;
+            default:
+                break;
+        }
+        List<Map> data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+
+        List<String> names = new ArrayList<>();
+        List<Double> rates = new ArrayList<>();
+        for (Map object : data) {
+            names.add((String)object.get("name"));
+            rates.add(((BigDecimal)object.get("rate")).doubleValue());
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("names", names);
+        resultMap.put("rates", rates);
 
         return resultMap;
     }

@@ -29,15 +29,13 @@ public class QuotaServiceImpl implements QuotaService {
     SettlementDaoImpl settlementDao;
 
     @Override
-    public Map<String, Object> getSiteQuitRateRank() {
-        //TODO
-        return null;
+    public Map<String, Object> getSiteQuitRateRank(StatTimeType statTimeType) {
+        return orderDao.getSiteQuitRank(statTimeType);
     }
 
     @Override
-    public Map<String, Object> getSiteSatisfactionRank() {
-        //TODO
-        return null;
+    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType) {
+        return orderDao.getSiteQuitRank(statTimeType);
     }
 
     @Override
@@ -85,5 +83,11 @@ public class QuotaServiceImpl implements QuotaService {
     @Override
     public List<Double> getSiteMemberYearToYearRate() {
         return studentDao.getSiteMemberYearToYearRate();
+    }
+
+    @Override
+    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType) {
+        // TODO
+        return null;
     }
 }

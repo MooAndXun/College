@@ -43,6 +43,10 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
 
     public Map<String, Object> getSiteIncomeRank(StatTimeType statTimeType);
 
+    public Map<String, Object> getSiteQuitRank(StatTimeType statTimeType);
+
+    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType);
+
     public List<Double> getSiteQuitRate(StatTimeType statTimeType);
 
     public List<Double> getSiteSatisfactionRate(StatTimeType statTimeType);
