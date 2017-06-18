@@ -22,4 +22,6 @@ public interface SettlementDao extends BaseDao<SettlementEntity> {
     public List<Double> getSiteIncomeLine();
 
     public Map<String,Object> getOrganTopCourse(String organId);
+
+    public List<Double> getSiteIncomeYearToYearRate();
 }

@@ -258,7 +258,11 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         int yearGap = 3;
 
         for (int i = 0; i < yearGap; i++) {
-            resultList.add(isDouble?0.0:0);
+            if(isDouble) {
+                resultList.add(0.0);
+            }else {
+                resultList.add(0);
+            }
         }
 
         int currentYear = TimeUtil.getCurrentYear();
@@ -268,8 +272,8 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
             if(currentYear-year<yearGap) {
                 if(isDouble) {
                     Object originalData = dataMap.get(dataKey);
-                        double data = originalData instanceof BigDecimal?((BigDecimal)originalData).doubleValue():(Double)originalData;
-                        resultList.set((yearGap-1)+year-currentYear, data);
+                    double data = originalData instanceof BigDecimal?((BigDecimal)originalData).doubleValue():(Double)originalData;
+                    resultList.set((yearGap-1)+year-currentYear, data);
                 } else {
                     int data = ((BigInteger)dataMap.get(dataKey)).intValue();
                     resultList.set((yearGap-1)+year-currentYear, data);
@@ -283,7 +287,12 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         List<Object> resultList = new ArrayList<>();
 
         for (int i = 0; i < 12; i++) {
-            resultList.add(isDouble?0.0:0);
+            if(isDouble) {
+                resultList.add(0.0);
+            }else {
+                resultList.add(0);
+            }
+
         }
 
         for (Map<String, Object> dataMap :
@@ -314,7 +323,11 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         int weekGap = 8;
 
         for (int i = 0; i < weekGap; i++) {
-            resultList.add(isDouble?0.0:0);
+            if(isDouble) {
+                resultList.add(0.0);
+            }else {
+                resultList.add(0);
+            }
         }
 
         int currentWeek = TimeUtil.getCurrentWeek();
@@ -334,5 +347,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         }
         return resultList;
     }
+
+
 
 }

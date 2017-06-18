@@ -3,6 +3,7 @@ package cn.moo.trainingcollege.dao.impl;
 import cn.moo.trainingcollege.dao.SettlementDao;
 import cn.moo.trainingcollege.entity.SettlementEntity;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
@@ -77,5 +78,35 @@ public class SettlementDaoImpl extends BaseDaoImpl<SettlementEntity> implements 
         return map;
     }
 
+    @Override
+    public List<Double> getSiteIncomeYearToYearRate() {
+        List<Double> currentYearData = getSiteIncomeLine();
 
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "SELECT DATE_FORMAT(created_at,'%c') AS month, SUM(commission) AS income\n" +
+                "FROM settlement\n" +
+                "WHERE created_at <= DATE_SUB(NOW(),INTERVAL 1 YEAR)\n" +
+                "  AND created_at > DATE_SUB(NOW(),INTERVAL 2 YEAR)\n" +
+                "GROUP BY DATE_FORMAT(created_at,'%y%m')\n" +
+                "ORDER BY DATE_FORMAT(created_at,'%y%m');";
+
+        List<Map<String, Object>> data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+
+        List<Double> lastYearData = getMonthTimeLine(data, true, "income");
+
+        List<Double> resultList = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            double currentMonthData = currentYearData.get(i);
+            double lastMonthData = lastYearData.get(i);
+
+            if(lastMonthData!=0) {
+                double rate = (currentMonthData-lastMonthData)/lastMonthData;
+                resultList.add(rate);
+            }else {
+                resultList.add(0.0);
+            }
+        }
+
+        return resultList;
+    }
 }

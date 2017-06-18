@@ -46,4 +46,6 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
     public List<Double> getSiteQuitRate(StatTimeType statTimeType);
 
     public List<Double> getSiteSatisfactionRate(StatTimeType statTimeType);
+
+
 }

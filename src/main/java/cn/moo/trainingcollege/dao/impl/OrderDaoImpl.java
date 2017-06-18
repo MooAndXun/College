@@ -276,25 +276,28 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                 sql = "SELECT DATE_FORMAT(created_at, '%Y') AS year, (COUNT(quit_state=1 or null)/COUNT(*)) AS rate\n" +
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
-                        "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
-                        "ORDER BY DATE_FORMAT(created_at, '%y%m') LIMIT 12;";
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 3 YEAR)\n" +
+                        "GROUP BY DATE_FORMAT(created_at, '%y')\n" +
+                        "ORDER BY DATE_FORMAT(created_at, '%y');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getYearTimeLine(data, true, "rate");
             case MONTH:
                 sql = "SELECT DATE_FORMAT(created_at, '%c') AS month, (COUNT(quit_state=1 or null)/COUNT(*)) AS rate\n" +
                         "FROM order_account\n" +
                         "JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 12 MONTH)\n" +
                         "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
-                        "ORDER BY DATE_FORMAT(created_at, '%y%m') LIMIT 12;";
+                        "ORDER BY DATE_FORMAT(created_at, '%y%m');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getMonthTimeLine(data, true, "rate");
             case WEEK:
                 sql = "SELECT DATE_FORMAT(created_at, '%v') AS week, (COUNT(quit_state=1 or null)/COUNT(*)) AS rate\n" +
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
-                        "WHERE  YEAR(created_at) = YEAR(NOW())\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 8 WEEK)\n" +
+                        "  AND YEAR(created_at) = YEAR(NOW())\n" +
                         "GROUP BY DATE_FORMAT(created_at, '%x%v')\n" +
-                        "ORDER BY DATE_FORMAT(created_at, '%x%v') LIMIT 8";
+                        "ORDER BY DATE_FORMAT(created_at, '%x%v');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getWeekTimeLine(data, true, "rate");
         }
@@ -312,28 +315,32 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                 sql = "SELECT DATE_FORMAT(created_at, '%Y') AS year, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
-                        "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
-                        "ORDER BY DATE_FORMAT(created_at, '%y%m') LIMIT 12;";
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 3 YEAR)\n" +
+                        "GROUP BY DATE_FORMAT(created_at, '%y')\n" +
+                        "ORDER BY DATE_FORMAT(created_at, '%y');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getYearTimeLine(data, true, "rate");
             case MONTH:
                 sql = "SELECT DATE_FORMAT(created_at, '%c') AS month, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
                         "FROM order_account\n" +
                         "JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 12 MONTH)\n" +
                         "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
-                        "ORDER BY DATE_FORMAT(created_at, '%y%m') LIMIT 12;";
+                        "ORDER BY DATE_FORMAT(created_at, '%y%m');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getMonthTimeLine(data, true, "rate");
             case WEEK:
                 sql = "SELECT DATE_FORMAT(created_at, '%v') AS week, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
-                        "WHERE  YEAR(created_at) = YEAR(NOW())\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 8 WEEK)\n" +
+                        "  AND YEAR(created_at) = YEAR(NOW())\n" +
                         "GROUP BY DATE_FORMAT(created_at, '%x%v')\n" +
-                        "ORDER BY DATE_FORMAT(created_at, '%x%v') LIMIT 8";
+                        "ORDER BY DATE_FORMAT(created_at, '%x%v');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getWeekTimeLine(data, true, "rate");
         }
         return new ArrayList<>();
     }
+
 }

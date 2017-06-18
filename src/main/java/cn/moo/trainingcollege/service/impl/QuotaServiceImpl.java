@@ -2,7 +2,8 @@ package cn.moo.trainingcollege.service.impl;
 
 import cn.moo.trainingcollege.dao.CourseDao;
 import cn.moo.trainingcollege.dao.OrderDao;
-import cn.moo.trainingcollege.service.OrderService;
+import cn.moo.trainingcollege.dao.StudentDao;
+import cn.moo.trainingcollege.dao.impl.SettlementDaoImpl;
 import cn.moo.trainingcollege.service.QuotaService;
 import cn.moo.trainingcollege.utils.StatTimeType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,14 @@ import java.util.Map;
 @Service
 @Transactional
 public class QuotaServiceImpl implements QuotaService {
-    private final OrderDao orderDao;
-    private final CourseDao courseDao;
-
     @Autowired
-    public QuotaServiceImpl(CourseDao courseDao, OrderDao orderDao) {
-        this.courseDao = courseDao;
-        this.orderDao = orderDao;
-    }
+    OrderDao orderDao;
+    @Autowired
+    CourseDao courseDao;
+    @Autowired
+    StudentDao studentDao;
+    @Autowired
+    SettlementDaoImpl settlementDao;
 
     @Override
     public Map<String, Object> getSiteQuitRateRank() {
@@ -78,13 +79,11 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Override
     public List<Double> getSiteIncomeYearToYearRate() {
-        // TODO
-        return null;
+        return settlementDao.getSiteIncomeYearToYearRate();
     }
 
     @Override
     public List<Double> getSiteMemberYearToYearRate() {
-        // TODO
-        return null;
+        return studentDao.getSiteMemberYearToYearRate();
     }
 }

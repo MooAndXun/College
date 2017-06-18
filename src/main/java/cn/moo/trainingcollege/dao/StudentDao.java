@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface StudentDao extends BaseDao<StudentEntity> {
     public List getSiteStudentLine();
+
+    public List<Double> getSiteMemberYearToYearRate();
 }
