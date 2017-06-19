@@ -51,5 +51,5 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
 
     public List<Double> getSiteSatisfactionRate(StatTimeType statTimeType);
 
-
+    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType);
 }

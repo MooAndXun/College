@@ -87,7 +87,6 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Override
     public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType) {
-        // TODO
-        return null;
+        return orderDao.getTeacherIncomeRank(statTimeType);
     }
 }

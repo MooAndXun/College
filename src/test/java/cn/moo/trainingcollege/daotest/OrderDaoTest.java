@@ -19,4 +19,8 @@ public class OrderDaoTest extends BaseTest {
         System.out.println(orderDao.getSiteQuitRate(StatTimeType.MONTH));
         System.out.println(orderDao.getSiteQuitRate(StatTimeType.WEEK));
     }
+
+    @Test void getTeacherRankTest() {
+        System.out.println(orderDao.getTeacherIncomeRank(StatTimeType.YEAR));
+    }
 }

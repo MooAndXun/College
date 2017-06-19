@@ -440,4 +440,52 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         return new ArrayList<>();
     }
 
+    @Override
+    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "";
+
+        switch (statTimeType) {
+            case YEAR:
+                sql = "SELECT teacher, SUM(order_account.price) AS income\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY teacher\n" +
+                        "ORDER BY SUM(order_account.price) DESC LIMIT 5";
+                break;
+            case MONTH:
+                sql = "SELECT teacher, SUM(order_account.price) AS income\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY teacher\n" +
+                        "ORDER BY SUM(order_account.price) DESC LIMIT 5;";
+                break;
+            case WEEK:
+                sql = "SELECT teacher, SUM(order_account.price) AS income\n" +
+                        "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
+                        "      AND is_paid=1\n" +
+                        "GROUP BY teacher\n" +
+                        "ORDER BY SUM(order_account.price) DESC LIMIT 5;";
+                break;
+            default:
+                break;
+        }
+        List<Map> data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+
+        List<String> names = new ArrayList<>();
+        List<Double> incomes = new ArrayList<>();
+        for (Map object : data) {
+            names.add((String)object.get("teacher"));
+            incomes.add(((Double)object.get("income")));
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("teachers", names);
+        resultMap.put("incomes", incomes);
+
+        return resultMap;
+    }
+
 }
