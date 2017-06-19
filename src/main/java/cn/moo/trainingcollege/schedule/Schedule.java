@@ -1,12 +1,16 @@
 package cn.moo.trainingcollege.schedule;
 
+import cn.moo.trainingcollege.dao.PageviewDao;
 import cn.moo.trainingcollege.dao.StudentDao;
+import cn.moo.trainingcollege.entity.PageviewEntity;
 import cn.moo.trainingcollege.entity.StudentEntity;
+import cn.moo.trainingcollege.utils.CounterUtil;
 import cn.moo.trainingcollege.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +23,8 @@ import java.util.List;
 public class Schedule {
     @Autowired
     StudentDao studentDao;
+    @Autowired
+    PageviewDao pageviewDao;
 
     @Scheduled(cron = "0 0 12 * * ?")
     public void checkMemberState() {
@@ -43,6 +49,15 @@ public class Schedule {
                     break;
             }
         }
+    }
+
+
+    public void saveAccessNumber(){
+        PageviewEntity entity = new PageviewEntity();
+        entity.setNum(CounterUtil.getNum());
+        entity.setRecordDate(TimeUtil.getCurrentTime());
+        pageviewDao.add(entity);
+        CounterUtil.returnZero();
     }
 
     private int beforeCurrent(Timestamp lastTime) {
