@@ -179,3 +179,210 @@ function post(URL, PARAMS) {
     temp.submit();
     return temp;
 }
+
+function lineChart(id, title, xName, yName, xData, yData) {
+    var myChart = echarts.init(document.getElementById(id));
+    var option = {
+        title: {
+            text: title,
+            textStyle: {
+                fontSize: 22
+            },
+            left: 'center',
+        },
+        color: [primaryColor],
+        tooltip: {
+            trigger: 'axis',
+        },
+        grid: {
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: xData,
+                name: xName,
+                nameGap: 25,
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 14
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: yName,
+                nameGap: 25,
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 14
+                    }
+                }
+            }
+        ],
+        series: [
+            {
+                name: yName,
+                type: 'line',
+                data: yData
+            }
+        ],
+        textStyle: {
+            fontSize: 16
+        }
+    };
+
+    myChart.setOption(option);
+}
+
+function barChart(id, title, xName, yName, xData, yData) {
+    var myChart = echarts.init(document.getElementById(id));
+    var option = {
+        title: {
+            text: title,
+            textStyle: {
+                fontSize: 22
+            },
+            left: 'center',
+        },
+        color: [primaryColor],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: xData,
+                name: xName,
+                nameGap: 25,
+                axisLabel: {
+                    interval: 0,
+                    textStyle: {
+                        fontSize: 14
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: yName,
+                nameGap: 25,
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 14
+                    }
+                }
+            }
+        ],
+        series: [
+            {
+                name: yName,
+                type: 'bar',
+                barWidth: '60px',
+                data: yData
+            }
+        ],
+        textStyle: {
+            fontSize: 16
+        }
+    };
+
+    myChart.setOption(option);
+}
+
+function doubleLineChart(id, title, xName, yName1, yName2, xData, yData1, yData2) {
+    var myChart = echarts.init(document.getElementById(id));
+    var option = {
+        title: {
+            text: title,
+            textStyle: {
+                fontSize: 22
+            },
+            padding:10,
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:[yName1,yName2],
+            left: "right"
+        },
+        grid: {
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: xData,
+                name: xName,
+                nameGap: 15,
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 14
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: yName1,
+                nameGap: 15,
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 14
+                    }
+                }
+            },
+            {
+                type: 'value',
+                name: yName2,
+                nameGap: 15,
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 14
+                    }
+                }
+            }
+        ],
+        series: [
+            {
+                name: yName1,
+                type: 'line',
+                data: yData1
+            },
+            {
+                name: yName2,
+                type: 'line',
+                yAxisIndex: 1,
+                data: yData2
+            }
+        ],
+        textStyle: {
+            fontSize: 16
+        }
+    };
+    myChart.setOption(option);
+}
+
+function getMonthList() {
+    var date = new Date();
+    var month = date.getMonth();
+    var monthList = ['Jen', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+    var temp = monthList.slice(0, month + 1);
+    var temp2 = monthList.slice(month + 1, monthList.length);
+    var result = Array.prototype.concat(temp2, temp);
+    return result;
+}

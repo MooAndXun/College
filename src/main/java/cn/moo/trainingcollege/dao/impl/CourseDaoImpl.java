@@ -48,11 +48,11 @@ public class CourseDaoImpl extends BaseDaoImpl<CourseEntity> implements CourseDa
         List<Map> data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 
         List<String> names = new ArrayList<>();
-        List<Integer> prices = new ArrayList<>();
+        List<Double> prices = new ArrayList<>();
 
         for (Map object : data) {
             names.add((String)object.get("name"));
-            prices.add(((BigInteger)object.get("price")).intValue());
+            prices.add((Double)object.get("price"));
         }
 
         Map<String, Object> resultMap = new HashMap<>();

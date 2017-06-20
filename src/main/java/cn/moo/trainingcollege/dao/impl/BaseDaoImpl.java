@@ -272,7 +272,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
             if(currentYear-year<yearGap) {
                 if(isDouble) {
                     Object originalData = dataMap.get(dataKey);
-                    double data = originalData instanceof BigDecimal?((BigDecimal)originalData).doubleValue():(Double)originalData;
+                    double data = (originalData instanceof BigDecimal)?((BigDecimal)originalData).doubleValue():(Double)originalData;
                     resultList.set((yearGap-1)+year-currentYear, data);
                 } else {
                     int data = ((BigInteger)dataMap.get(dataKey)).intValue();
