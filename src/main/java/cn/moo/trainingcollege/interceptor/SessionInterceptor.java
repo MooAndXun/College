@@ -1,5 +1,6 @@
 package cn.moo.trainingcollege.interceptor;
 
+import cn.moo.trainingcollege.utils.CounterUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,7 +24,10 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-
+        if(modelAndView.hasView()){
+            CounterUtil.add();
+        }
+//        System.out.println(CounterUtil.getNum());
     }
 
     @Override
