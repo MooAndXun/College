@@ -89,4 +89,14 @@ public class QuotaServiceImpl implements QuotaService {
     public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType) {
         return orderDao.getTeacherIncomeRank(statTimeType);
     }
+
+    @Override
+    public List<Integer> getMemberQuota(StatTimeType statTimeType, String organId) {
+        return courseDao.getMemberQuota(statTimeType, organId);
+    }
+
+    @Override
+    public List<Double> getIncomeQuota(StatTimeType statTimeType, String organId) {
+        return orderDao.getIncomeQuota(statTimeType, organId);
+    }
 }

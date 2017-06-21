@@ -15,6 +15,7 @@ function initQuotaChart() {
     initQuitChart("month");
     initTeacherRankChart("year");
     initMemberAndIncomeYearToYearChart();
+    initMemberAndIncomeChart("month");
 }
 
 function reloadQuotaChart(timeType) {
@@ -116,6 +117,17 @@ function initMemberAndIncomeYearToYearChart() {
             var yData1 = data.member;
             var yData2 = data.income;
             doubleLineChart("member-income-year-chart", "会员数/收入同比增长率", "时间", "会员数", "收入", xData, yData1, yData2);
+        })
+    }
+}
+
+function initMemberAndIncomeChart(timeType) {
+    if ($("#member-income-chart").length > 0) {
+        $.get("/quota/member_income",{type: timeType}, function (data) {
+            var xData = getMonthList();
+            var yData1 = data.member;
+            var yData2 = data.income;
+            doubleLineChart("member-income-chart", "会员数/收入统计图", "时间", "新会员数", "收入", xData, yData1, yData2);
         })
     }
 }

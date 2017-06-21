@@ -61,4 +61,48 @@ public class CourseDaoImpl extends BaseDaoImpl<CourseEntity> implements CourseDa
 
         return resultMap;
     }
+
+    @Override
+    public List<Integer> getMemberQuota(StatTimeType statTimeType, String organId) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql;
+
+        String organWhere = organId==null?"":("AND organ_id='"+organId+"'\n");
+
+        List<Map<String, Object>> data;
+        switch (statTimeType) {
+            case YEAR:
+                sql = "SELECT DATE_FORMAT(created_at, '%Y') AS year, COUNT(DISTINCT student_id) AS num\n" +
+                        "FROM order_account\n" +
+                        "  JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 3 YEAR)\n" +
+                        organWhere+
+                        "GROUP BY DATE_FORMAT(created_at, '%y')\n" +
+                        "ORDER BY DATE_FORMAT(created_at, '%y');";
+                data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+                return getYearTimeLine(data, false, "num");
+            case MONTH:
+                sql = "SELECT DATE_FORMAT(created_at, '%c') AS month, COUNT(DISTINCT student_id) AS num\n" +
+                        "FROM order_account\n" +
+                        "JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 12 MONTH)\n" +
+                        organWhere+
+                        "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
+                        "ORDER BY DATE_FORMAT(created_at, '%y%m');";
+                data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+                return getMonthTimeLine(data, false, "num");
+            case WEEK:
+                sql = "SELECT DATE_FORMAT(created_at, '%v') AS week, COUNT(DISTINCT student_id) AS num\n" +
+                        "FROM order_account\n" +
+                        "  JOIN course ON order_account.course_id = course.id\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 8 WEEK)\n" +
+                        "  AND YEAR(created_at) = YEAR(NOW())\n" +
+                        organWhere+
+                        "GROUP BY DATE_FORMAT(created_at, '%x%v')\n" +
+                        "ORDER BY DATE_FORMAT(created_at, '%x%v');";
+                data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+                return getWeekTimeLine(data, false, "num");
+        }
+        return new ArrayList<>();
+    }
 }

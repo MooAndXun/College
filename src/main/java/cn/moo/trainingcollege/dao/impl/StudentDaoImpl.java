@@ -57,7 +57,6 @@ public class StudentDaoImpl extends BaseDaoImpl<StudentEntity> implements Studen
                 resultList.add(0.0);
             }
         }
-
         return resultList;
     }
 }

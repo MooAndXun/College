@@ -11,4 +11,6 @@ import java.util.Map;
  */
 public interface CourseDao extends BaseDao<CourseEntity> {
     public Map<String, Object> getSitePriceRank(StatTimeType statTimeType);
+
+    public List<Integer> getMemberQuota(StatTimeType statTimeType, String organId);
 }

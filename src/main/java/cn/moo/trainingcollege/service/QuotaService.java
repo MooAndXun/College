@@ -90,4 +90,8 @@ public interface QuotaService {
      * @return
      */
     public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType);
+
+    public List<Integer> getMemberQuota(StatTimeType statTimeType, String organId);
+
+    public List<Double> getIncomeQuota(StatTimeType statTimeType, String organId);
 }

@@ -84,4 +84,17 @@ public class QuotaController {
         result.put("income", incomeList);
         return result;
     }
+
+    @RequestMapping("/member_income")
+    @ResponseBody
+    public Map memberAndIncome(String type) {
+        List memberList = quotaService.getMemberQuota(StatTimeType.getStatTimeType(type), null);
+        List incomeList = quotaService.getIncomeQuota(StatTimeType.getStatTimeType(type), null);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("member", memberList);
+        result.put("income", incomeList);
+        return result;
+    }
+
 }
