@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by chenmuen on 2017/2/12.
  */
 public interface CourseDao extends BaseDao<CourseEntity> {
-    public Map<String, Object> getSitePriceRank(StatTimeType statTimeType);
+    public Map<String, Object> getSitePriceRank(StatTimeType statTimeType, String organId);
 
     public List<Integer> getMemberQuota(StatTimeType statTimeType, String organId);
 }

@@ -29,38 +29,38 @@ public class QuotaServiceImpl implements QuotaService {
     SettlementDaoImpl settlementDao;
 
     @Override
-    public Map<String, Object> getSiteQuitRateRank(StatTimeType statTimeType) {
-        return orderDao.getSiteQuitRank(statTimeType);
+    public Map<String, Object> getSiteQuitRateRank(StatTimeType statTimeType, String organId) {
+        return orderDao.getSiteQuitRank(statTimeType, organId);
     }
 
     @Override
-    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType) {
-        return orderDao.getSiteQuitRank(statTimeType);
+    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType, String organId) {
+        return orderDao.getSiteQuitRank(statTimeType, organId);
     }
 
     @Override
-    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType) {
-        return orderDao.getSiteOrderRank(statTimeType);
+    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType, String organId) {
+        return orderDao.getSiteOrderRank(statTimeType, organId);
     }
 
     @Override
-    public Map<String, Object> getSitePriceRank(StatTimeType statTimeType) {
-        return courseDao.getSitePriceRank(statTimeType);
+    public Map<String, Object> getSitePriceRank(StatTimeType statTimeType, String organId) {
+        return courseDao.getSitePriceRank(statTimeType, organId);
     }
 
     @Override
-    public Map<String, Object> getSiteCourseIncomeRank(StatTimeType statTimeType) {
-        return orderDao.getSiteIncomeRank(statTimeType);
+    public Map<String, Object> getSiteCourseIncomeRank(StatTimeType statTimeType, String organId) {
+        return orderDao.getSiteIncomeRank(statTimeType, organId);
     }
 
     @Override
-    public List<Double> getQuitRate(StatTimeType statTimeType) {
-        return orderDao.getSiteQuitRate(statTimeType);
+    public List<Double> getQuitRate(StatTimeType statTimeType, String organId) {
+        return orderDao.getSiteQuitRate(statTimeType, organId);
     }
 
     @Override
-    public List<Double> getSatisfactionRate(StatTimeType statTimeType) {
-        return orderDao.getSiteSatisfactionRate(statTimeType);
+    public List<Double> getSatisfactionRate(StatTimeType statTimeType, String organId) {
+        return orderDao.getSiteSatisfactionRate(statTimeType, organId);
     }
 
     @Override
@@ -86,8 +86,8 @@ public class QuotaServiceImpl implements QuotaService {
     }
 
     @Override
-    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType) {
-        return orderDao.getTeacherIncomeRank(statTimeType);
+    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType, String organId) {
+        return orderDao.getTeacherIncomeRank(statTimeType, organId);
     }
 
     @Override

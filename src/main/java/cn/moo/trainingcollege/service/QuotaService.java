@@ -12,51 +12,52 @@ public interface QuotaService {
     /**
      *
      * @param statTimeType 时间层次类型
+     * @param organId
      * @return
      */
-    public Map<String, Object> getSiteQuitRateRank(StatTimeType statTimeType);
+    public Map<String, Object> getSiteQuitRateRank(StatTimeType statTimeType, String organId);
 
     /**
      *
      * @param statTimeType 时间层次类型
      * @return
      */
-    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType);
+    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType, String organId);
 
     /**
      *
      * @param statTimeType 时间层次类型
      * @return
      */
-    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType);
+    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType, String organId);
 
     /**
      *
      * @param statTimeType 时间层次类型
      * @return
      */
-    public Map<String, Object> getSitePriceRank(StatTimeType statTimeType);
+    public Map<String, Object> getSitePriceRank(StatTimeType statTimeType, String organId);
 
     /**
      *
      * @param statTimeType 时间层次类型
      * @return
      */
-    public Map<String, Object> getSiteCourseIncomeRank(StatTimeType statTimeType);
+    public Map<String, Object> getSiteCourseIncomeRank(StatTimeType statTimeType, String organId);
 
     /**
      *
      * @param statTimeType 时间层次类型
      * @return
      */
-    public List<Double> getQuitRate(StatTimeType statTimeType);
+    public List<Double> getQuitRate(StatTimeType statTimeType, String organId);
 
     /**
      *
      * @param statTimeType 时间层次类型
      * @return
      */
-    public List<Double> getSatisfactionRate(StatTimeType statTimeType);
+    public List<Double> getSatisfactionRate(StatTimeType statTimeType, String organId);
 
     /**
      *
@@ -89,7 +90,7 @@ public interface QuotaService {
      * @param statTimeType 时间层次类型
      * @return
      */
-    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType);
+    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType, String organId);
 
     public List<Integer> getMemberQuota(StatTimeType statTimeType, String organId);
 

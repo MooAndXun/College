@@ -39,19 +39,19 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
     public Map<String, Object> getSiteTopOrgan();
 
     // New
-    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType);
+    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType, String organId);
 
-    public Map<String, Object> getSiteIncomeRank(StatTimeType statTimeType);
+    public Map<String, Object> getSiteIncomeRank(StatTimeType statTimeType, String organId);
 
-    public Map<String, Object> getSiteQuitRank(StatTimeType statTimeType);
+    public Map<String, Object> getSiteQuitRank(StatTimeType statTimeType, String organId);
 
-    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType);
+    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType, String organId);
 
-    public List<Double> getSiteQuitRate(StatTimeType statTimeType);
+    public List<Double> getSiteQuitRate(StatTimeType statTimeType, String organId);
 
-    public List<Double> getSiteSatisfactionRate(StatTimeType statTimeType);
+    public List<Double> getSiteSatisfactionRate(StatTimeType statTimeType, String organId);
 
-    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType);
+    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType, String organId);
 
     public List<Double> getIncomeQuota(StatTimeType statTimeType, String organId);
 }

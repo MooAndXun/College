@@ -19,13 +19,13 @@ public class QuotaTest extends BaseTest {
 
     @Test
     public void testRank() {
-        System.out.println(quotaService.getSitePriceRank(StatTimeType.YEAR));
+        System.out.println(quotaService.getSitePriceRank(StatTimeType.YEAR, null));
     }
 
     @Test
     public void testRate() {
-        System.out.println(quotaService.getSatisfactionRate(StatTimeType.MONTH));
-        System.out.println(quotaService.getQuitRate(StatTimeType.YEAR));
+        System.out.println(quotaService.getSatisfactionRate(StatTimeType.MONTH, null));
+        System.out.println(quotaService.getQuitRate(StatTimeType.YEAR, null));
     }
 
     @Test

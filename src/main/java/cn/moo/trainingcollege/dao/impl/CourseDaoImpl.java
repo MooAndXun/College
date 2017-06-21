@@ -21,7 +21,7 @@ import java.util.Map;
 @Repository
 public class CourseDaoImpl extends BaseDaoImpl<CourseEntity> implements CourseDao {
     @Override
-    public Map<String, Object> getSitePriceRank(StatTimeType statTimeType) {
+    public Map<String, Object> getSitePriceRank(StatTimeType statTimeType, String organId) {
         Session session = sessionFactory.getCurrentSession();
         String sql = "";
 
@@ -29,16 +29,19 @@ public class CourseDaoImpl extends BaseDaoImpl<CourseEntity> implements CourseDa
             case YEAR:
                 sql = "SELECT course.name AS name, price FROM course\n" +
                         "WHERE TO_DAYS(NOW()) - TO_DAYS(start_time) <= 365\n" +
+                        getOrganWhere(organId) +
                         "ORDER BY price DESC LIMIT 5";
                 break;
             case MONTH:
                 sql = "SELECT course.name AS name, price FROM course\n" +
                         "WHERE DATE_FORMAT(start_time,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')\n" +
+                        getOrganWhere(organId) +
                         "ORDER BY price DESC LIMIT 5";
                 break;
             case WEEK:
                 sql = "SELECT course.name AS name, price FROM course\n" +
                         "WHERE YEARWEEK(DATE_FORMAT(start_time,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
+                        getOrganWhere(organId) +
                         "ORDER BY price DESC LIMIT 5";
                 break;
             default:
@@ -67,7 +70,7 @@ public class CourseDaoImpl extends BaseDaoImpl<CourseEntity> implements CourseDa
         Session session = sessionFactory.getCurrentSession();
         String sql;
 
-        String organWhere = organId==null?"":("AND organ_id='"+organId+"'\n");
+        String organWhere = getOrganWhere(organId);
 
         List<Map<String, Object>> data;
         switch (statTimeType) {

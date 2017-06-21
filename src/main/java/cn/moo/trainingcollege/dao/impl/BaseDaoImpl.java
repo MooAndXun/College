@@ -348,6 +348,9 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return resultList;
     }
 
-
+    public String getOrganWhere(String organId) {
+        String organWhere = organId==null?"":("AND organ_id='"+organId+"'\n");
+        return organWhere;
+    }
 
 }

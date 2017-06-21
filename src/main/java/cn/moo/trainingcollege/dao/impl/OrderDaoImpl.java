@@ -171,7 +171,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
     }
 
     @Override
-    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType) {
+    public Map<String, Object> getSiteOrderRank(StatTimeType statTimeType, String organId) {
         Session session = sessionFactory.getCurrentSession();
         String sql = "";
 
@@ -181,6 +181,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5";
                 break;
@@ -189,6 +190,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE DATE_FORMAT(created_at,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m') \n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5";
                 break;
@@ -197,6 +199,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5;";
                 break;
@@ -219,7 +222,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
     }
 
     @Override
-    public Map<String, Object> getSiteIncomeRank(StatTimeType statTimeType) {
+    public Map<String, Object> getSiteIncomeRank(StatTimeType statTimeType, String organId) {
         Session session = sessionFactory.getCurrentSession();
         String sql = "";
 
@@ -229,6 +232,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY SUM(order_account.price) DESC LIMIT 5";
                 break;
@@ -237,6 +241,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY SUM(order_account.price) DESC LIMIT 5;";
                 break;
@@ -245,6 +250,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY SUM(order_account.price) DESC LIMIT 5;";
                 break;
@@ -266,8 +272,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         return resultMap;
     }
 
-    @Override
-    public Map<String, Object> getSiteQuitRank(StatTimeType statTimeType) {
+    public Map<String, Object> getSiteQuitRank(StatTimeType statTimeType, String organId) {
         Session session = sessionFactory.getCurrentSession();
         String sql = "";
 
@@ -277,6 +282,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY (COUNT(quit_state=1 or null)/COUNT(*)) DESC LIMIT 5";
                 break;
@@ -285,6 +291,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY (COUNT(quit_state=1 or null)/COUNT(*)) DESC LIMIT 5;";
                 break;
@@ -293,6 +300,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY (COUNT(quit_state=1 or null)/COUNT(*)) DESC LIMIT 5;";
                 break;
@@ -315,7 +323,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
     }
 
     @Override
-    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType) {
+    public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType, String organId) {
         Session session = sessionFactory.getCurrentSession();
         String sql = "";
 
@@ -325,6 +333,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY (SUM(satisfaction)/COUNT(satisfaction>0 or null)) DESC LIMIT 5";
                 break;
@@ -333,6 +342,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY (SUM(satisfaction)/COUNT(satisfaction>0 or null)) DESC LIMIT 5;";
                 break;
@@ -341,6 +351,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY course_id\n" +
                         "ORDER BY (SUM(satisfaction)/COUNT(satisfaction>0 or null)) DESC LIMIT 5;";
                 break;
@@ -363,7 +374,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
     }
 
     @Override
-    public List<Double> getSiteQuitRate(StatTimeType statTimeType) {
+    public List<Double> getSiteQuitRate(StatTimeType statTimeType, String organId) {
         Session session = sessionFactory.getCurrentSession();
         String sql;
 
@@ -374,6 +385,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 3 YEAR)\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY DATE_FORMAT(created_at, '%y')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%y');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -383,6 +395,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account\n" +
                         "JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 12 MONTH)\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%y%m');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -393,6 +406,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "  JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 8 WEEK)\n" +
                         "  AND YEAR(created_at) = YEAR(NOW())\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY DATE_FORMAT(created_at, '%x%v')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%x%v');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -402,7 +416,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
     }
 
     @Override
-    public List<Double> getSiteSatisfactionRate(StatTimeType statTimeType) {
+    public List<Double> getSiteSatisfactionRate(StatTimeType statTimeType, String organId) {
         Session session = sessionFactory.getCurrentSession();
         String sql;
 
@@ -413,6 +427,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 3 YEAR)\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY DATE_FORMAT(created_at, '%y')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%y');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -422,6 +437,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account\n" +
                         "JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 12 MONTH)\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%y%m');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -432,6 +448,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "  JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 8 WEEK)\n" +
                         "  AND YEAR(created_at) = YEAR(NOW())\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY DATE_FORMAT(created_at, '%x%v')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%x%v');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -441,7 +458,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
     }
 
     @Override
-    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType) {
+    public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType, String organId) {
         Session session = sessionFactory.getCurrentSession();
         String sql = "";
 
@@ -451,6 +468,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY teacher\n" +
                         "ORDER BY SUM(order_account.price) DESC LIMIT 5";
                 break;
@@ -459,6 +477,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY teacher\n" +
                         "ORDER BY SUM(order_account.price) DESC LIMIT 5;";
                 break;
@@ -467,6 +486,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
                         "      AND is_paid=1\n" +
+                        getOrganWhere(organId) +
                         "GROUP BY teacher\n" +
                         "ORDER BY SUM(order_account.price) DESC LIMIT 5;";
                 break;
@@ -493,7 +513,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         Session session = sessionFactory.getCurrentSession();
         String sql;
 
-        String organWhere = organId==null?"":("AND organ_id='"+organId+"'\n");
+        String organWhere = getOrganWhere(organId);
 
         List<Map<String, Object>> data;
         switch (statTimeType) {

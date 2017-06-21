@@ -113,6 +113,7 @@ function initTeacherRankChart(timeType) {
 function initMemberAndIncomeYearToYearChart() {
     if ($("#member-income-year-chart").length > 0) {
         $.get("/quota//member_income/year_to_year", function (data) {
+            console.log(data);
             var xData = getMonthList();
             var yData1 = data.member;
             var yData2 = data.income;
