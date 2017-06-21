@@ -22,13 +22,43 @@ public class QuotaController {
     QuotaService quotaService;
 
     @RequestMapping("/site")
-    public String courseQuotaPage() {
+    public String siteQuotaPage() {
         return "site-quota";
     }
 
-    @RequestMapping("/organ")
+    @RequestMapping("/organization")
     public String organQuotaPage() {
         return "organ-quota";
+    }
+
+    @RequestMapping("/course")
+    public String quotaCoursePage() {
+        return "quota-course";
+    }
+
+    @RequestMapping("/income")
+    public String quotaIncomePage() {
+        return "quota-income";
+    }
+
+    @RequestMapping("/teacher")
+    public String quotaTeacherPage() {
+        return "quota-teacher";
+    }
+
+    @RequestMapping("/feedback")
+    public String quotaFeedbackPage() {
+        return "quota-feedback";
+    }
+
+    @RequestMapping("/convert")
+    public String quotaConvertPage() {
+        return "quota-convert";
+    }
+
+    @RequestMapping("/organ")
+    public String quotaOrganPage() {
+        return "quota-organ";
     }
 
     @RequestMapping("/course_num_rank")

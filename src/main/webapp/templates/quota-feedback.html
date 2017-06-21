@@ -1,0 +1,57 @@
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="base/fragment::head('反馈指标')"></head>
+
+<body>
+<header th:replace="base/fragment::header(${session.userType}, 2)"></header>
+
+<div class="wrapper">
+  <div class="container">
+
+    <div class="page-content-left">
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 2, 3)"></div>
+    </div>
+
+    <div class="page-content">
+      <div class="segment">
+        <div class="segment-title">
+          <div class="title-rect"></div>
+          <h2 class="title">图表展示</h2>
+        </div>
+        <div id="view-tab" class="ui three item stackable tabs menu">
+          <a class="active item" data-tab="year">年视图</a>
+          <a class="item"  data-tab="month">月视图</a>
+          <a class="item" data-tab="week">周视图</a>
+        </div>
+        <
+        <div class="stat-chart">
+          <div class="chart" id="course-quit-rank-chart" style="width: 700px;height:400px;"></div>
+        </div>
+
+        <div class="stat-chart">
+          <div class="chart" id="course-satisfaction-rank-chart" style="width: 700px;height:400px;"></div>
+        </div>
+
+        <div class="stat-chart">
+          <div class="chart" id="course-quit-satisfaction-chart" style="width: 700px;height:500px;"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="base/fragment::footer"></footer>
+
+<th:block th:replace="base/fragment::modal"/>
+
+<th:block th:replace="base/fragment::script"/>
+
+<script src="/build/js/quota.js"></script>
+
+</body>
+
+</html>

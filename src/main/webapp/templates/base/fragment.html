@@ -24,16 +24,15 @@
              th:href="@{/stat/student}">统计</a>
         </th:block>
         <th:block th:case="1">
-          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#"
-             th:href="@{/course/manage}">课程</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/manage}">课程</a>
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user/info}">机构</a>
-          <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#" th:href="@{/stat/organ}">统计</a>
-          <a class="nav-item" th:class="'nav-item ' + (${active}==3 ? 'active')" href="#" th:href="@{/quota/organ}">指标</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#" th:href="@{/quota/income}">指标</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==3 ? 'active')" href="#" th:href="@{/stat/organ}">统计</a>
         </th:block>
         <th:block th:case="2">
           <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/approve}">课程</a>
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/stat/site}">统计</a>
-          <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#" th:href="@{/quota/site}">指标</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#" th:href="@{/quota/income}">指标</a>
         </th:block>
         <th:block th:case="3">
           <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/user/info}">个人</a>
@@ -77,11 +76,14 @@
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/user/info}">机构信息</a>
         <a class="active item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/course/join}">添加学员</a>
       </th:block>
-      <th:block th:case="2">
+      <th:block th:case="3">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/stat/organ}">统计信息</a>
       </th:block>
-      <th:block th:case="3">
-        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/quota/organ}">课程指标</a>
+      <th:block th:case="2">
+        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/quota/income}">收益指标</a>
+        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/quota/course}">课程指标</a>
+        <a class="item" th:class="'item '+(${subActive}==3?'active')" th:href="@{/quota/feedback}">反馈指标</a>
+        <a class="item" th:class="'item '+(${subActive}==4?'active')" th:href="@{/quota/teacher}">教师指标</a>
       </th:block>
     </th:block>
   </th:block>
@@ -95,7 +97,12 @@
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/stat/site}">统计信息</a>
       </th:block>
       <th:block th:case="2">
-        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/quota/site}">课程指标</a>
+        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/quota/income}">收益指标</a>
+        <a class="item" th:class="'item '+(${subActive}==1?'active')" th:href="@{/quota/course}">课程指标</a>
+        <a class="item" th:class="'item '+(${subActive}==2?'active')" th:href="@{/quota/organ}">机构指标</a>
+        <a class="item" th:class="'item '+(${subActive}==3?'active')" th:href="@{/quota/feedback}">反馈指标</a>
+        <a class="item" th:class="'item '+(${subActive}==4?'active')" th:href="@{/quota/teacher}">教师指标</a>
+        <a class="item" th:class="'item '+(${subActive}==5?'active')" th:href="@{/quota/convert}">转化指标</a>
       </th:block>
     </th:block>
   </th:block>
