@@ -21,7 +21,6 @@ function toast(message, error_message) {
 }
 
 
-
 function bindButtonEvent() {
     bindBuyButton();
     bindPayButton();
@@ -115,7 +114,7 @@ function bindScoreButton() {
                 inverted: true,
                 onApprove: function () {
                     var score = $("#score-input").val();
-                    post("/course/score", {courseId: courseId,orderId: orderId, score: score});
+                    post("/course/score", {courseId: courseId, orderId: orderId, score: score});
                 }
             })
             .modal('show');
@@ -133,7 +132,7 @@ function bindMemberTypeCheckbox(value) {
 }
 
 function bindRegisterTypeCheckBox(option) {
-    if(option==0) {
+    if (option == 0) {
         $("#account-input").removeClass("invisible");
     } else {
         $("#account-input").addClass("invisible");
@@ -307,14 +306,14 @@ function doubleLineChart(id, title, xName, yName1, yName2, xData, yData1, yData2
             textStyle: {
                 fontSize: 22
             },
-            padding:10,
+            padding: 10,
             left: 'center'
         },
         tooltip: {
             trigger: 'axis'
         },
         legend: {
-            data:[yName1,yName2],
+            data: [yName1, yName2],
             left: "right"
         },
         grid: {
@@ -383,6 +382,57 @@ function getMonthList() {
 
     var temp = monthList.slice(0, month + 1);
     var temp2 = monthList.slice(month + 1, monthList.length);
-    var result = Array.prototype.concat(temp2, temp);
-    return result;
+    var resultList = Array.prototype.concat(temp2, temp);
+    return resultList;
+}
+
+function getYearList() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var yearList = [];
+    yearList.push(year - 2);
+    yearList.push(year - 1);
+    yearList.push(year);
+    return yearList;
+}
+
+function getWeekList() {
+    var week = getYearWeek(new Date());
+    var weekList = [];
+    for(var i = 7; i>=0; i--) {
+        weekList.push("第"+(week-i)+"周");
+    }
+    return weekList;
+}
+function getYearWeek(date) {
+    var date2 = new Date(date.getFullYear(), 0, 1);
+    var day1 = date.getDay();
+    if (day1 === 0) day1 = 7;
+    var day2 = date2.getDay();
+    if (day2 === 0) day2 = 7;
+    d = Math.round((date.getTime() - date2.getTime() + (day2 - day1) * (24 * 60 * 60 * 1000)) / 86400000);
+    return Math.ceil(d / 7) + 1;
+}
+
+
+function getXDataList(timeType) {
+    switch (timeType) {
+        case "year":
+            return getYearList();
+        case "month":
+            return getMonthList();
+        case "week":
+            return getWeekList();
+    }
+}
+
+function getTimeXAxisName(timeType) {
+    switch (timeType) {
+        case "year":
+            return "年份";
+        case "month":
+            return "月份";
+        case "week":
+            return "周数";
+    }
 }

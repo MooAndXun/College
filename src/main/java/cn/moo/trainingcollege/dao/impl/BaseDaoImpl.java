@@ -275,7 +275,8 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
                     double data = (originalData instanceof BigDecimal)?((BigDecimal)originalData).doubleValue():(Double)originalData;
                     resultList.set((yearGap-1)+year-currentYear, data);
                 } else {
-                    int data = ((BigInteger)dataMap.get(dataKey)).intValue();
+                    Object originalData = dataMap.get(dataKey);
+                    int data = (originalData instanceof BigInteger)?((BigInteger)originalData).intValue():(Integer)originalData;
                     resultList.set((yearGap-1)+year-currentYear, data);
                 }
             }
@@ -303,7 +304,8 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
                 double data = originalData instanceof BigDecimal?((BigDecimal)originalData).doubleValue():(Double)originalData;
                 resultList.set(month-1, data);
             } else {
-                int data = ((BigInteger)dataMap.get(dataKey)).intValue();
+                Object originalData = dataMap.get(dataKey);
+                int data = (originalData instanceof BigInteger)?((BigInteger)originalData).intValue():(Integer)originalData;
                 resultList.set(month-1, data);
             }
         }
@@ -340,7 +342,8 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
                     double data = originalData instanceof BigDecimal?((BigDecimal)originalData).doubleValue():(Double)originalData;
                     resultList.set((weekGap-1)+week-currentWeek, data);
                 } else {
-                    int data = ((BigInteger)dataMap.get(dataKey)).intValue();
+                    Object originalData = dataMap.get(dataKey);
+                    int data = (originalData instanceof BigInteger)?((BigInteger)originalData).intValue():(Integer)originalData;
                     resultList.set((weekGap-1)+week-currentWeek, data);
                 }
             }

@@ -27,13 +27,13 @@
           <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#"
              th:href="@{/course/manage}">课程</a>
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/user/info}">机构</a>
-          <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#"
-             th:href="@{/stat/organ}">统计</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#" th:href="@{/stat/organ}">统计</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==3 ? 'active')" href="#" th:href="@{/quota/organ}">指标</a>
         </th:block>
         <th:block th:case="2">
           <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/course/approve}">课程</a>
           <a class="nav-item" th:class="'nav-item ' + (${active}==1 ? 'active')" href="#" th:href="@{/stat/site}">统计</a>
-          <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#" th:href="@{/quota/course}">指标</a>
+          <a class="nav-item" th:class="'nav-item ' + (${active}==2 ? 'active')" href="#" th:href="@{/quota/site}">指标</a>
         </th:block>
         <th:block th:case="3">
           <a class="nav-item" th:class="'nav-item ' + (${active}==0 ? 'active')" href="#" th:href="@{/user/info}">个人</a>
@@ -80,6 +80,9 @@
       <th:block th:case="2">
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/stat/organ}">统计信息</a>
       </th:block>
+      <th:block th:case="3">
+        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/quota/organ}">课程指标</a>
+      </th:block>
     </th:block>
   </th:block>
   <th:block th:case="2">
@@ -92,7 +95,7 @@
         <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/stat/site}">统计信息</a>
       </th:block>
       <th:block th:case="2">
-        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/quota/course}">课程指标</a>
+        <a class="active item" th:class="'item '+(${subActive}==0?'active')" th:href="@{/quota/site}">课程指标</a>
       </th:block>
     </th:block>
   </th:block>

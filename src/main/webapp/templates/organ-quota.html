@@ -3,16 +3,16 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<head th:replace="base/fragment::head('网站指标')"></head>
+<head th:replace="base/fragment::head('机构指标')"></head>
 
 <body>
-<header th:replace="base/fragment::header(${session.userType}, 2)"></header>
+<header th:replace="base/fragment::header(${session.userType}, 3)"></header>
 
 <div class="wrapper">
   <div class="container">
 
     <div class="page-content-left">
-      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 2, 0)"></div>
+      <div class="nav-left" th:replace="base/fragment::nav-left(${session.userType}, 3, 0)"></div>
     </div>
 
     <div class="page-content">
@@ -52,10 +52,6 @@
 
         <div class="stat-chart">
           <div class="chart" id="teacher-rank-chart" style="width: 700px;height:400px;"></div>
-        </div>
-
-        <div class="stat-chart">
-          <div class="chart" id="member-income-year-chart" style="width: 700px;height:400px;"></div>
         </div>
 
         <div class="stat-chart">

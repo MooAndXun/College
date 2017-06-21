@@ -148,20 +148,20 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
     public Map<String, Object> getSiteTopOrgan() {
         String sql =
                 "SELECT organization.name AS name, COUNT(DISTINCT student_id) AS num " +
-                "FROM organization " +
-                "  LEFT JOIN course ON organization.id = organ_id " +
-                "  LEFT JOIN order_account ON course_id = course.id " +
-                "  WHERE is_paid=1 " +
-                "GROUP BY organ_id, organization.name " +
-                "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5";
+                        "FROM organization " +
+                        "  LEFT JOIN course ON organization.id = organ_id " +
+                        "  LEFT JOIN order_account ON course_id = course.id " +
+                        "  WHERE is_paid=1 " +
+                        "GROUP BY organ_id, organization.name " +
+                        "ORDER BY COUNT(DISTINCT student_id) DESC LIMIT 5";
         Session session = sessionFactory.getCurrentSession();
         List<Map> objects = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 
         List<String> names = new ArrayList<>();
         List<Integer> nums = new ArrayList<>();
         for (Map object : objects) {
-            names.add((String)object.get("name"));
-            nums.add(((BigInteger)object.get("num")).intValue());
+            names.add((String) object.get("name"));
+            nums.add(((BigInteger) object.get("num")).intValue());
         }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("names", names);
@@ -211,8 +211,8 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         List<String> names = new ArrayList<>();
         List<Integer> nums = new ArrayList<>();
         for (Map object : data) {
-            names.add((String)object.get("name"));
-            nums.add(((BigInteger)object.get("num")).intValue());
+            names.add((String) object.get("name"));
+            nums.add(((BigInteger) object.get("num")).intValue());
         }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("names", names);
@@ -262,8 +262,8 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         List<String> names = new ArrayList<>();
         List<Double> incomes = new ArrayList<>();
         for (Map object : data) {
-            names.add((String)object.get("name"));
-            incomes.add((Double)object.get("income"));
+            names.add((String) object.get("name"));
+            incomes.add((Double) object.get("income"));
         }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("names", names);
@@ -312,8 +312,8 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         List<String> names = new ArrayList<>();
         List<Double> rates = new ArrayList<>();
         for (Map object : data) {
-            names.add((String)object.get("name"));
-            rates.add(((BigDecimal)object.get("rate")).doubleValue());
+            names.add((String) object.get("name"));
+            rates.add(((BigDecimal) object.get("rate")).doubleValue());
         }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("names", names);
@@ -329,7 +329,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
 
         switch (statTimeType) {
             case YEAR:
-                sql = "SELECT course.name AS name, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
+                sql = "SELECT course.name AS name, (SUM(satisfaction)/(COUNT(satisfaction>0)*5)) AS rate\n" +
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE TO_DAYS(NOW()) - TO_DAYS(created_at) <= 365\n" +
                         "      AND is_paid=1\n" +
@@ -338,7 +338,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "ORDER BY (SUM(satisfaction)/COUNT(satisfaction>0 or null)) DESC LIMIT 5";
                 break;
             case MONTH:
-                sql = "SELECT course.name AS name, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
+                sql = "SELECT course.name AS name, (SUM(satisfaction)/(COUNT(satisfaction>0)*5)) AS rate\n" +
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE date_format(created_at,'%Y-%m')=date_format(now(),'%Y-%m')\n" +
                         "      AND is_paid=1\n" +
@@ -347,7 +347,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "ORDER BY (SUM(satisfaction)/COUNT(satisfaction>0 or null)) DESC LIMIT 5;";
                 break;
             case WEEK:
-                sql = "SELECT course.name AS name, (SUM(satisfaction)/COUNT(satisfaction>0 or null)) AS rate\n" +
+                sql = "SELECT course.name AS name, (SUM(satisfaction)/(COUNT(satisfaction>0)*5)) AS rate\n" +
                         "FROM order_account JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE YEARWEEK(DATE_FORMAT(created_at,'%Y-%m-%d')) = YEARWEEK(NOW())\n" +
                         "      AND is_paid=1\n" +
@@ -363,8 +363,8 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         List<String> names = new ArrayList<>();
         List<Double> rates = new ArrayList<>();
         for (Map object : data) {
-            names.add((String)object.get("name"));
-            rates.add(((BigDecimal)object.get("rate")).doubleValue());
+            names.add((String) object.get("name"));
+            rates.add(((BigDecimal) object.get("rate")).doubleValue());
         }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("names", names);
@@ -423,7 +423,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         List<Map<String, Object>> data;
         switch (statTimeType) {
             case YEAR:
-                sql = "SELECT DATE_FORMAT(created_at, '%Y') AS year, (SUM(satisfaction)/COUNT(satisfaction>0)) AS rate\n" +
+                sql = "SELECT DATE_FORMAT(created_at, '%Y') AS year, (SUM(satisfaction)/(COUNT(satisfaction>0)*5)) AS rate\n" +
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 3 YEAR)\n" +
@@ -433,7 +433,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getYearTimeLine(data, true, "rate");
             case MONTH:
-                sql = "SELECT DATE_FORMAT(created_at, '%c') AS month, (SUM(satisfaction)/COUNT(satisfaction>0)) AS rate\n" +
+                sql = "SELECT DATE_FORMAT(created_at, '%c') AS month, (SUM(satisfaction)/(COUNT(satisfaction>0)*5)) AS rate\n" +
                         "FROM order_account\n" +
                         "JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 12 MONTH)\n" +
@@ -443,7 +443,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getMonthTimeLine(data, true, "rate");
             case WEEK:
-                sql = "SELECT DATE_FORMAT(created_at, '%v') AS week, (SUM(satisfaction)/COUNT(satisfaction>0)) AS rate\n" +
+                sql = "SELECT DATE_FORMAT(created_at, '%v') AS week, (SUM(satisfaction)/(COUNT(satisfaction>0)*5)) AS rate\n" +
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 8 WEEK)\n" +
@@ -498,8 +498,8 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
         List<String> names = new ArrayList<>();
         List<Double> incomes = new ArrayList<>();
         for (Map object : data) {
-            names.add((String)object.get("teacher"));
-            incomes.add(((Double)object.get("income")));
+            names.add((String) object.get("teacher"));
+            incomes.add(((Double) object.get("income")));
         }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("teachers", names);
@@ -522,7 +522,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account\n" +
                         "  JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 3 YEAR)\n" +
-                        organWhere+
+                        organWhere +
                         "GROUP BY DATE_FORMAT(created_at, '%y')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%y');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -532,7 +532,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "FROM order_account\n" +
                         "JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 12 MONTH)\n" +
-                        organWhere+
+                        organWhere +
                         "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%y%m');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -543,11 +543,47 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderAccountEntity> implements Ord
                         "  JOIN course ON order_account.course_id = course.id\n" +
                         "WHERE created_at > DATE_SUB(NOW(), INTERVAL 8 WEEK)\n" +
                         "  AND YEAR(created_at) = YEAR(NOW())\n" +
-                        organWhere+
+                        organWhere +
                         "GROUP BY DATE_FORMAT(created_at, '%x%v')\n" +
                         "ORDER BY DATE_FORMAT(created_at, '%x%v');";
                 data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
                 return getWeekTimeLine(data, true, "income");
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Integer> getOrderCountQuota(StatTimeType statTimeType) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql;
+
+        List<Map<String, Object>> data;
+        switch (statTimeType) {
+            case YEAR:
+                sql = "SELECT DATE_FORMAT(created_at, '%Y') AS year, COUNT(DISTINCT order_account.id) AS num\n" +
+                        "FROM order_account\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 3 YEAR)\n" +
+                        "GROUP BY DATE_FORMAT(created_at, '%y')\n" +
+                        "ORDER BY DATE_FORMAT(created_at, '%y');";
+                data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+                return getYearTimeLine(data, false, "num");
+            case MONTH:
+                sql = "SELECT DATE_FORMAT(created_at, '%c') AS month, COUNT(DISTINCT order_account.id) AS num\n" +
+                        "FROM order_account\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 12 MONTH)\n" +
+                        "GROUP BY DATE_FORMAT(created_at, '%y%m')\n" +
+                        "ORDER BY DATE_FORMAT(created_at, '%y%m');";
+                data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+                return getMonthTimeLine(data, false, "num");
+            case WEEK:
+                sql = "SELECT DATE_FORMAT(created_at, '%v') AS week, COUNT(DISTINCT order_account.id) AS num\n" +
+                        "FROM order_account\n" +
+                        "WHERE created_at > DATE_SUB(NOW(), INTERVAL 8 WEEK)\n" +
+                        "  AND YEAR(created_at) = YEAR(NOW())\n" +
+                        "GROUP BY DATE_FORMAT(created_at, '%x%v')\n" +
+                        "ORDER BY DATE_FORMAT(created_at, '%x%v');";
+                data = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+                return getWeekTimeLine(data, false, "num");
         }
         return new ArrayList<>();
     }

@@ -1,15 +1,15 @@
 package cn.moo.trainingcollege.service.impl;
 
-import cn.moo.trainingcollege.dao.CourseDao;
-import cn.moo.trainingcollege.dao.OrderDao;
-import cn.moo.trainingcollege.dao.StudentDao;
+import cn.moo.trainingcollege.dao.*;
 import cn.moo.trainingcollege.dao.impl.SettlementDaoImpl;
 import cn.moo.trainingcollege.service.QuotaService;
+import cn.moo.trainingcollege.utils.MathUtil;
 import cn.moo.trainingcollege.utils.StatTimeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +26,9 @@ public class QuotaServiceImpl implements QuotaService {
     @Autowired
     StudentDao studentDao;
     @Autowired
-    SettlementDaoImpl settlementDao;
+    SettlementDao settlementDao;
+    @Autowired
+    PageviewDao pageviewDao;
 
     @Override
     public Map<String, Object> getSiteQuitRateRank(StatTimeType statTimeType, String organId) {
@@ -35,7 +37,7 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Override
     public Map<String, Object> getSiteSatisfactionRank(StatTimeType statTimeType, String organId) {
-        return orderDao.getSiteQuitRank(statTimeType, organId);
+        return orderDao.getSiteSatisfactionRank(statTimeType, organId);
     }
 
     @Override
@@ -65,14 +67,24 @@ public class QuotaServiceImpl implements QuotaService {
 
     @Override
     public List<Double> getConsumptionConversionRate(StatTimeType statTimeType) {
-        // TODO
-        return null;
+        return studentDao.getConsumptionConversionRate(statTimeType);
     }
 
     @Override
     public List<Double> getOrderConversionRate(StatTimeType statTimeType) {
-        // TODO
-        return null;
+        List<Integer> pageViewList = pageviewDao.getPageViewCount(statTimeType);
+        List<Integer> orderCountList = orderDao.getOrderCountQuota(statTimeType);
+
+        List<Double> resultList = new ArrayList<>();
+        for (int i = 0; i < pageViewList.size(); i++) {
+            if(pageViewList.get(i)!=0) {
+                resultList.add(MathUtil.getDoubleWithRound((double)orderCountList.get(i)/(double)pageViewList.get(i)));
+            } else {
+                resultList.add(0.0);
+            }
+        }
+
+        return resultList;
     }
 
     @Override

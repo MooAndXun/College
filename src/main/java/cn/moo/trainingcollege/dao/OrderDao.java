@@ -54,4 +54,6 @@ public interface OrderDao extends BaseDao<OrderAccountEntity> {
     public Map<String, Object> getTeacherIncomeRank(StatTimeType statTimeType, String organId);
 
     public List<Double> getIncomeQuota(StatTimeType statTimeType, String organId);
+
+    public List<Integer> getOrderCountQuota(StatTimeType statTimeType);
 }

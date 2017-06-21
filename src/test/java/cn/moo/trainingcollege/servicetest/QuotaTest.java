@@ -20,11 +20,12 @@ public class QuotaTest extends BaseTest {
     @Test
     public void testRank() {
         System.out.println(quotaService.getSitePriceRank(StatTimeType.YEAR, null));
+        System.out.println(quotaService.getSiteSatisfactionRank(StatTimeType.YEAR, null));
     }
 
     @Test
     public void testRate() {
-        System.out.println(quotaService.getSatisfactionRate(StatTimeType.MONTH, null));
+        System.out.println(quotaService.getSatisfactionRate(StatTimeType.YEAR, null));
         System.out.println(quotaService.getQuitRate(StatTimeType.YEAR, null));
     }
 
@@ -43,5 +44,11 @@ public class QuotaTest extends BaseTest {
         result.put("income", incomeList);
 
         System.out.println(result);
+    }
+
+    @Test
+    public void testTransferRate() {
+        System.out.println(quotaService.getOrderConversionRate(StatTimeType.MONTH));
+        System.out.println(quotaService.getConsumptionConversionRate(StatTimeType.MONTH));
     }
 }

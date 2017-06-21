@@ -12,10 +12,11 @@ function initQuotaChart() {
     initCourseIncomeRankChart("year");
     initQuitRankChart("year");
     initSatisfactionRankChart("year");
-    initQuitChart("month");
+    initQuitChart("year");
     initTeacherRankChart("year");
     initMemberAndIncomeYearToYearChart();
-    initMemberAndIncomeChart("month");
+    initMemberAndIncomeChart("year");
+    initConversionChart("month");
 }
 
 function reloadQuotaChart(timeType) {
@@ -24,8 +25,11 @@ function reloadQuotaChart(timeType) {
     initCourseIncomeRankChart(timeType);
     initQuitRankChart(timeType);
     initSatisfactionRankChart(timeType);
-    initQuitChart("month");
+    initQuitChart(timeType);
     initTeacherRankChart(timeType);
+    initMemberAndIncomeYearToYearChart();
+    initMemberAndIncomeChart(timeType);
+    initConversionChart(timeType);
 }
 
 function bindTimeTab() {
@@ -41,7 +45,11 @@ function bindTimeTab() {
 
 function initCourseNumRankChart(timeType) {
     if ($("#course-num-rank-chart").length > 0) {
-        $.get("/quota/course_num_rank", {type: timeType}, function (data) {
+        var params = {type: timeType};
+        if(userType===1) {
+            params.organ_id=userId;
+        }
+        $.get("/quota/course_num_rank", params, function (data) {
             var xData = data.names;
             var yData = data.nums;
             barChart("course-num-rank-chart", "课程报名人数排名图", "课程", "选课人数", xData, yData);
@@ -51,7 +59,11 @@ function initCourseNumRankChart(timeType) {
 
 function initCoursePriceRankChart(timeType) {
     if ($("#course-price-rank-chart").length > 0) {
-        $.get("/quota/course_price_rank", {type: timeType}, function (data) {
+        var params = {type: timeType};
+        if(userType===1) {
+            params.organ_id=userId;
+        }
+        $.get("/quota/course_price_rank", params, function (data) {
             var xData = data.names;
             var yData = data.prices;
             barChart("course-price-rank-chart", "课程单价排名图", "课程", "价格", xData, yData);
@@ -61,7 +73,11 @@ function initCoursePriceRankChart(timeType) {
 
 function initCourseIncomeRankChart(timeType) {
     if ($("#course-income-rank-chart").length > 0) {
-        $.get("/quota/course_income_rank", {type: timeType}, function (data) {
+        var params = {type: timeType};
+        if(userType===1) {
+            params.organ_id=userId;
+        }
+        $.get("/quota/course_income_rank", params, function (data) {
             var xData = data.names;
             var yData = data.incomes;
             barChart("course-income-rank-chart", "课程收入排名图", "课程", "收入", xData, yData);
@@ -71,7 +87,11 @@ function initCourseIncomeRankChart(timeType) {
 
 function initQuitRankChart(timeType) {
     if ($("#course-quit-rank-chart").length > 0) {
-        $.get("/quota/course_quit_rank", {type: timeType}, function (data) {
+        var params = {type: timeType};
+        if(userType===1) {
+            params.organ_id=userId;
+        }
+        $.get("/quota/course_quit_rank", params, function (data) {
             var xData = data.names;
             var yData = data.rates;
             barChart("course-quit-rank-chart", "课程退课率排名图", "课程", "退课率", xData, yData);
@@ -81,7 +101,11 @@ function initQuitRankChart(timeType) {
 
 function initSatisfactionRankChart(timeType) {
     if ($("#course-satisfaction-rank-chart").length > 0) {
-        $.get("/quota/course_satisfaction_rank", {type: timeType}, function (data) {
+        var params = {type: timeType};
+        if(userType===1) {
+            params.organ_id=userId;
+        }
+        $.get("/quota/course_satisfaction_rank", params, function (data) {
             var xData = data.names;
             var yData = data.rates;
             barChart("course-satisfaction-rank-chart", "课程满意度排名图", "课程", "满意度", xData, yData);
@@ -91,18 +115,26 @@ function initSatisfactionRankChart(timeType) {
 
 function initQuitChart(timeType) {
     if ($("#course-quit-satisfaction-chart").length > 0) {
-        $.get("/quota/course_quit_satisfaction", {type: timeType}, function (data) {
-            var xData = getMonthList();
+        var params = {type: timeType};
+        if(userType===1) {
+            params.organ_id=userId;
+        }
+        $.get("/quota/course_quit_satisfaction", params, function (data) {
+            var xData = getXDataList(timeType);
             var yData1 = data.quit;
             var yData2 = data.satisfaction;
-            doubleLineChart("course-quit-satisfaction-chart", "退课率／满意度", "月份", "退课率", "满意度", xData, yData1, yData2)
+            doubleLineChart("course-quit-satisfaction-chart", "退课率／满意度", "时间", "退课率", "满意度", xData, yData1, yData2)
         });
     }
 }
 
 function initTeacherRankChart(timeType) {
     if ($("#teacher-rank-chart").length > 0) {
-        $.get("/quota/teacher_rank", {type: timeType}, function (data) {
+        var params = {type: timeType};
+        if(userType===1) {
+            params.organ_id=userId;
+        }
+        $.get("/quota/teacher_rank", params, function (data) {
             var xData = data.teachers;
             var yData = data.incomes;
             barChart("teacher-rank-chart", "教师收入排名", "教师", "收入", xData, yData);
@@ -124,11 +156,27 @@ function initMemberAndIncomeYearToYearChart() {
 
 function initMemberAndIncomeChart(timeType) {
     if ($("#member-income-chart").length > 0) {
-        $.get("/quota/member_income",{type: timeType}, function (data) {
-            var xData = getMonthList();
+        var params = {type: timeType};
+        if(userType===1) {
+            params.organ_id=userId;
+        }
+        $.get("/quota/member_income", params, function (data) {
+            var xData = getXDataList(timeType);
             var yData1 = data.member;
             var yData2 = data.income;
             doubleLineChart("member-income-chart", "会员数/收入统计图", "时间", "新会员数", "收入", xData, yData1, yData2);
+        })
+    }
+}
+
+function initConversionChart(timeType) {
+    if ($("#conversion-chart").length > 0) {
+        var params = {type: timeType};
+        $.get("/quota/conversion_rate", params, function (data) {
+            var xData = getXDataList(timeType);
+            var yData1 = data.consume;
+            var yData2 = data.order;
+            doubleLineChart("conversion-chart", "消费/订单转化率", "时间", "消费转化率", "订单转化率", xData, yData1, yData2);
         })
     }
 }

@@ -21,9 +21,14 @@ public class QuotaController {
     @Autowired
     QuotaService quotaService;
 
-    @RequestMapping("/course")
+    @RequestMapping("/site")
     public String courseQuotaPage() {
-        return "quota-course";
+        return "site-quota";
+    }
+
+    @RequestMapping("/organ")
+    public String organQuotaPage() {
+        return "organ-quota";
     }
 
     @RequestMapping("/course_num_rank")
@@ -95,6 +100,18 @@ public class QuotaController {
         Map<String, Object> result = new HashMap<>();
         result.put("member", memberList);
         result.put("income", incomeList);
+        return result;
+    }
+
+    @RequestMapping("/conversion_rate")
+    @ResponseBody
+    public Map conversionRate(String type) {
+        List consumeList = quotaService.getConsumptionConversionRate(StatTimeType.getStatTimeType(type));
+        List orderList = quotaService.getOrderConversionRate(StatTimeType.getStatTimeType(type));
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("consume", consumeList);
+        result.put("order", orderList);
         return result;
     }
 
