@@ -16,6 +16,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         if(httpServletRequest.getServletPath().equals("/login")||httpServletRequest.getServletPath().equals("/register")) {
             return true;
         } else if(httpServletRequest.getSession().getAttribute("user")==null) {
+            CounterUtil.add();
             httpServletResponse.sendRedirect("/login");
             return false;
         }
@@ -24,10 +25,10 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        if(modelAndView.hasView()){
+        if((modelAndView != null)&&(modelAndView.hasView())){
+//            System.out.println("add");
             CounterUtil.add();
         }
-//        System.out.println(CounterUtil.getNum());
     }
 
     @Override
